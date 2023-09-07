@@ -1,17 +1,13 @@
-import { User, UserDocument } from "src/domain/entities/user";
-import UserModel from "../models/user.model";
-import { CreateUserDto } from "src/application/dto/User/create-user.dto";
-import { IUserRepository } from "src/domain/interfaces/repository/IUserRepository";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
-import { UpdateUserDto } from "src/application/dto/User/update-user.dto";
 import { IChapterRepository } from "src/domain/interfaces/repository/IChapterRepository";
 import { Chapter, ChapterDocument } from "src/domain/entities/chapter";
 import { UpdateChapterDto } from "src/application/dto/Chapter/update-chapter.dto";
 import { CreateChapterDto } from "src/application/dto/Chapter/create-chapter.dto";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class ChapterRepository implements IChapterRepository {
-  prisma: any;
   constructor(
     @InjectModel(Chapter.name) private chapterModel: Model<ChapterDocument>
   ) {}

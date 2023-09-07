@@ -9,32 +9,32 @@ import {
   Delete,
   Put,
 } from "@nestjs/common";
-import { User } from "src/domain/entities/user";
-import { CreateUserDto } from "../dto/User/create-user.dto";
-import { CreateUserUseCase } from "../useCases/user/createUser.use-case";
-import { GetUserUseCase } from "../useCases/user/getUser.use-case";
-import { UpdateUserDto } from "../dto/User/update-user.dto";
-import { UpdateUserUseCase } from "../useCases/user/updateUser.user-case";
-import { DeleteUserUseCase } from "../useCases/user/deleteUser.use-case";
 import { CreateChapterDto } from "../dto/Chapter/create-chapter.dto";
 import { UpdateChapterDto } from "../dto/Chapter/update-chapter.dto";
+import { Chapter } from "src/domain/entities/chapter";
+import { ApiOperation, ApiResponse, ApiTags, ApiParam } from "@nestjs/swagger";
+import { ChapterUseCase } from "../useCases/chapter/chapter.use-case";
 
+@ApiTags("chapter")
 @Controller("chapter")
 export default class ChapterController {
-  constructor(
-    private readonly createUserUseCase: CreateUserUseCase,
-    private readonly getUserUseCase: GetUserUseCase,
-    private readonly updateUserUseCase: UpdateUserUseCase,
-    private readonly deleteUserUseCase: DeleteUserUseCase
-  ) {}
+  constructor(private readonly chapterUseCase: ChapterUseCase) {}
 
   @Post()
+  @ApiOperation({
+    summary: "Create Chapter",
+  })
+  @ApiResponse({ status: 201, description: "Chapter created.", type: Chapter })
+  @ApiResponse({ status: 403, description: "Forbidden." })
   async create(
-    @Body() chapter: CreateChapterDto,
-    adminMail: string
-  ): Promise<User> {
+    @Body() createChapterDto: CreateChapterDto,
+    @Body("adminMail") adminMail: string
+  ): Promise<Chapter> {
     try {
-      return await this.createChapterUseCase.execute(chapter, adminMail);
+      return await this.chapterUseCase.createChapter(
+        createChapterDto,
+        adminMail
+      );
     } catch (error) {
       throw new HttpException(
         "Une erreur est survenue",
@@ -43,10 +43,20 @@ export default class ChapterController {
     }
   }
 
-  @Get()
-  async get(@Param() chapterId: string): Promise<User> {
+  @Get(":chapterId")
+  @ApiOperation({
+    summary: "Get Chapter",
+  })
+  @ApiResponse({
+    status: 200,
+    description: "The found chapter.",
+    type: Chapter,
+  })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  @ApiParam({ name: "chapterId", description: "Chapter ID" })
+  async get(@Param("chapterId") chapterId: string): Promise<Chapter> {
     try {
-      return await this.getChapterUseCase.execute(chapterId);
+      return await this.chapterUseCase.getChapter(chapterId);
     } catch (error) {
       throw new HttpException(
         "Une erreur est survenue",
@@ -55,10 +65,20 @@ export default class ChapterController {
     }
   }
 
-  @Delete()
-  async delete(@Param() chapterId: string, adminMail: string): Promise<void> {
+  @Delete(":chapterId/:adminMail")
+  @ApiOperation({
+    summary: "Delete Chapter",
+  })
+  @ApiResponse({ status: 204, description: "Chapter deleted." })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  @ApiParam({ name: "chapterId", description: "Chapter ID" })
+  @ApiParam({ name: "adminMail", description: "Admin Mail" })
+  async delete(
+    @Param("chapterId") chapterId: string,
+    @Param("adminMail") adminMail: string
+  ): Promise<void> {
     try {
-      await this.deleteChapterUseCase.execute(chapterId, adminMail);
+      await this.chapterUseCase.deleteChapter(chapterId, adminMail);
     } catch (error) {
       throw new HttpException(
         "Une erreur est survenue",
@@ -67,13 +87,24 @@ export default class ChapterController {
     }
   }
 
-  @Put()
+  @Put(":chapterId")
+  @ApiOperation({
+    summary: "Update Chapter",
+  })
+  @ApiResponse({ status: 200, description: "Chapter Updated.", type: Chapter })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  @ApiParam({ name: "chapterId", description: "Chapter ID" })
   async update(
-    @Body() chapter: UpdateChapterDto,
-    adminMail: string
-  ): Promise<User> {
+    @Param("chapterId") chapterId: string,
+    @Body() updateChapterDto: UpdateChapterDto,
+    @Body("adminMail") adminMail: string
+  ): Promise<Chapter> {
     try {
-      return await this.updateChapterUseCase.execute(chapter, adminMail);
+      return await this.chapterUseCase.updateChapter(
+        chapterId,
+        updateChapterDto,
+        adminMail
+      );
     } catch (error) {
       throw new HttpException(
         "Une erreur est survenue",

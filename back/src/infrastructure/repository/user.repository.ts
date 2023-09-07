@@ -1,13 +1,12 @@
 import { User, UserDocument } from "src/domain/entities/user";
-import UserModel from "../models/user.model";
-import { CreateUserDto } from "src/application/dto/User/create-user.dto";
 import { IUserRepository } from "src/domain/interfaces/repository/IUserRepository";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { UpdateUserDto } from "src/application/dto/User/update-user.dto";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class UserRepository implements IUserRepository {
-  prisma: any;
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async get(id: string): Promise<User | null> {

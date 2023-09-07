@@ -1,15 +1,17 @@
-import { CreateUserDto } from "src/application/dto/User/create-user.dto";
-import { User } from "../../entities/user";
-import { UpdateUserDto } from "src/application/dto/User/update-user.dto";
+import { CreateChapterDto } from "src/application/dto/Chapter/create-chapter.dto";
+import { Chapter } from "src/domain/entities/chapter";
+import { UpdateChapterDto } from "src/application/dto/Chapter/update-chapter.dto";
 
-export interface IChapterService {
-  get(userId: string): Promise<User>;
-  create(createUserDto: CreateUserDto, userCreatingMail: string): Promise<User>;
-  update(
-    userId: string,
-    updateUserDto: UpdateUserDto,
+export abstract class IChapterService {
+  get: (chapterId: string) => Promise<Chapter>;
+  create: (
+    createChapterDto: CreateChapterDto,
+    chapterCreatingMail: string
+  ) => Promise<Chapter>;
+  update: (
+    chapterId: string,
+    updateChapterDto: UpdateChapterDto,
     adminMail: string
-  ): Promise<User>;
-  delete(userId: string, adminMail: string): Promise<void>;
-  getByMail(userMail: string): Promise<User>;
+  ) => Promise<Chapter>;
+  delete: (chapterId: string, adminMail: string) => Promise<void>;
 }

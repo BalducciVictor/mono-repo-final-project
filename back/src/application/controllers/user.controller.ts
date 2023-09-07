@@ -11,25 +11,24 @@ import {
 } from "@nestjs/common";
 import { User } from "src/domain/entities/user";
 import { CreateUserDto } from "../dto/User/create-user.dto";
-import { CreateUserUseCase } from "../useCases/user/createUser.use-case";
-import { GetUserUseCase } from "../useCases/user/getUser.use-case";
 import { UpdateUserDto } from "../dto/User/update-user.dto";
-import { UpdateUserUseCase } from "../useCases/user/updateUser.user-case";
-import { DeleteUserUseCase } from "../useCases/user/deleteUser.use-case";
+import { ApiOperation, ApiResponse, ApiTags, ApiParam } from "@nestjs/swagger";
+import { UserUseCase } from "../useCases/user/user.use-case";
 
+@ApiTags("users")
 @Controller("users")
 export default class UserController {
-  constructor(
-    private readonly createUserUseCase: CreateUserUseCase,
-    private readonly getUserUseCase: GetUserUseCase,
-    private readonly updateUserUseCase: UpdateUserUseCase,
-    private readonly deleteUserUseCase: DeleteUserUseCase
-  ) {}
+  constructor(private readonly userUseCase: UserUseCase) {}
 
   @Post()
-  async create(@Body() user: CreateUserDto, adminMail: string): Promise<User> {
+  @ApiOperation({
+    summary: "Create User",
+  })
+  @ApiResponse({ status: 201, description: "User created.", type: User })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  async create(@Body() user: CreateUserDto): Promise<User> {
     try {
-      return await this.createUserUseCase.execute(user, adminMail);
+      return await this.userUseCase.createUser(user, user.adminMail);
     } catch (error) {
       throw new HttpException(
         "Une erreur est survenue",
@@ -38,10 +37,15 @@ export default class UserController {
     }
   }
 
-  @Get()
-  async get(@Param() userId: string): Promise<User> {
+  @Get(":userId")
+  @ApiOperation({
+    summary: "Get User",
+  })
+  @ApiResponse({ status: 200, description: "The found user.", type: User })
+  @ApiParam({ name: "userId", description: "User ID" })
+  async get(@Param("userId") userId: string): Promise<User> {
     try {
-      return await this.getUserUseCase.execute(userId);
+      return await this.userUseCase.getUser(userId);
     } catch (error) {
       throw new HttpException(
         "Une erreur est survenue",
@@ -50,10 +54,19 @@ export default class UserController {
     }
   }
 
-  @Delete()
-  async delete(@Param() userId: string, adminMail: string): Promise<void> {
+  @ApiOperation({
+    summary: "Delete User",
+  })
+  @Delete(":userId/:adminMail")
+  @ApiResponse({ status: 204, description: "User deleted." })
+  @ApiParam({ name: "userId", description: "User ID" })
+  @ApiParam({ name: "adminMail", description: "Admin Mail" })
+  async delete(
+    @Param("userId") userId: string,
+    @Param("adminMail") adminMail: string
+  ): Promise<void> {
     try {
-      await this.deleteUserUseCase.execute(userId, adminMail);
+      await this.userUseCase.deleteUser(userId, adminMail);
     } catch (error) {
       throw new HttpException(
         "Une erreur est survenue",
@@ -62,14 +75,18 @@ export default class UserController {
     }
   }
 
-  @Put()
+  @Put(":userId")
+  @ApiOperation({
+    summary: "Update User",
+  })
+  @ApiResponse({ status: 200, description: "The updated user.", type: User })
+  @ApiParam({ name: "userId", description: "User ID" })
   async update(
-    @Body() user: UpdateUserDto,
-    userId: string,
-    adminMail: string
+    @Param("userId") userId: string,
+    @Body() user: UpdateUserDto
   ): Promise<User> {
     try {
-      return await this.updateUserUseCase.execute(userId, user, adminMail);
+      return await this.userUseCase.updateUser(userId, user, user.adminMail);
     } catch (error) {
       throw new HttpException(
         "Une erreur est survenue",
