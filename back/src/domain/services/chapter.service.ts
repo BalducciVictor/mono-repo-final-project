@@ -3,9 +3,9 @@ import { User } from "../entities/user";
 import { IUserRepository } from "../interfaces/repository/IUserRepository";
 import { IChapterRepository } from "../interfaces/repository/IChapterRepository";
 import { IChapterService } from "../interfaces/services/IChapterService";
-import { CreateChapterDto } from "src/application/dto/Chapter/create-chapter.dto";
+import { CreateChapterRequestDto } from "src/application/dto/Chapter/create-chapter-request.dto";
 import { Chapter } from "../entities/chapter";
-import { UpdateChapterDto } from "src/application/dto/Chapter/update-chapter.dto";
+import { UpdateChapterRequestDto } from "src/application/dto/Chapter/update-chapter-request.dto";
 
 @Injectable()
 export class ChapterService implements IChapterService {
@@ -15,10 +15,11 @@ export class ChapterService implements IChapterService {
   ) {}
 
   public async create(
-    createChapterDto: CreateChapterDto,
-    adminMail: string
+    createChapterDto: CreateChapterRequestDto
   ): Promise<Chapter> {
-    const adminUser: User = await this.userRepository.getByMail(adminMail);
+    const adminUser: User = await this.userRepository.getByMail(
+      createChapterDto.adminMail
+    );
     if (adminUser.role !== "ADMIN") throw new Error(`This user is not ADMIN`);
 
     return await this.chapterRepository.create(createChapterDto);
@@ -35,7 +36,7 @@ export class ChapterService implements IChapterService {
 
   public async update(
     chapterId: string,
-    updateChapterDto: UpdateChapterDto,
+    updateChapterDto: UpdateChapterRequestDto,
     adminMail: string
   ): Promise<Chapter> {
     const adminUser: User = await this.userRepository.getByMail(adminMail);

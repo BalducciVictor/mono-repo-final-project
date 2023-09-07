@@ -8,12 +8,14 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { User } from "src/domain/entities/user";
-import { CreateUserDto } from "../dto/User/create-user.dto";
-import { UpdateUserDto } from "../dto/User/update-user.dto";
+import { CreateUserDto } from "../dto/User/create-user-request.dto";
+import { UpdateUserDto } from "../dto/User/update-user-request.dto";
 import { ApiOperation, ApiResponse, ApiTags, ApiParam } from "@nestjs/swagger";
 import { UserUseCase } from "../useCases/user/user.use-case";
+import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
 
 @ApiTags("users")
 @Controller("users")
@@ -21,6 +23,7 @@ export default class UserController {
   constructor(private readonly userUseCase: UserUseCase) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: "Create User",
   })
@@ -54,10 +57,11 @@ export default class UserController {
     }
   }
 
+  @Delete(":userId/:adminMail")
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: "Delete User",
   })
-  @Delete(":userId/:adminMail")
   @ApiResponse({ status: 204, description: "User deleted." })
   @ApiParam({ name: "userId", description: "User ID" })
   @ApiParam({ name: "adminMail", description: "Admin Mail" })
@@ -76,6 +80,7 @@ export default class UserController {
   }
 
   @Put(":userId")
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: "Update User",
   })

@@ -2,8 +2,9 @@ import { User, UserDocument } from "src/domain/entities/user";
 import { IUserRepository } from "src/domain/interfaces/repository/IUserRepository";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
-import { UpdateUserDto } from "src/application/dto/User/update-user.dto";
+import { UpdateUserDto } from "src/application/dto/User/update-user-request.dto";
 import { Injectable } from "@nestjs/common";
+import { CreateUserDto } from "src/application/dto/User/create-user-request.dto";
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -14,10 +15,11 @@ export class UserRepository implements IUserRepository {
   }
 
   async getByMail(email: string): Promise<User | null> {
-    return this.userModel.findOne({ email: email }).exec();
+    const user = await this.userModel.findOne({ email: email }).exec();
+    return user;
   }
 
-  async create(user: User): Promise<User> {
+  async create(user: CreateUserDto): Promise<User> {
     const newUser = new this.userModel(user);
     return newUser.save();
   }
