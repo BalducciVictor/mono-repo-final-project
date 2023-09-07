@@ -1,5 +1,5 @@
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
+import { AppModule } from "./infrastructure/config/modules/app.module";
 import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 
 async function bootstrap() {
@@ -11,6 +11,7 @@ async function bootstrap() {
     .setVersion("1.0")
     .addTag("chapter")
     .addTag("users")
+    .addTag("auth")
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);

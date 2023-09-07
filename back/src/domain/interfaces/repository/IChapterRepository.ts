@@ -1,13 +1,13 @@
 import { Chapter } from "src/domain/entities/chapter";
-import { CreateChapterDto } from "src/application/dto/Chapter/create-chapter.dto";
-import { UpdateChapterDto } from "src/application/dto/Chapter/update-chapter.dto";
+import { CreateChapterRequestDto } from "src/application/dto/Chapter/create-chapter-request.dto";
+import { UpdateChapterRequestDto } from "src/application/dto/Chapter/update-chapter-request.dto";
 
 export abstract class IChapterRepository {
   get: (userId: string) => Promise<Chapter>;
-  create: (createChapterDto: CreateChapterDto) => Promise<Chapter>;
+  create: (createChapterDto: CreateChapterRequestDto) => Promise<Chapter>;
   delete: (id: string) => Promise<void>;
   update: (
     id: string,
-    updateChapterDto: UpdateChapterDto
+    updateChapterDto: UpdateChapterRequestDto
   ) => Promise<Chapter | null>;
 }

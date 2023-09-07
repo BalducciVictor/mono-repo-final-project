@@ -8,26 +8,36 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from "@nestjs/common";
-import { CreateChapterDto } from "../dto/Chapter/create-chapter.dto";
-import { UpdateChapterDto } from "../dto/Chapter/update-chapter.dto";
+import { CreateChapterRequestDto } from "../dto/Chapter/create-chapter-request.dto";
+import { UpdateChapterRequestDto } from "../dto/Chapter/update-chapter-request.dto";
 import { Chapter } from "src/domain/entities/chapter";
-import { ApiOperation, ApiResponse, ApiTags, ApiParam } from "@nestjs/swagger";
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiParam,
+  ApiBearerAuth,
+} from "@nestjs/swagger";
 import { ChapterUseCase } from "../useCases/chapter/chapter.use-case";
+import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
 
+@ApiBearerAuth()
 @ApiTags("chapter")
 @Controller("chapter")
 export default class ChapterController {
   constructor(private readonly chapterUseCase: ChapterUseCase) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: "Create Chapter",
   })
   @ApiResponse({ status: 201, description: "Chapter created.", type: Chapter })
   @ApiResponse({ status: 403, description: "Forbidden." })
   async create(
-    @Body() createChapterDto: CreateChapterDto,
+    @Body() createChapterDto: CreateChapterRequestDto,
     @Body("adminMail") adminMail: string
   ): Promise<Chapter> {
     try {
@@ -66,6 +76,7 @@ export default class ChapterController {
   }
 
   @Delete(":chapterId/:adminMail")
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: "Delete Chapter",
   })
@@ -88,6 +99,7 @@ export default class ChapterController {
   }
 
   @Put(":chapterId")
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: "Update Chapter",
   })
@@ -96,7 +108,7 @@ export default class ChapterController {
   @ApiParam({ name: "chapterId", description: "Chapter ID" })
   async update(
     @Param("chapterId") chapterId: string,
-    @Body() updateChapterDto: UpdateChapterDto,
+    @Body() updateChapterDto: UpdateChapterRequestDto,
     @Body("adminMail") adminMail: string
   ): Promise<Chapter> {
     try {
