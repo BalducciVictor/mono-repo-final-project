@@ -1,5 +1,5 @@
 export enum DocumentationContentType {
-  Text,
-  Image,
-  Video,
+  Text = "text",
+  Image = "image",
+  Video = "video",
 }

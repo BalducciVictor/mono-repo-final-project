@@ -20,6 +20,22 @@ import { AuthModule } from "./auth/auth.module";
 import { AuthService } from "src/domain/services/auth.service";
 import { AuthController } from "src/application/controllers/auth.controller";
 import { APP_GUARD } from "@nestjs/core";
+import { IDocumentationRepository } from "src/domain/interfaces/repository/IDocumentationRepository";
+import { DocumentationRepository } from "src/infrastructure/repository/document.repository";
+import { DocumentationContentRepository } from "src/infrastructure/repository/documentation-content.repository";
+import { IDocumentationContentRepository } from "src/domain/interfaces/repository/IDocumentationContentRepository";
+import { IDocumentationService } from "src/domain/interfaces/services/IDocumentationService";
+import { DocumentationService } from "src/domain/services/documentation.service";
+import { DocumentationUseCase } from "src/application/useCases/documentation/documentation.use-case";
+import DocumentationController from "src/application/controllers/documentation.controller";
+import {
+  DocumentationContent,
+  DocumentationContentSchema,
+} from "src/domain/entities/documentationContent";
+import {
+  Documentation,
+  DocumentationSchema,
+} from "src/domain/entities/documentation";
 
 @Module({
   imports: [
@@ -34,11 +50,23 @@ import { APP_GUARD } from "@nestjs/core";
     ),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Chapter.name, schema: ChapterSchema }]),
+    MongooseModule.forFeature([
+      { name: Documentation.name, schema: DocumentationSchema },
+    ]),
+    MongooseModule.forFeature([
+      { name: DocumentationContent.name, schema: DocumentationContentSchema },
+    ]),
   ],
-  controllers: [UserController, ChapterController, AuthController],
+  controllers: [
+    UserController,
+    ChapterController,
+    AuthController,
+    DocumentationController,
+  ],
   providers: [
     UserUseCase,
     ChapterUseCase,
+    DocumentationUseCase,
 
     ///Declare Services
     AuthService,
@@ -50,7 +78,10 @@ import { APP_GUARD } from "@nestjs/core";
       provide: IUserService,
       useClass: UserService,
     },
-
+    {
+      provide: IDocumentationService,
+      useClass: DocumentationService,
+    },
     ///Declare Repository
     {
       provide: IChapterRepository,
@@ -59,6 +90,14 @@ import { APP_GUARD } from "@nestjs/core";
     {
       provide: IUserRepository,
       useClass: UserRepository,
+    },
+    {
+      provide: IDocumentationRepository,
+      useClass: DocumentationRepository,
+    },
+    {
+      provide: IDocumentationContentRepository,
+      useClass: DocumentationContentRepository,
     },
   ],
 })

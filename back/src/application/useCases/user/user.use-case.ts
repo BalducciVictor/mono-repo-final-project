@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { CreateUserDto } from "src/application/dto/User/create-user-request.dto";
-import { UpdateUserDto } from "src/application/dto/User/update-user-request.dto";
+import { CreateUserRequestDto } from "src/application/dto/User/Request/create-user-request.dto";
+import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
+import { UpdateUserRequestDto } from "src/application/dto/User/Request/update-user-request.dto";
 import { User } from "src/domain/entities/user";
 import { IUserService } from "src/domain/interfaces/services/IUserService";
 
@@ -10,13 +11,13 @@ export class UserUseCase {
 
   async updateUser(
     userId: string,
-    updateUserDto: UpdateUserDto,
+    updateUserDto: UpdateUserRequestDto,
     adminMail: string
-  ): Promise<User | null> {
+  ): Promise<UserResponseDto | null> {
     return await this.userService.update(userId, updateUserDto, adminMail);
   }
 
-  async getUser(userId: string): Promise<User> {
+  async getUser(userId: string): Promise<UserResponseDto> {
     return await this.userService.get(userId);
   }
 
@@ -24,7 +25,10 @@ export class UserUseCase {
     await this.userService.delete(userId, adminMail);
   }
 
-  async createUser(user: CreateUserDto, adminMail: string): Promise<User> {
+  async createUser(
+    user: CreateUserRequestDto,
+    adminMail: string
+  ): Promise<UserResponseDto> {
     return await this.userService.create(user, adminMail);
   }
 }

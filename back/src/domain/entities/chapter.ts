@@ -13,6 +13,7 @@ export class Chapter {
   description: string;
   @Prop({ required: true })
   adminMail: string;
+  _id: any;
 }
 
 export const ChapterSchema = SchemaFactory.createForClass(Chapter);
