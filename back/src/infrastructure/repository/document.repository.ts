@@ -3,8 +3,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Documentation } from "src/domain/entities/documentation";
 import { IDocumentationRepository } from "src/domain/interfaces/repository/IDocumentationRepository";
-import { CreateDocumentationRequestDto } from "src/application/dto/Documentation/Request/create-documentation-request.dto";
-
 @Injectable()
 export class DocumentationRepository implements IDocumentationRepository {
   constructor(

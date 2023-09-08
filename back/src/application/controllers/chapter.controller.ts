@@ -12,7 +12,6 @@ import {
 } from "@nestjs/common";
 import { CreateChapterRequestDto } from "../dto/Chapter/Request/create-chapter-request.dto";
 import { UpdateChapterRequestDto } from "../dto/Chapter/Request/update-chapter-request.dto";
-import { Chapter } from "src/domain/entities/chapter";
 import {
   ApiOperation,
   ApiResponse,
