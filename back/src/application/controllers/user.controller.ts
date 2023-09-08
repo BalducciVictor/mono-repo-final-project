@@ -16,6 +16,7 @@ import { UpdateUserDto } from "../dto/User/update-user-request.dto";
 import { ApiOperation, ApiResponse, ApiTags, ApiParam } from "@nestjs/swagger";
 import { UserUseCase } from "../useCases/user/user.use-case";
 import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
+import { Roles } from "../decorator/user/roles.decorator";
 
 @ApiTags("users")
 @Controller("users")
@@ -24,6 +25,7 @@ export default class UserController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  @Roles(["ADMIN"])
   @ApiOperation({
     summary: "Create User",
   })
@@ -59,6 +61,7 @@ export default class UserController {
 
   @Delete(":userId/:adminMail")
   @UseGuards(JwtAuthGuard)
+  @Roles(["ADMIN"])
   @ApiOperation({
     summary: "Delete User",
   })
@@ -81,6 +84,7 @@ export default class UserController {
 
   @Put(":userId")
   @UseGuards(JwtAuthGuard)
+  @Roles(["ADMIN"])
   @ApiOperation({
     summary: "Update User",
   })

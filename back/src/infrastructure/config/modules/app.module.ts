@@ -19,6 +19,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { AuthModule } from "./auth/auth.module";
 import { AuthService } from "src/domain/services/auth.service";
 import { AuthController } from "src/application/controllers/auth.controller";
+import { APP_GUARD } from "@nestjs/core";
 
 @Module({
   imports: [

@@ -4,10 +4,7 @@ import { UpdateChapterRequestDto } from "src/application/dto/Chapter/update-chap
 
 export abstract class IChapterService {
   get: (chapterId: string) => Promise<Chapter>;
-  create: (
-    createChapterDto: CreateChapterRequestDto,
-    chapterCreatingMail: string
-  ) => Promise<Chapter>;
+  create: (createChapterDto: CreateChapterRequestDto) => Promise<Chapter>;
   update: (
     chapterId: string,
     updateChapterDto: UpdateChapterRequestDto,

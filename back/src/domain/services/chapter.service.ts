@@ -17,11 +17,6 @@ export class ChapterService implements IChapterService {
   public async create(
     createChapterDto: CreateChapterRequestDto
   ): Promise<Chapter> {
-    const adminUser: User = await this.userRepository.getByMail(
-      createChapterDto.adminMail
-    );
-    if (adminUser.role !== "ADMIN") throw new Error(`This user is not ADMIN`);
-
     return await this.chapterRepository.create(createChapterDto);
   }
 

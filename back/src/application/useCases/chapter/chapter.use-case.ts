@@ -12,11 +12,8 @@ export class ChapterUseCase {
     return await this.chapterService.get(chapter);
   }
 
-  async createChapter(
-    chapter: CreateChapterRequestDto,
-    adminMail: string
-  ): Promise<Chapter> {
-    return await this.chapterService.create(chapter, adminMail);
+  async createChapter(chapter: CreateChapterRequestDto): Promise<Chapter> {
+    return await this.chapterService.create(chapter);
   }
 
   async deleteChapter(chapter: string, adminMail: string): Promise<void> {

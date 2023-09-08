@@ -22,6 +22,7 @@ import {
 } from "@nestjs/swagger";
 import { ChapterUseCase } from "../useCases/chapter/chapter.use-case";
 import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
+import { Roles } from "../decorator/user/roles.decorator";
 
 @ApiBearerAuth()
 @ApiTags("chapter")
@@ -31,21 +32,19 @@ export default class ChapterController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  @Roles(["ADMIN"])
   @ApiOperation({
     summary: "Create Chapter",
   })
   @ApiResponse({ status: 201, description: "Chapter created.", type: Chapter })
   @ApiResponse({ status: 403, description: "Forbidden." })
   async create(
-    @Body() createChapterDto: CreateChapterRequestDto,
-    @Body("adminMail") adminMail: string
+    @Body() createChapterDto: CreateChapterRequestDto
   ): Promise<Chapter> {
     try {
-      return await this.chapterUseCase.createChapter(
-        createChapterDto,
-        adminMail
-      );
+      return await this.chapterUseCase.createChapter(createChapterDto);
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         "Une erreur est survenue",
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -77,6 +76,7 @@ export default class ChapterController {
 
   @Delete(":chapterId/:adminMail")
   @UseGuards(JwtAuthGuard)
+  @Roles(["ADMIN"])
   @ApiOperation({
     summary: "Delete Chapter",
   })
@@ -100,6 +100,7 @@ export default class ChapterController {
 
   @Put(":chapterId")
   @UseGuards(JwtAuthGuard)
+  @Roles(["ADMIN"])
   @ApiOperation({
     summary: "Update Chapter",
   })

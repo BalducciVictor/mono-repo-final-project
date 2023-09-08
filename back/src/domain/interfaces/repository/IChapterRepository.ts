@@ -3,7 +3,7 @@ import { CreateChapterRequestDto } from "src/application/dto/Chapter/create-chap
 import { UpdateChapterRequestDto } from "src/application/dto/Chapter/update-chapter-request.dto";
 
 export abstract class IChapterRepository {
-  get: (userId: string) => Promise<Chapter>;
+  get: (chapterId: string) => Promise<Chapter>;
   create: (createChapterDto: CreateChapterRequestDto) => Promise<Chapter>;
   delete: (id: string) => Promise<void>;
   update: (
