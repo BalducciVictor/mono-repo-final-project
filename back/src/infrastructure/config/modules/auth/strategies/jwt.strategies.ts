@@ -6,13 +6,10 @@ import { IUserService } from "src/domain/interfaces/services/IUserService";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly userService: IUserService
-  ) {
+  constructor(private readonly userService: IUserService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: "your-secret-key",
+      secretOrKey: process.env.SECRET_KEY,
     });
   }
 

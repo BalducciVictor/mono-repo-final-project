@@ -36,18 +36,18 @@ import {
   Documentation,
   DocumentationSchema,
 } from "src/domain/entities/documentation";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
       global: true,
-      secret: "your-secret-key",
+      secret: process.env.SECRET_KEY,
       signOptions: { expiresIn: "1h" },
     }),
-    MongooseModule.forRoot(
-      "mongodb+srv://admin:admin@ewcglki.mongodb.net/?retryWrites=true&w=majority"
-    ),
+    MongooseModule.forRoot(process.env.DATABASE_URL),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Chapter.name, schema: ChapterSchema }]),
     MongooseModule.forFeature([

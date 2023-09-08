@@ -1,10 +1,11 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./infrastructure/config/modules/app.module";
 import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
+import * as dotenv from "dotenv";
 
 async function bootstrap() {
+  dotenv.config();
   const app = await NestFactory.create(AppModule);
-
   const swaggerConfig = new DocumentBuilder()
     .setTitle("API with NestJS")
     .setDescription("API developed throughout the API with NestJS course")

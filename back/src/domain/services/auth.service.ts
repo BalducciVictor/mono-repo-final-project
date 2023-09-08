@@ -21,7 +21,7 @@ export class AuthService {
       sub: user.lastName,
       role: user.role,
     };
-    const accessToken = jwt.sign(payload, "your-secret-key", {
+    const accessToken = jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "1h",
     });
 
