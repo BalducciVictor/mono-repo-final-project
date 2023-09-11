@@ -1,15 +1,17 @@
 import {
+  Injectable,
   CanActivate,
   ExecutionContext,
-  Injectable,
   UnauthorizedException,
 } from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
+import { Roles } from "src/application/decorator/user/roles.decorator";
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService, private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -19,13 +21,20 @@ export class JwtAuthGuard implements CanActivate {
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: "your-secret-key",
+        secret: process.env.SECRET_KEY,
       });
       request["user"] = payload;
     } catch {
       throw new UnauthorizedException();
     }
-    return true;
+
+    const roles = this.reflector.get(Roles, context.getHandler());
+    if (!roles) {
+      return true;
+    }
+
+    const user = request.user;
+    return roles.includes(user.role);
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {

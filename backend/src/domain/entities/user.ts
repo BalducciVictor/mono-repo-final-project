@@ -18,9 +18,6 @@ export class User {
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ unique: true, default: uuidv4 })
-  userId: string;
-
   @Prop({ required: true })
   companyId: string;
 

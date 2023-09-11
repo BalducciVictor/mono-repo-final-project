@@ -16,28 +16,55 @@ import UserController from "../../../application/controllers/user.controller";
 import ChapterController from "../../../application/controllers/chapter.controller";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { AuthModule } from "./auth/auth.module";
 import { AuthService } from "src/domain/services/auth.service";
 import { AuthController } from "src/application/controllers/auth.controller";
+import { IDocumentationRepository } from "src/domain/interfaces/repository/IDocumentationRepository";
+import { DocumentationRepository } from "src/infrastructure/repository/document.repository";
+import { DocumentationContentRepository } from "src/infrastructure/repository/documentation-content.repository";
+import { IDocumentationContentRepository } from "src/domain/interfaces/repository/IDocumentationContentRepository";
+import { IDocumentationService } from "src/domain/interfaces/services/IDocumentationService";
+import { DocumentationService } from "src/domain/services/documentation.service";
+import { DocumentationUseCase } from "src/application/useCases/documentation/documentation.use-case";
+import DocumentationController from "src/application/controllers/documentation.controller";
+import {
+  DocumentationContent,
+  DocumentationContentSchema,
+} from "src/domain/entities/documentationContent";
+import {
+  Documentation,
+  DocumentationSchema,
+} from "src/domain/entities/documentation";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
       global: true,
-      secret: "your-secret-key",
+      secret: process.env.SECRET_KEY,
       signOptions: { expiresIn: "1h" },
     }),
-    MongooseModule.forRoot(
-      "mongodb+srv://admin:admin@ewcglki.mongodb.net/?retryWrites=true&w=majority"
-    ),
+    MongooseModule.forRoot(process.env.DATABASE_URL),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Chapter.name, schema: ChapterSchema }]),
+    MongooseModule.forFeature([
+      { name: Documentation.name, schema: DocumentationSchema },
+    ]),
+    MongooseModule.forFeature([
+      { name: DocumentationContent.name, schema: DocumentationContentSchema },
+    ]),
   ],
-  controllers: [UserController, ChapterController, AuthController],
+  controllers: [
+    UserController,
+    ChapterController,
+    AuthController,
+    DocumentationController,
+  ],
   providers: [
     UserUseCase,
     ChapterUseCase,
+    DocumentationUseCase,
 
     ///Declare Services
     AuthService,
@@ -49,7 +76,10 @@ import { AuthController } from "src/application/controllers/auth.controller";
       provide: IUserService,
       useClass: UserService,
     },
-
+    {
+      provide: IDocumentationService,
+      useClass: DocumentationService,
+    },
     ///Declare Repository
     {
       provide: IChapterRepository,
@@ -58,6 +88,14 @@ import { AuthController } from "src/application/controllers/auth.controller";
     {
       provide: IUserRepository,
       useClass: UserRepository,
+    },
+    {
+      provide: IDocumentationRepository,
+      useClass: DocumentationRepository,
+    },
+    {
+      provide: IDocumentationContentRepository,
+      useClass: DocumentationContentRepository,
     },
   ],
 })

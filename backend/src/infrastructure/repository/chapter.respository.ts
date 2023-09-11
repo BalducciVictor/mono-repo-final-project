@@ -2,9 +2,10 @@ import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { IChapterRepository } from "src/domain/interfaces/repository/IChapterRepository";
 import { Chapter, ChapterDocument } from "src/domain/entities/chapter";
-import { UpdateChapterRequestDto } from "src/application/dto/Chapter/update-chapter-request.dto";
-import { CreateChapterRequestDto } from "src/application/dto/Chapter/create-chapter-request.dto";
+import { UpdateChapterRequestDto } from "src/application/dto/Chapter/Request/update-chapter-request.dto";
+import { CreateChapterRequestDto } from "src/application/dto/Chapter/Request/create-chapter-request.dto";
 import { Injectable } from "@nestjs/common";
+import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
 
 @Injectable()
 export class ChapterRepository implements IChapterRepository {
@@ -12,11 +13,11 @@ export class ChapterRepository implements IChapterRepository {
     @InjectModel(Chapter.name) private chapterModel: Model<ChapterDocument>
   ) {}
 
-  async get(id: string): Promise<Chapter | null> {
+  async get(id: string): Promise<ChapterResponseDto | null> {
     return this.chapterModel.findById(id).exec();
   }
 
-  async create(chapter: CreateChapterRequestDto): Promise<Chapter> {
+  async create(chapter: CreateChapterRequestDto): Promise<ChapterResponseDto> {
     const newChapter = new this.chapterModel(chapter);
     return newChapter.save();
   }
@@ -28,7 +29,7 @@ export class ChapterRepository implements IChapterRepository {
   async update(
     id: string,
     updateChapterDto: UpdateChapterRequestDto
-  ): Promise<Chapter | null> {
+  ): Promise<ChapterResponseDto | null> {
     const updatedChapter = await this.chapterModel
       .findByIdAndUpdate(id, updateChapterDto, { new: true })
       .exec();

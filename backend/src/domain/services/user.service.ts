@@ -1,24 +1,27 @@
 import { Injectable } from "@nestjs/common";
-import { CreateUserDto } from "src/application/dto/User/create-user-request.dto";
+import { CreateUserRequestDto } from "src/application/dto/User/Request/create-user-request.dto";
 import { User } from "../entities/user";
 import { IUserService } from "../interfaces/services/IUserService";
 import { IUserRepository } from "../interfaces/repository/IUserRepository";
-import { UpdateUserDto } from "src/application/dto/User/update-user-request.dto";
+import { UpdateUserRequestDto } from "src/application/dto/User/Request/update-user-request.dto";
 import { UserRepository } from "src/infrastructure/repository/user.repository";
 import * as bcrypt from "bcrypt";
+import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
 
 @Injectable()
 export class UserService implements IUserService {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  public async create(createUserDto: CreateUserDto): Promise<User> {
+  public async create(
+    createUserDto: CreateUserRequestDto
+  ): Promise<UserResponseDto> {
     //const adminUser: User = await this.userRepository.getByMail(adminMail);
     //if (adminUser.role !== "ADMIN") throw new Error(`This user is not ADMIN`);
     if ((await this.userRepository.getByMail(createUserDto.email)) != null)
       throw new Error(`This user already exist`);
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-    const newUser: CreateUserDto = {
+    const newUser: CreateUserRequestDto = {
       ...createUserDto,
       password: hashedPassword,
     };
@@ -26,7 +29,7 @@ export class UserService implements IUserService {
     return await this.userRepository.create(newUser);
   }
 
-  public async get(userId: string): Promise<User> {
+  public async get(userId: string): Promise<UserResponseDto> {
     return await this.userRepository.get(userId);
   }
 
@@ -36,9 +39,9 @@ export class UserService implements IUserService {
 
   public async update(
     userId: string,
-    updateUserDto: UpdateUserDto,
+    updateUserDto: UpdateUserRequestDto,
     adminMail: string
-  ): Promise<User> {
+  ): Promise<UserResponseDto> {
     const adminUser: User = await this.userRepository.getByMail(adminMail);
     if (adminUser.role !== "ADMIN") {
       throw new Error(`This user is not an ADMIN`);

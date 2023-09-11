@@ -16,8 +16,12 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { username: user.email, sub: user.userId, role: user.role };
-    const accessToken = jwt.sign(payload, "your-secret-key", {
+    const payload = {
+      username: user.email,
+      sub: user.lastName,
+      role: user.role,
+    };
+    const accessToken = jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "1h",
     });
 

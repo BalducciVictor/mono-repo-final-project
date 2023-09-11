@@ -8,7 +8,7 @@ import { AuthService } from "src/domain/services/auth.service";
   imports: [
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
-      secret: "your-secret-key",
+      secret: process.env.SECRET_KEY,
       signOptions: { expiresIn: "1h" },
     }),
   ],
