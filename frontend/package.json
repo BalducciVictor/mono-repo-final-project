@@ -44,6 +44,5 @@
   },
   "devDependencies": {
     "gh-pages": "^6.0.0"
-  },
-  "homepage": "https://balduccivictor.github.io/mono-repo-final-project/"
+  }
 }

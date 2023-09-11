@@ -18,14 +18,11 @@ Pour commencer à travailler sur ce monorepo, suivez ces étapes :
 
 ## Versionning
 
-Merge dans head-master uniquement via PR et apres validation de chaque membres de l'équipe. Seulement les branches master (stable) de chaque workspace pourront etre merge dans [head-master].
-- head-master [Protected] 
+Merge dans [master] uniquement via PR et apres validation de chaque membres de l'équipe. Seulement develop peut-etre merge dans [master].
+- Master [Protected] 
 
-Toujours travailler avec deux branches par environnement. 
-- master [Protected]
-- develop 
-
-Exemple: master-frontend, develop-frontend, master-backend,...
+Toujours partir de develop pour creer ca propre branch. 
+- develop
 
 ## Auteurs
 
