@@ -1,8 +1,10 @@
-FROM node:14 as build
+FROM node:16 as build
 
 WORKDIR /app
 
-COPY /package.json /package-lock.json ./
+COPY package*.json ./
+
+RUN npm rebuild bcrypt --build-from-source
 
 RUN npm install
 
@@ -13,6 +15,10 @@ RUN npm run build
 FROM node:18
 
 WORKDIR /app
+
+ENV SECRET_KEY="my-secret-key"
+ENV DATABASE_URL="mongodb+srv://admin:admin@ewcglki.mongodb.net/?retryWrites=true&w=majority"
+ENV PORT=3000
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules

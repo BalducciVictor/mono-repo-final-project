@@ -1,5 +1,18 @@
 version: '3'
 services:
+  mongodb:
+      image: mongo:latest
+      ports:
+        - "27017:27017"
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:3000"
+    depends_on:
+      - mongodb
+  
   frontend:
     build:
       context: ./frontend
@@ -7,9 +20,5 @@ services:
       - "3000:80"
     environment:
       - REACT_APP_API_URL=http://backend:8000
-
-  backend:
-    build:
-      context: ./backend
-    ports:
-      - "8000:3000"
+    depends_on:
+      - backend

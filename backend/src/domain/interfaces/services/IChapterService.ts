@@ -1,5 +1,4 @@
 import { CreateChapterRequestDto } from "src/application/dto/Chapter/Request/create-chapter-request.dto";
-import { Chapter } from "src/domain/entities/chapter";
 import { UpdateChapterRequestDto } from "src/application/dto/Chapter/Request/update-chapter-request.dto";
 import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
 

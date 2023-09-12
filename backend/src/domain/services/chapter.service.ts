@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { User } from "../entities/user";
 import { IUserRepository } from "../interfaces/repository/IUserRepository";
 import { IChapterRepository } from "../interfaces/repository/IChapterRepository";
 import { IChapterService } from "../interfaces/services/IChapterService";

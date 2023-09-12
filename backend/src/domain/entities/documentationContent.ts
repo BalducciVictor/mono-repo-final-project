@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { DocumentationContentType } from "../enum/documentationContentType";
-import { HydratedDocument, SchemaTypes } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
 export type DocumentationContentDocument =
   HydratedDocument<DocumentationContent>;
