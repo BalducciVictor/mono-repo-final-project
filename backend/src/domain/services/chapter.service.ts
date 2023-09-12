@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { IUserRepository } from "../interfaces/repository/IUserRepository";
 import { IChapterRepository } from "../interfaces/repository/IChapterRepository";
 import { IChapterService } from "../interfaces/services/IChapterService";
@@ -22,9 +22,17 @@ export class ChapterService implements IChapterService {
   public async get(chapterId: string): Promise<ChapterResponseDto> {
     const existingChapter: ChapterResponseDto =
       await this.chapterRepository.get(chapterId);
-    if (!existingChapter) throw new Error(`Chapter not found`);
+    if (!existingChapter) throw new NotFoundException(`Chapter not found`);
 
-    return await this.chapterRepository.get(chapterId);
+    return existingChapter;
+  }
+
+  public async getAll(): Promise<Array<ChapterResponseDto>> {
+    const existingChapter: Array<ChapterResponseDto> =
+      await this.chapterRepository.getAll();
+    if (!existingChapter) throw new NotFoundException(`Chapters not found`);
+
+    return existingChapter;
   }
 
   public async update(
@@ -33,7 +41,7 @@ export class ChapterService implements IChapterService {
   ): Promise<ChapterResponseDto> {
     const existingChapter: ChapterResponseDto =
       await this.chapterRepository.get(chapterId);
-    if (!existingChapter) throw new Error(`Chapter not found`);
+    if (!existingChapter) throw new NotFoundException(`Chapter not found`);
 
     return await this.chapterRepository.update(chapterId, updateChapterDto);
   }
@@ -41,7 +49,7 @@ export class ChapterService implements IChapterService {
   public async delete(chapterId: string): Promise<void> {
     const existingChapter: ChapterResponseDto =
       await this.chapterRepository.get(chapterId);
-    if (!existingChapter) throw new Error(`Chapter not found`);
+    if (!existingChapter) throw new NotFoundException(`Chapter not found`);
 
     await this.chapterRepository.delete(chapterId);
   }

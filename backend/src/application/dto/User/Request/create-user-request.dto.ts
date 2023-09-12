@@ -5,11 +5,6 @@ export class CreateUserRequestDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  adminMail: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
   firstName: string;
 
   @ApiProperty()

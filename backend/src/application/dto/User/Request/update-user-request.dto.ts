@@ -5,11 +5,6 @@ export class UpdateUserRequestDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  adminMail: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
   firstName?: string;
 
   @ApiProperty()

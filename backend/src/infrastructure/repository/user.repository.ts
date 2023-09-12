@@ -1,4 +1,4 @@
-import { User, UserDocument } from "src/domain/entities/user";
+import { User, UserDocument } from "src/domain/entities/user/user";
 import { IUserRepository } from "src/domain/interfaces/repository/IUserRepository";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
@@ -15,7 +15,7 @@ export class UserRepository implements IUserRepository {
     return this.userModel.findById(id).exec();
   }
 
-  async getByMail(email: string): Promise<User | null> {
+  async getByMail(email: string): Promise<UserResponseDto | null> {
     const user = await this.userModel.findOne({ email: email }).exec();
     return user;
   }

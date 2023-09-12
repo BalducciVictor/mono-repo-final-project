@@ -1,13 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, IsBoolean } from "class-validator";
+import {
+  IsNotEmpty,
+  IsString,
+  IsBoolean,
+  ValidateNested,
+  IsArray,
+} from "class-validator";
+import { Type } from "class-transformer";
 import { CreateDocumentationRequestDto } from "../../Documentation/Request/create-documentation-request.dto";
 
 export class CreateChapterRequestDto {
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  adminMail: string;
-
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
@@ -24,7 +26,9 @@ export class CreateChapterRequestDto {
   description: string;
 
   @ApiProperty()
-  @IsString()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateDocumentationRequestDto)
   @IsNotEmpty()
   documents: CreateDocumentationRequestDto[];
 }

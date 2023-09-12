@@ -2,8 +2,6 @@ import {
   Controller,
   Post,
   Body,
-  HttpException,
-  HttpStatus,
   Get,
   Param,
   Delete,
@@ -23,6 +21,7 @@ import { ChapterUseCase } from "../useCases/chapter/chapter.use-case";
 import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
 import { Roles } from "../decorator/user/roles.decorator";
 import { ChapterResponseDto } from "../dto/Chapter/Response/chapter-response.dto";
+import { UserType } from "src/domain/enum/userType";
 
 @ApiBearerAuth()
 @ApiTags("chapter")
@@ -32,7 +31,7 @@ export default class ChapterController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  @Roles(["ADMIN"])
+  @Roles([UserType.ADMIN, UserType.SUPERADMIN])
   @ApiOperation({
     summary: "Create Chapter",
   })
@@ -45,18 +44,12 @@ export default class ChapterController {
   async create(
     @Body() createChapterDto: CreateChapterRequestDto
   ): Promise<ChapterResponseDto> {
-    try {
-      return await this.chapterUseCase.createChapter(createChapterDto);
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        "Une erreur est survenue",
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await this.chapterUseCase.createChapter(createChapterDto);
   }
 
   @Get(":chapterId")
+  @UseGuards(JwtAuthGuard)
+  @Roles([UserType.ADMIN, UserType.USER, UserType.SUPERADMIN])
   @ApiOperation({
     summary: "Get Chapter",
   })
@@ -70,40 +63,41 @@ export default class ChapterController {
   async get(
     @Param("chapterId") chapterId: string
   ): Promise<ChapterResponseDto> {
-    try {
-      return await this.chapterUseCase.getChapter(chapterId);
-    } catch (error) {
-      throw new HttpException(
-        "Une erreur est survenue",
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await this.chapterUseCase.getChapter(chapterId);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  @Roles([UserType.ADMIN, UserType.USER, UserType.SUPERADMIN])
+  @ApiOperation({
+    summary: "Get all Chapters",
+  })
+  @ApiResponse({
+    status: 200,
+    description: "The found chapters.",
+    type: Array<ChapterResponseDto>,
+  })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  async getAll(): Promise<Array<ChapterResponseDto>> {
+    return await this.chapterUseCase.getAllChapters();
   }
 
   @Delete(":chapterId")
   @UseGuards(JwtAuthGuard)
-  @Roles(["ADMIN"])
+  @Roles([UserType.ADMIN, UserType.SUPERADMIN])
   @ApiOperation({
     summary: "Delete Chapter",
   })
   @ApiResponse({ status: 204, description: "Chapter deleted." })
   @ApiResponse({ status: 403, description: "Forbidden." })
   @ApiParam({ name: "chapterId", description: "Chapter ID" })
-  @ApiParam({ name: "adminMail", description: "Admin Mail" })
   async delete(@Param("chapterId") chapterId: string): Promise<void> {
-    try {
-      await this.chapterUseCase.deleteChapter(chapterId);
-    } catch (error) {
-      throw new HttpException(
-        "Une erreur est survenue",
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    await this.chapterUseCase.deleteChapter(chapterId);
   }
 
   @Put(":chapterId")
   @UseGuards(JwtAuthGuard)
-  @Roles(["ADMIN"])
+  @Roles([UserType.ADMIN, UserType.SUPERADMIN])
   @ApiOperation({
     summary: "Update Chapter",
   })
@@ -118,16 +112,6 @@ export default class ChapterController {
     @Param("chapterId") chapterId: string,
     @Body() updateChapterDto: UpdateChapterRequestDto
   ): Promise<ChapterResponseDto> {
-    try {
-      return await this.chapterUseCase.updateChapter(
-        chapterId,
-        updateChapterDto
-      );
-    } catch (error) {
-      throw new HttpException(
-        "Une erreur est survenue",
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
-    }
+    return await this.chapterUseCase.updateChapter(chapterId, updateChapterDto);
   }
 }

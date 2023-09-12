@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { IChapterRepository } from "src/domain/interfaces/repository/IChapterRepository";
-import { Chapter, ChapterDocument } from "src/domain/entities/chapter";
+import { Chapter, ChapterDocument } from "src/domain/entities/chapter/chapter";
 import { UpdateChapterRequestDto } from "src/application/dto/Chapter/Request/update-chapter-request.dto";
 import { CreateChapterRequestDto } from "src/application/dto/Chapter/Request/create-chapter-request.dto";
 import { Injectable } from "@nestjs/common";
@@ -15,6 +15,10 @@ export class ChapterRepository implements IChapterRepository {
 
   async get(id: string): Promise<ChapterResponseDto | null> {
     return this.chapterModel.findById(id).exec();
+  }
+
+  async getAll(): Promise<Array<ChapterResponseDto> | null> {
+    return this.chapterModel.find().exec();
   }
 
   async create(chapter: CreateChapterRequestDto): Promise<ChapterResponseDto> {

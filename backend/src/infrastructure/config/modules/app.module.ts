@@ -1,5 +1,5 @@
 import { MongooseModule } from "@nestjs/mongoose";
-import { User, UserSchema } from "../../../domain/entities/user";
+import { User, UserSchema } from "../../../domain/entities/user/user";
 import { Module } from "@nestjs/common";
 import { UserService } from "../../../domain/services/user.service";
 import { UserRepository } from "../../repository/user.repository";
@@ -9,7 +9,10 @@ import { IChapterService } from "../../../domain/interfaces/services/IChapterSer
 import { ChapterService } from "../../../domain/services/chapter.service";
 import { IChapterRepository } from "../../../domain/interfaces/repository/IChapterRepository";
 import { ChapterRepository } from "../../repository/chapter.respository";
-import { Chapter, ChapterSchema } from "../../../domain/entities/chapter";
+import {
+  Chapter,
+  ChapterSchema,
+} from "../../../domain/entities/chapter/chapter";
 import { UserUseCase } from "../../../application/useCases/user/user.use-case";
 import { ChapterUseCase } from "../../../application/useCases/chapter/chapter.use-case";
 import UserController from "../../../application/controllers/user.controller";
@@ -19,6 +22,13 @@ import { JwtModule } from "@nestjs/jwt";
 import { AuthService } from "src/domain/services/auth.service";
 import { AuthController } from "src/application/controllers/auth.controller";
 import { ConfigModule } from "@nestjs/config";
+import { CompanyRepository } from "src/infrastructure/repository/company.respository";
+import { ICompanyRepository } from "src/domain/interfaces/repository/ICompanyRepository";
+import { ICompanyService } from "src/domain/interfaces/services/ICompanyService";
+import { CompanyService } from "src/domain/services/company.service";
+import { Company, CompanySchema } from "src/domain/entities/company/company";
+import CompanyController from "src/application/controllers/company.controller";
+import { CompanyUseCase } from "src/application/useCases/company/company.use-case";
 
 @Module({
   imports: [
@@ -32,11 +42,18 @@ import { ConfigModule } from "@nestjs/config";
     MongooseModule.forRoot(process.env.DATABASE_URL),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Chapter.name, schema: ChapterSchema }]),
+    MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]),
   ],
-  controllers: [UserController, ChapterController, AuthController],
+  controllers: [
+    UserController,
+    ChapterController,
+    AuthController,
+    CompanyController,
+  ],
   providers: [
     UserUseCase,
     ChapterUseCase,
+    CompanyUseCase,
 
     ///Declare Services
     AuthService,
@@ -48,10 +65,18 @@ import { ConfigModule } from "@nestjs/config";
       provide: IUserService,
       useClass: UserService,
     },
+    {
+      provide: ICompanyService,
+      useClass: CompanyService,
+    },
     ///Declare Repository
     {
       provide: IChapterRepository,
       useClass: ChapterRepository,
+    },
+    {
+      provide: ICompanyRepository,
+      useClass: CompanyRepository,
     },
     {
       provide: IUserRepository,
