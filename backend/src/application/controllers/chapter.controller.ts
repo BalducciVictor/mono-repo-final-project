@@ -80,7 +80,7 @@ export default class ChapterController {
     }
   }
 
-  @Delete(":chapterId/:adminMail")
+  @Delete(":chapterId")
   @UseGuards(JwtAuthGuard)
   @Roles(["ADMIN"])
   @ApiOperation({
@@ -90,12 +90,9 @@ export default class ChapterController {
   @ApiResponse({ status: 403, description: "Forbidden." })
   @ApiParam({ name: "chapterId", description: "Chapter ID" })
   @ApiParam({ name: "adminMail", description: "Admin Mail" })
-  async delete(
-    @Param("chapterId") chapterId: string,
-    @Param("adminMail") adminMail: string
-  ): Promise<void> {
+  async delete(@Param("chapterId") chapterId: string): Promise<void> {
     try {
-      await this.chapterUseCase.deleteChapter(chapterId, adminMail);
+      await this.chapterUseCase.deleteChapter(chapterId);
     } catch (error) {
       throw new HttpException(
         "Une erreur est survenue",
@@ -119,14 +116,12 @@ export default class ChapterController {
   @ApiParam({ name: "chapterId", description: "Chapter ID" })
   async update(
     @Param("chapterId") chapterId: string,
-    @Body() updateChapterDto: UpdateChapterRequestDto,
-    @Body("adminMail") adminMail: string
+    @Body() updateChapterDto: UpdateChapterRequestDto
   ): Promise<ChapterResponseDto> {
     try {
       return await this.chapterUseCase.updateChapter(
         chapterId,
-        updateChapterDto,
-        adminMail
+        updateChapterDto
       );
     } catch (error) {
       throw new HttpException(

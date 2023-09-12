@@ -10,8 +10,7 @@ export abstract class IChapterService {
   ) => Promise<ChapterResponseDto>;
   update: (
     chapterId: string,
-    updateChapterDto: UpdateChapterRequestDto,
-    adminMail: string
+    updateChapterDto: UpdateChapterRequestDto
   ) => Promise<ChapterResponseDto>;
-  delete: (chapterId: string, adminMail: string) => Promise<void>;
+  delete: (chapterId: string) => Promise<void>;
 }

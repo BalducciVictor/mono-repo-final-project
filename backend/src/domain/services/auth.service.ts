@@ -25,10 +25,8 @@ export class AuthService {
       expiresIn: "1h",
     });
 
-    const { ...result } = user;
-
     return {
-      ...result,
+      user,
       accessToken,
     };
   }

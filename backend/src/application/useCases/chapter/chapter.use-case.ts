@@ -19,15 +19,14 @@ export class ChapterUseCase {
     return await this.chapterService.create(chapter);
   }
 
-  async deleteChapter(chapter: string, adminMail: string): Promise<void> {
-    return await this.chapterService.delete(chapter, adminMail);
+  async deleteChapter(chapter: string): Promise<void> {
+    return await this.chapterService.delete(chapter);
   }
 
   async updateChapter(
     chapterId: string,
-    chapter: UpdateChapterRequestDto,
-    adminMail: string
+    chapter: UpdateChapterRequestDto
   ): Promise<ChapterResponseDto> {
-    return await this.chapterService.update(chapterId, chapter, adminMail);
+    return await this.chapterService.update(chapterId, chapter);
   }
 }

@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { DocumentationContent } from "./documentationContent";
-import { HydratedDocument } from "mongoose";
-import * as mongoose from "mongoose";
+import {
+  DocumentationContentDocument,
+  DocumentationContentSchema,
+} from "./documentationContent";
+import { HydratedDocument, Types } from "mongoose";
 
 export type DocumentationDocument = HydratedDocument<Documentation>;
 
@@ -11,10 +13,8 @@ export class Documentation {
   title: string;
   @Prop({ required: true })
   step: number;
-  @Prop({ required: true })
-  chapterId: number;
-  @Prop({ required: true })
-  documentationContentId: Array<string>;
+  @Prop({ type: [DocumentationContentSchema], default: [] })
+  documentationContent: Types.DocumentArray<DocumentationContentDocument>;
 }
 
 export const DocumentationSchema = SchemaFactory.createForClass(Documentation);

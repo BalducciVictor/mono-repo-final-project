@@ -4,7 +4,6 @@ import { IUserRepository } from "../interfaces/repository/IUserRepository";
 import { IChapterRepository } from "../interfaces/repository/IChapterRepository";
 import { IChapterService } from "../interfaces/services/IChapterService";
 import { CreateChapterRequestDto } from "src/application/dto/Chapter/Request/create-chapter-request.dto";
-import { Chapter } from "../entities/chapter";
 import { UpdateChapterRequestDto } from "src/application/dto/Chapter/Request/update-chapter-request.dto";
 import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
 
@@ -22,39 +21,28 @@ export class ChapterService implements IChapterService {
   }
 
   public async get(chapterId: string): Promise<ChapterResponseDto> {
-    const existingChapter: Chapter = await this.chapterRepository.get(
-      chapterId
-    );
-    if (!existingChapter) throw new Error(`User not found`);
+    const existingChapter: ChapterResponseDto =
+      await this.chapterRepository.get(chapterId);
+    if (!existingChapter) throw new Error(`Chapter not found`);
 
     return await this.chapterRepository.get(chapterId);
   }
 
   public async update(
     chapterId: string,
-    updateChapterDto: UpdateChapterRequestDto,
-    adminMail: string
+    updateChapterDto: UpdateChapterRequestDto
   ): Promise<ChapterResponseDto> {
-    const adminUser: User = await this.userRepository.getByMail(adminMail);
-    if (adminUser.role !== "ADMIN") throw new Error(`This user is not ADMIN`);
-
-    const existingChapter: Chapter = await this.chapterRepository.get(
-      chapterId
-    );
-    if (!existingChapter) throw new Error(`User not found`);
+    const existingChapter: ChapterResponseDto =
+      await this.chapterRepository.get(chapterId);
+    if (!existingChapter) throw new Error(`Chapter not found`);
 
     return await this.chapterRepository.update(chapterId, updateChapterDto);
   }
 
-  public async delete(chapterId: string, adminMail: string): Promise<void> {
-    const adminUser: User = await this.userRepository.getByMail(adminMail);
-    if (adminUser.role !== "ADMIN")
-      throw new Error(`This user is not an ADMIN`);
-
-    const existingChapter: Chapter = await this.chapterRepository.get(
-      chapterId
-    );
-    if (!existingChapter) throw new Error(`User not found`);
+  public async delete(chapterId: string): Promise<void> {
+    const existingChapter: ChapterResponseDto =
+      await this.chapterRepository.get(chapterId);
+    if (!existingChapter) throw new Error(`Chapter not found`);
 
     await this.chapterRepository.delete(chapterId);
   }
