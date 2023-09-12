@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsNumber } from "class-validator";
-import { DocumentationContent } from "src/domain/entities/documentationContent";
+import { DocumentationContent } from "src/domain/entities/chapter/documentationContent";
 
 export class GetDocumentationResponseDto {
   @ApiProperty()

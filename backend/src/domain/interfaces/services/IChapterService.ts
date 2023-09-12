@@ -12,4 +12,5 @@ export abstract class IChapterService {
     updateChapterDto: UpdateChapterRequestDto
   ) => Promise<ChapterResponseDto>;
   delete: (chapterId: string) => Promise<void>;
+  getAll: () => Promise<Array<ChapterResponseDto>>;
 }

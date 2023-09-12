@@ -12,6 +12,10 @@ export class ChapterUseCase {
     return await this.chapterService.get(chapter);
   }
 
+  async getAllChapters(): Promise<Array<ChapterResponseDto>> {
+    return await this.chapterService.getAll();
+  }
+
   async createChapter(
     chapter: CreateChapterRequestDto
   ): Promise<ChapterResponseDto> {
