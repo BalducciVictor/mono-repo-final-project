@@ -4,8 +4,7 @@ import { User } from "../entities/user";
 import { IUserService } from "../interfaces/services/IUserService";
 import { IUserRepository } from "../interfaces/repository/IUserRepository";
 import { UpdateUserRequestDto } from "src/application/dto/User/Request/update-user-request.dto";
-import { UserRepository } from "src/infrastructure/repository/user.repository";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
 
 @Injectable()

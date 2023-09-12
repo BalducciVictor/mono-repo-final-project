@@ -3,7 +3,7 @@ import { IUserService } from "../interfaces/services/IUserService";
 import * as jwt from "jsonwebtoken";
 import { User } from "../entities/user";
 import { LoginUserResponseDto } from "src/application/dto/User/auth/login-user-response.dto";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 
 @Injectable()
 export class AuthService {
@@ -25,10 +25,8 @@ export class AuthService {
       expiresIn: "1h",
     });
 
-    const { ...result } = user;
-
     return {
-      ...result,
+      user,
       accessToken,
     };
   }

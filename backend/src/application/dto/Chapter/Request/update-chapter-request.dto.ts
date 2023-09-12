@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, IsNumber, IsBoolean } from "class-validator";
+import { IsNotEmpty, IsString, IsBoolean } from "class-validator";
+import { UpdateDocumentationRequestDto } from "../../Documentation/Request/update-documentation-request.dto";
 
 export class UpdateChapterRequestDto {
   @ApiProperty()
@@ -23,7 +24,7 @@ export class UpdateChapterRequestDto {
   description: string;
 
   @ApiProperty()
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  step?: number;
+  documents: UpdateDocumentationRequestDto[];
 }

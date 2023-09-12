@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsBoolean } from "class-validator";
+import { CreateDocumentationRequestDto } from "../../Documentation/Request/create-documentation-request.dto";
 
 export class CreateChapterRequestDto {
   @ApiProperty()
@@ -21,4 +22,9 @@ export class CreateChapterRequestDto {
   @IsString()
   @IsNotEmpty()
   description: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  documents: CreateDocumentationRequestDto[];
 }

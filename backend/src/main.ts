@@ -3,23 +3,25 @@ import { AppModule } from "./infrastructure/config/modules/app.module";
 import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 import * as dotenv from "dotenv";
 
+dotenv.config();
+
 async function bootstrap() {
-  dotenv.config();
   const app = await NestFactory.create(AppModule);
   const swaggerConfig = new DocumentBuilder()
-    .setTitle("API with NestJS")
-    .setDescription("API developed throughout the API with NestJS course")
+    .setTitle("API with NestJS for our Onby app")
+    .setDescription("Onby swagger")
     .setVersion("1.0")
+    .addBearerAuth()
     .addTag("chapter")
     .addTag("users")
     .addTag("auth")
-    .addTag("documentation")
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup("api", app, document);
 
-  await app.listen(3000);
-  console.log(`Application is running on: localhost:3000/api`);
+  const PORT = process.env.PORT || 3000;
+  await app.listen(PORT);
+  console.log(`Application is running on: localhost:${PORT}/api`);
 }
 bootstrap();

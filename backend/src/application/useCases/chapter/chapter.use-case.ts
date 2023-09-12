@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { CreateChapterRequestDto } from "src/application/dto/Chapter/Request/create-chapter-request.dto";
 import { UpdateChapterRequestDto } from "src/application/dto/Chapter/Request/update-chapter-request.dto";
 import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
-import { Chapter } from "src/domain/entities/chapter";
 import { IChapterService } from "src/domain/interfaces/services/IChapterService";
 
 @Injectable()
@@ -19,15 +18,14 @@ export class ChapterUseCase {
     return await this.chapterService.create(chapter);
   }
 
-  async deleteChapter(chapter: string, adminMail: string): Promise<void> {
-    return await this.chapterService.delete(chapter, adminMail);
+  async deleteChapter(chapter: string): Promise<void> {
+    return await this.chapterService.delete(chapter);
   }
 
   async updateChapter(
     chapterId: string,
-    chapter: UpdateChapterRequestDto,
-    adminMail: string
+    chapter: UpdateChapterRequestDto
   ): Promise<ChapterResponseDto> {
-    return await this.chapterService.update(chapterId, chapter, adminMail);
+    return await this.chapterService.update(chapterId, chapter);
   }
 }
