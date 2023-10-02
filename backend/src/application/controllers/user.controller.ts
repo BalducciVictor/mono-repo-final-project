@@ -8,15 +8,15 @@ import {
   Put,
   UseGuards,
 } from "@nestjs/common";
-import { User } from "src/domain/entities/user/user";
+import { User } from "../../domain/entities/user/user";
 import { CreateUserRequestDto } from "../dto/User/Request/create-user-request.dto";
 import { UpdateUserRequestDto } from "../dto/User/Request/update-user-request.dto";
 import { ApiOperation, ApiResponse, ApiTags, ApiParam } from "@nestjs/swagger";
 import { UserUseCase } from "../useCases/user/user.use-case";
-import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
+import { JwtAuthGuard } from "../../infrastructure/config/modules/auth/guards/jwt-auth.gard";
 import { Roles } from "../decorator/user/roles.decorator";
 import { UserResponseDto } from "../dto/User/Response/user-response.dto";
-import { UserType } from "src/domain/enum/userType";
+import { UserType } from "../../domain/enum/userType";
 
 @ApiTags("users")
 @Controller("users")

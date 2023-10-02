@@ -3,7 +3,7 @@ import { User, UserSchema } from "../../../domain/entities/user/user";
 import { Module } from "@nestjs/common";
 import { UserService } from "../../../domain/services/user.service";
 import { UserRepository } from "../../repository/user.repository";
-import { IUserService } from "src/domain/interfaces/services/IUserService";
+import { IUserService } from "../../../domain/interfaces/services/IUserService";
 import { IUserRepository } from "../../../domain/interfaces/repository/IUserRepository";
 import { IChapterService } from "../../../domain/interfaces/services/IChapterService";
 import { ChapterService } from "../../../domain/services/chapter.service";
@@ -19,16 +19,19 @@ import UserController from "../../../application/controllers/user.controller";
 import ChapterController from "../../../application/controllers/chapter.controller";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { AuthService } from "src/domain/services/auth.service";
-import { AuthController } from "src/application/controllers/auth.controller";
+import { AuthService } from "../../../domain/services/auth.service";
+import { AuthController } from "../../../application/controllers/auth.controller";
 import { ConfigModule } from "@nestjs/config";
-import { CompanyRepository } from "src/infrastructure/repository/company.respository";
-import { ICompanyRepository } from "src/domain/interfaces/repository/ICompanyRepository";
-import { ICompanyService } from "src/domain/interfaces/services/ICompanyService";
-import { CompanyService } from "src/domain/services/company.service";
-import { Company, CompanySchema } from "src/domain/entities/company/company";
-import CompanyController from "src/application/controllers/company.controller";
-import { CompanyUseCase } from "src/application/useCases/company/company.use-case";
+import { CompanyRepository } from "../../../infrastructure/repository/company.respository";
+import { ICompanyRepository } from "../../../domain/interfaces/repository/ICompanyRepository";
+import { ICompanyService } from "../../../domain/interfaces/services/ICompanyService";
+import { CompanyService } from "../../../domain/services/company.service";
+import {
+  Company,
+  CompanySchema,
+} from "../../../domain/entities/company/company";
+import CompanyController from "../../../application/controllers/company.controller";
+import { CompanyUseCase } from "../../../application/useCases/company/company.use-case";
 
 @Module({
   imports: [

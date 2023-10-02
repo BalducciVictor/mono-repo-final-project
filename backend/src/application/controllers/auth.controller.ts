@@ -1,5 +1,5 @@
 import { Controller, Post, Body } from "@nestjs/common";
-import { AuthService } from "src/domain/services/auth.service";
+import { AuthService } from "../../domain/services/auth.service";
 import { LoginUserRequestDto } from "../dto/User/auth/login-user-request.dto";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { LoginUserResponseDto } from "../dto/User/auth/login-user-response.dto";
@@ -11,7 +11,7 @@ export class AuthController {
 
   @Post("signin")
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: "User connected.",
     type: LoginUserResponseDto,
   })

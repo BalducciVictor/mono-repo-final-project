@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { CreateCompanyRequestDto } from "src/application/dto/Company/Request/create-company-group-request.dto";
-import { UpdateCompanyRequestDto } from "src/application/dto/Company/Request/update-company-group-request.dto";
-import { CompanyResponseDto } from "src/application/dto/Company/Response/company-response.dto";
-import { Company } from "src/domain/entities/company/company";
-import { ICompanyRepository } from "src/domain/interfaces/repository/ICompanyRepository";
+import { CreateCompanyRequestDto } from "../../application/dto/Company/Request/create-company-group-request.dto";
+import { UpdateCompanyRequestDto } from "../../application/dto/Company/Request/update-company-group-request.dto";
+import { CompanyResponseDto } from "../../application/dto/Company/Response/company-response.dto";
+import { Company } from "../../domain/entities/company/company";
+import { ICompanyRepository } from "../../domain/interfaces/repository/ICompanyRepository";
 
 @Injectable()
 export class CompanyRepository implements ICompanyRepository {

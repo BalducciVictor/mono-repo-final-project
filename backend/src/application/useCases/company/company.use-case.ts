@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CreateCompanyRequestDto } from "src/application/dto/Company/Request/create-company-group-request.dto";
 import { UpdateCompanyRequestDto } from "src/application/dto/Company/Request/update-company-group-request.dto";
 import { CompanyResponseDto } from "src/application/dto/Company/Response/company-response.dto";
-import { ICompanyService } from "src/domain/interfaces/services/ICompanyService";
+import { ICompanyService } from "../../../domain/interfaces/services/ICompanyService";
 
 @Injectable()
 export class CompanyUseCase {
