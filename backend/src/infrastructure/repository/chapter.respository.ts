@@ -1,11 +1,14 @@
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
-import { IChapterRepository } from "src/domain/interfaces/repository/IChapterRepository";
-import { Chapter, ChapterDocument } from "src/domain/entities/chapter/chapter";
-import { UpdateChapterRequestDto } from "src/application/dto/Chapter/Request/update-chapter-request.dto";
-import { CreateChapterRequestDto } from "src/application/dto/Chapter/Request/create-chapter-request.dto";
+import { IChapterRepository } from "../../domain/interfaces/repository/IChapterRepository";
+import {
+  Chapter,
+  ChapterDocument,
+} from "../../domain/entities/chapter/chapter";
+import { UpdateChapterRequestDto } from "../../application/dto/Chapter/Request/update-chapter-request.dto";
+import { CreateChapterRequestDto } from "../../application/dto/Chapter/Request/create-chapter-request.dto";
 import { Injectable } from "@nestjs/common";
-import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
+import { ChapterResponseDto } from "../../application/dto/Chapter/Response/chapter-response.dto";
 
 @Injectable()
 export class ChapterRepository implements IChapterRepository {

@@ -1,11 +1,11 @@
-import { User, UserDocument } from "src/domain/entities/user/user";
-import { IUserRepository } from "src/domain/interfaces/repository/IUserRepository";
+import { User, UserDocument } from "../../domain/entities/user/user";
+import { IUserRepository } from "../../domain/interfaces/repository/IUserRepository";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
-import { UpdateUserRequestDto } from "src/application/dto/User/Request/update-user-request.dto";
+import { UpdateUserRequestDto } from "../../application/dto/User/Request/update-user-request.dto";
 import { Injectable } from "@nestjs/common";
-import { CreateUserRequestDto } from "src/application/dto/User/Request/create-user-request.dto";
-import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
+import { CreateUserRequestDto } from "../../application/dto/User/Request/create-user-request.dto";
+import { UserResponseDto } from "../../application/dto/User/Response/user-response.dto";
 
 @Injectable()
 export class UserRepository implements IUserRepository {

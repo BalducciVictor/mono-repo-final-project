@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CreateChapterRequestDto } from "src/application/dto/Chapter/Request/create-chapter-request.dto";
 import { UpdateChapterRequestDto } from "src/application/dto/Chapter/Request/update-chapter-request.dto";
 import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
-import { IChapterService } from "src/domain/interfaces/services/IChapterService";
+import { IChapterService } from "../../../domain/interfaces/services/IChapterService";
 
 @Injectable()
 export class ChapterUseCase {

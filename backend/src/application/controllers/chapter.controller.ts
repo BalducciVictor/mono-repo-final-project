@@ -18,10 +18,10 @@ import {
   ApiBearerAuth,
 } from "@nestjs/swagger";
 import { ChapterUseCase } from "../useCases/chapter/chapter.use-case";
-import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
+import { JwtAuthGuard } from "../../infrastructure/config/modules/auth/guards/jwt-auth.gard";
 import { Roles } from "../decorator/user/roles.decorator";
 import { ChapterResponseDto } from "../dto/Chapter/Response/chapter-response.dto";
-import { UserType } from "src/domain/enum/userType";
+import { UserType } from "../../domain/enum/userType";
 
 @ApiBearerAuth()
 @ApiTags("chapter")

@@ -8,8 +8,6 @@ import {
   Put,
   UseGuards,
 } from "@nestjs/common";
-import { CreateChapterRequestDto } from "../dto/Chapter/Request/create-chapter-request.dto";
-import { UpdateChapterRequestDto } from "../dto/Chapter/Request/update-chapter-request.dto";
 import {
   ApiOperation,
   ApiResponse,
@@ -17,9 +15,9 @@ import {
   ApiParam,
   ApiBearerAuth,
 } from "@nestjs/swagger";
-import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
+import { JwtAuthGuard } from "../../infrastructure/config/modules/auth/guards/jwt-auth.gard";
 import { Roles } from "../decorator/user/roles.decorator";
-import { UserType } from "src/domain/enum/userType";
+import { UserType } from "../../domain/enum/userType";
 import { CreateCompanyRequestDto } from "../dto/Company/Request/create-company-group-request.dto";
 import { CompanyResponseDto } from "../dto/Company/Response/company-response.dto";
 import { CompanyUseCase } from "../useCases/company/company.use-case";
@@ -76,7 +74,7 @@ export default class CompanyController {
   })
   @ApiResponse({
     status: 200,
-    description: "The found chapters.",
+    description: "The found companies.",
     type: Array<CompanyResponseDto>,
   })
   @ApiResponse({ status: 403, description: "Forbidden." })
