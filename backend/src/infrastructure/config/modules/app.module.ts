@@ -32,6 +32,9 @@ import {
 } from "../../../domain/entities/company/company";
 import CompanyController from "../../../application/controllers/company.controller";
 import { CompanyUseCase } from "../../../application/useCases/company/company.use-case";
+import { ContentController } from "src/application/controllers/content.controller";
+import { BlobContentService } from "src/domain/services/blobContent.service";
+import { IBlobContentService } from "src/domain/interfaces/services/IBlobContentService";
 
 @Module({
   imports: [
@@ -52,6 +55,7 @@ import { CompanyUseCase } from "../../../application/useCases/company/company.us
     ChapterController,
     AuthController,
     CompanyController,
+    ContentController,
   ],
   providers: [
     UserUseCase,
@@ -71,6 +75,10 @@ import { CompanyUseCase } from "../../../application/useCases/company/company.us
     {
       provide: ICompanyService,
       useClass: CompanyService,
+    },
+    {
+      provide: IBlobContentService,
+      useClass: BlobContentService,
     },
     ///Declare Repository
     {

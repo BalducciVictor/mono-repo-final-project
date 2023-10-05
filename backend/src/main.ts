@@ -16,12 +16,13 @@ async function bootstrap() {
     .addTag("users")
     .addTag("auth")
     .addTag("company")
+    .addTag("upload")
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup("api", app, document);
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 8000;
   await app.listen(PORT);
   console.log(`Application is running on: localhost:${PORT}/api`);
 }

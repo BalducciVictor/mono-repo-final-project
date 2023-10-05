@@ -11,7 +11,6 @@ export class DocumentationContent {
   content: string;
   @Prop({ required: true, enum: Object.values(DocumentationContentType) })
   contentType: DocumentationContentType;
-  _id: any;
 }
 
 export const DocumentationContentSchema =

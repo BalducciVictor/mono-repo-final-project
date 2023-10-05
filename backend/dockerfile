@@ -16,7 +16,7 @@ FROM node:18
 
 WORKDIR /app
 
-ENV SECRET_KEY="my-secret-key"
+ENV SECRET_KEY="qT&@YLYb41yCD1"
 ENV DATABASE_URL="mongodb+srv://admin:admin@ewcglki.mongodb.net/?retryWrites=true&w=majority"
 ENV PORT=3000
 
