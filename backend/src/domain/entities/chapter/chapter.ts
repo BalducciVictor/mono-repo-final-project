@@ -20,8 +20,6 @@ export class Chapter {
 
   @Prop({ type: [DocumentationSchema], default: [] })
   documents: Types.DocumentArray<DocumentationDocument>;
-
-  _id: any;
 }
 
 export const ChapterSchema = SchemaFactory.createForClass(Chapter);

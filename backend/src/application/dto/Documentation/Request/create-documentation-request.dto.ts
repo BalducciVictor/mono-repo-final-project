@@ -1,6 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, IsNumber, IsArray } from "class-validator";
-import { CreateDocumentationContentRequestDto } from "../DocumentationContent/Request/create-documentation-content-request.dto";
+import { IsNotEmpty, IsString, IsNumber } from "class-validator";
 
 export class CreateDocumentationRequestDto {
   @ApiProperty()
@@ -12,9 +11,4 @@ export class CreateDocumentationRequestDto {
   @IsNumber()
   @IsNotEmpty()
   step: number;
-
-  @ApiProperty()
-  @IsArray()
-  @IsNotEmpty()
-  documentationContent: CreateDocumentationContentRequestDto[];
 }
