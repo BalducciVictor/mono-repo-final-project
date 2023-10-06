@@ -1,0 +1,28 @@
+name: Push Docker image to ACR
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  push_to_registry:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v2
+
+    - name: Login to ACR
+      run: docker login finalprojectacr.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build and push backend Docker image
+      run: |
+        docker build -t finalprojectacr.azurecr.io/backend:latest ./backend
+        docker push finalprojectacr.azurecr.io/backend:latest
+
+    - name: Build and push frontend Docker image
+      run: |
+        docker build -t finalprojectacr.azurecr.io/frontend:latest ./frontend
+        docker push finalprojectacr.azurecr.io/frontend:latest
