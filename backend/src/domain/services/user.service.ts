@@ -59,7 +59,6 @@ export class UserService implements IUserService {
   public async getUserGroup(
     userId: string
   ): Promise<GetUserCompanyGroupResponseDto> {
-    console.log(userId, "userId");
     const existingUser: UserResponseDto = await this.userRepository.get(userId);
     if (!existingUser) {
       throw new NotFoundException(`User not found`);

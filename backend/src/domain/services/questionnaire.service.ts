@@ -1,11 +1,4 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { Chapter, ChapterDocument } from "../entities/chapter/chapter";
-import {
-  Questionnaire,
-  QuestionnaireDocument,
-} from "../entities/quiz/questionnaire";
 import { IQuestionnaireService } from "../interfaces/services/IQuestionnaireService";
 import { CreateQuestionnaireRequestDto } from "src/application/dto/Questionnaire/Request/create-questionnaire-request.dto";
 import { IChapterRepository } from "../interfaces/repository/IChapterRepository";
