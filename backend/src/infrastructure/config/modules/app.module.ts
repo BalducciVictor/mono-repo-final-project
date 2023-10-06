@@ -35,6 +35,14 @@ import { CompanyUseCase } from "../../../application/useCases/company/company.us
 import { ContentController } from "src/application/controllers/content.controller";
 import { BlobContentService } from "src/domain/services/blobContent.service";
 import { IBlobContentService } from "src/domain/interfaces/services/IBlobContentService";
+import { IQuestionnaireService } from "src/domain/interfaces/services/IQuestionnaireService";
+import { QuestionnaireService } from "src/domain/services/questionnaire.service";
+import { QuestionnaireController } from "src/application/controllers/questionnaire.controller";
+import {
+  Questionnaire,
+  QuestionnaireSchema,
+} from "src/domain/entities/quiz/questionnaire";
+import { ContentUseCase } from "src/application/useCases/content/content.use-case";
 
 @Module({
   imports: [
@@ -49,6 +57,9 @@ import { IBlobContentService } from "src/domain/interfaces/services/IBlobContent
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Chapter.name, schema: ChapterSchema }]),
     MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]),
+    MongooseModule.forFeature([
+      { name: Questionnaire.name, schema: QuestionnaireSchema },
+    ]),
   ],
   controllers: [
     UserController,
@@ -56,8 +67,10 @@ import { IBlobContentService } from "src/domain/interfaces/services/IBlobContent
     AuthController,
     CompanyController,
     ContentController,
+    QuestionnaireController,
   ],
   providers: [
+    //DeclareUseCase
     UserUseCase,
     ChapterUseCase,
     CompanyUseCase,
@@ -79,6 +92,10 @@ import { IBlobContentService } from "src/domain/interfaces/services/IBlobContent
     {
       provide: IBlobContentService,
       useClass: BlobContentService,
+    },
+    {
+      provide: IQuestionnaireService,
+      useClass: QuestionnaireService,
     },
     ///Declare Repository
     {
