@@ -4,6 +4,7 @@ import { CompanyResponseDto } from "src/application/dto/Company/Response/company
 import { CreateCompanyRequestDto } from "src/application/dto/Company/Request/create-company-group-request.dto";
 import { ICompanyRepository } from "../interfaces/repository/ICompanyRepository";
 import { UpdateCompanyRequestDto } from "src/application/dto/Company/Request/update-company-group-request.dto";
+import { AddCompanyGroupRequestDto } from "src/application/dto/Company/CompanyGroup/Request/add-company-group-request.dto";
 
 @Injectable()
 export class CompanyService implements ICompanyService {
@@ -40,6 +41,17 @@ export class CompanyService implements ICompanyService {
     if (!existingCompany) throw new NotFoundException(`Company not found`);
 
     return this.companyRepository.update(companyId, updatedCompany);
+  }
+
+  public async addCompanyGroup(
+    companyId: string,
+    updatedCompany: AddCompanyGroupRequestDto
+  ): Promise<CompanyResponseDto> {
+    const existingCompany: CompanyResponseDto =
+      await this.companyRepository.get(companyId);
+    if (!existingCompany) throw new NotFoundException(`Company not found`);
+
+    return this.companyRepository.addGroupToCompany(companyId, updatedCompany);
   }
 
   public async delete(companyId: string): Promise<void> {

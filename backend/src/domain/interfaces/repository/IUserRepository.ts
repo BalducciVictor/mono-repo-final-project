@@ -4,6 +4,7 @@ import { UserResponseDto } from "src/application/dto/User/Response/user-response
 
 export abstract class IUserRepository {
   get: (userId: string) => Promise<UserResponseDto>;
+  getUsersByCompanyId: (companyId: string) => Promise<Array<UserResponseDto>>;
   create: (createUserDto: CreateUserRequestDto) => Promise<UserResponseDto>;
   getByMail: (email: string) => Promise<UserResponseDto | null>;
   delete: (id: string) => Promise<void>;

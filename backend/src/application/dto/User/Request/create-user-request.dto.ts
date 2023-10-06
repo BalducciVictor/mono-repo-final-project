@@ -28,6 +28,11 @@ export class CreateUserRequestDto {
   companyId: string;
 
   @ApiProperty()
+  @IsNumber()
+  @IsNotEmpty()
+  groupId: string;
+
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   role: string;

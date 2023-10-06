@@ -15,6 +15,12 @@ export class UserRepository implements IUserRepository {
     return this.userModel.findById(id).exec();
   }
 
+  async getUsersByCompanyId(
+    companyId: string
+  ): Promise<Array<UserResponseDto> | null> {
+    return this.userModel.find({ companyId: companyId }).exec();
+  }
+
   async getByMail(email: string): Promise<UserResponseDto | null> {
     const user = await this.userModel.findOne({ email: email }).exec();
     return user;

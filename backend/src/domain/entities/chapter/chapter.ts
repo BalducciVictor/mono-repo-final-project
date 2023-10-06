@@ -13,6 +13,9 @@ export class Chapter {
   hasQuiz: boolean;
 
   @Prop({ required: true })
+  category: string;
+
+  @Prop({ required: true })
   description: string;
 
   @Prop({ required: true })

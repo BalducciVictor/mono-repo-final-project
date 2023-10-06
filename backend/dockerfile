@@ -16,13 +16,6 @@ FROM node:18
 
 WORKDIR /app
 
-ENV STORAGE_ACCOUNT_NAME="finalprojectcontentimage"
-ENV STORAGE_ACCOUNT_KEY="ogElm77QeBxgMhrM+JF0oF8dWh6jtKisonTmF2RjGUTkk1ZU/O8vIaavlldBcFF0992IYk6RkxVC+AStcJ5Kyw=="
-ENV STORAGE_CONTAINER_NAME="core.windows.net"
-ENV SECRET_KEY="qT&@YLYb41yCD1"
-ENV DATABASE_URL="mongodb+srv://admin:admin@ewcglki.mongodb.net/?retryWrites=true&w=majority"
-ENV PORT=8000
-
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 

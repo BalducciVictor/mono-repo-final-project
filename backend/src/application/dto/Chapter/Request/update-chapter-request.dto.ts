@@ -14,6 +14,11 @@ export class UpdateChapterRequestDto {
   chapterName: string;
 
   @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  category: string;
+
+  @ApiProperty()
   @IsBoolean()
   @IsNotEmpty()
   hasQuiz: boolean;
