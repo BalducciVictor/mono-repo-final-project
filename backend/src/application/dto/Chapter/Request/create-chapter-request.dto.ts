@@ -8,6 +8,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { CreateDocumentationRequestDto } from "../../Documentation/Request/create-documentation-request.dto";
+import { CreateQuestionnaireRequestDto } from "../../Questionnaire/Request/create-questionnaire-request.dto";
 
 export class CreateChapterRequestDto {
   @ApiProperty()
@@ -19,6 +20,11 @@ export class CreateChapterRequestDto {
   @IsBoolean()
   @IsNotEmpty()
   hasQuiz: boolean;
+
+  @ApiProperty()
+  @Type(() => CreateQuestionnaireRequestDto)
+  @IsNotEmpty()
+  questionnaire: Array<CreateQuestionnaireRequestDto>;
 
   @ApiProperty()
   @IsString()

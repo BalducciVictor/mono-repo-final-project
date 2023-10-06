@@ -1,8 +1,16 @@
-import { Question } from "./question";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument, Types } from "mongoose";
+import { QuestionDocument, QuestionSchema } from "./question";
 
+export type QuestionnaireDocument = HydratedDocument<Questionnaire>;
+
+@Schema()
 export class Questionnaire {
-  readonly _id?: string;
-  chapterId: number;
+  @Prop({ required: true })
   step: number;
-  question: Question[];
+
+  @Prop({ type: [QuestionSchema], default: [] })
+  questions: Types.DocumentArray<QuestionDocument>;
 }
+
+export const QuestionnaireSchema = SchemaFactory.createForClass(Questionnaire);

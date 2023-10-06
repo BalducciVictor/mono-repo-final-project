@@ -8,23 +8,29 @@ import {
 import { UpdateChapterRequestDto } from "../../application/dto/Chapter/Request/update-chapter-request.dto";
 import { CreateChapterRequestDto } from "../../application/dto/Chapter/Request/create-chapter-request.dto";
 import { Injectable } from "@nestjs/common";
-import { ChapterResponseDto } from "../../application/dto/Chapter/Response/chapter-response.dto";
+import {
+  Questionnaire,
+  QuestionnaireDocument,
+} from "src/domain/entities/quiz/questionnaire";
+import { CreateQuestionnaireRequestDto } from "src/application/dto/Questionnaire/Request/create-questionnaire-request.dto";
 
 @Injectable()
 export class ChapterRepository implements IChapterRepository {
   constructor(
-    @InjectModel(Chapter.name) private chapterModel: Model<ChapterDocument>
+    @InjectModel(Chapter.name) private chapterModel: Model<ChapterDocument>,
+    @InjectModel(Questionnaire.name)
+    private questionnaireModel: Model<QuestionnaireDocument>
   ) {}
 
-  async get(id: string): Promise<ChapterResponseDto | null> {
+  async get(id: string): Promise<ChapterDocument | null> {
     return this.chapterModel.findById(id).exec();
   }
 
-  async getAll(): Promise<Array<ChapterResponseDto> | null> {
+  async getAll(): Promise<Array<ChapterDocument> | null> {
     return this.chapterModel.find().exec();
   }
 
-  async create(chapter: CreateChapterRequestDto): Promise<ChapterResponseDto> {
+  async create(chapter: CreateChapterRequestDto): Promise<ChapterDocument> {
     const newChapter = new this.chapterModel(chapter);
     return newChapter.save();
   }
@@ -36,11 +42,24 @@ export class ChapterRepository implements IChapterRepository {
   async update(
     id: string,
     updateChapterDto: UpdateChapterRequestDto
-  ): Promise<ChapterResponseDto | null> {
+  ): Promise<ChapterDocument | null> {
     const updatedChapter = await this.chapterModel
       .findByIdAndUpdate(id, updateChapterDto, { new: true })
       .exec();
 
     return updatedChapter ? updatedChapter.toObject() : null;
+  }
+
+  async addQuestionnaire(
+    chapter: ChapterDocument,
+    createQuestionnaireDto: CreateQuestionnaireRequestDto
+  ): Promise<QuestionnaireDocument | null> {
+    const newQuestionnaire = new this.questionnaireModel(
+      createQuestionnaireDto
+    );
+    chapter.questionnaire.push(newQuestionnaire);
+    await chapter.save();
+
+    return newQuestionnaire;
   }
 }
