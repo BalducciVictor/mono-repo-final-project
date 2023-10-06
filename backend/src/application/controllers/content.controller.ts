@@ -18,12 +18,16 @@ import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-
 import { Roles } from "../decorator/user/roles.decorator";
 import { CreateContentResponseDto } from "../dto/Content/Response/create-content-reponse.dto";
 import { IBlobContentService } from "src/domain/interfaces/services/IBlobContentService";
+import { ContentUseCase } from "../useCases/content/content.use-case";
 
 @ApiBearerAuth()
 @ApiTags("upload")
 @Controller("upload")
 export class ContentController {
-  constructor(private readonly blobStorageService: IBlobContentService) {}
+  constructor(
+    private readonly blobStorageService: IBlobContentService,
+    private readonly contentUseCase: ContentUseCase
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -38,12 +42,6 @@ export class ContentController {
     @UploadedFile() file: Express.Multer.File,
     @Query("contentType") contentType: string
   ): Promise<CreateContentResponseDto> {
-    const blobName: string = file.originalname;
-    const blobBuffer: Buffer = file.buffer;
-    return await this.blobStorageService.uploadFile(
-      blobName,
-      blobBuffer,
-      contentType
-    );
+    return await this.contentUseCase.uploadFile(file, contentType);
   }
 }

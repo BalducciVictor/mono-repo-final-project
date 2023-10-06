@@ -43,6 +43,8 @@ import {
   QuestionnaireSchema,
 } from "src/domain/entities/quiz/questionnaire";
 import { ContentUseCase } from "src/application/useCases/content/content.use-case";
+import { QuestionnaireUseCase } from "src/application/useCases/questionnaire/questionnaire.use-case";
+import { AuthUseCase } from "src/application/useCases/auth/auth.use-case";
 
 @Module({
   imports: [
@@ -74,6 +76,9 @@ import { ContentUseCase } from "src/application/useCases/content/content.use-cas
     UserUseCase,
     ChapterUseCase,
     CompanyUseCase,
+    ContentUseCase,
+    QuestionnaireUseCase,
+    AuthUseCase,
 
     ///Declare Services
     AuthService,
