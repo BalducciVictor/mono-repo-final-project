@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
 import { CreateCompanyRequestDto } from "../../application/dto/Company/Request/create-company-group-request.dto";
@@ -64,21 +60,9 @@ export class CompanyRepository implements ICompanyRepository {
   ): Promise<CompanyResponseDto> {
     const company = await this.companyModel.findById(companyId).exec();
 
-    if (!company)
+    if (!company) {
       throw new NotFoundException(`Company with ID ${companyId} not found.`);
-
-    for (const userId of groupDto.user) {
-      const isUserInAnotherGroup = company.companyGroup.some((group) =>
-        group.user.includes(userId)
-      );
-
-      if (isUserInAnotherGroup) {
-        throw new ConflictException(
-          `User with ID ${userId} is already in another group of this company.`
-        );
-      }
     }
-
     company.companyGroup.push(groupDto);
     await company.save();
 
