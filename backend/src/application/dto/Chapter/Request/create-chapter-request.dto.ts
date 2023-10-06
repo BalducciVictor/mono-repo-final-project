@@ -23,6 +23,11 @@ export class CreateChapterRequestDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  category: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
   description: string;
 
   @ApiProperty()

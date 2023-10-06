@@ -6,7 +6,6 @@ export type CompanyDocument = HydratedDocument<Company>;
 
 @Schema()
 export class Company {
-  _id?: any;
   @Prop({ required: true, unique: true })
   name: string;
   @Prop({ type: [CompanyGroupSchema], default: [] })
