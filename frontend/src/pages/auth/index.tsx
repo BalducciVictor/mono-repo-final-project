@@ -6,6 +6,8 @@ import AuthImage from "../../assets/auth.png";
 
 export const Auth = () => {
   const [adminAuth, setAdminAuth] = useState(true);
+  const [email, setEmail] = useState('');
+  const [psw, setPsw] = useState('');
 
   function changeAuth( admin: boolean) {
     setAdminAuth(admin);
@@ -22,7 +24,7 @@ export const Auth = () => {
             <LeftChoice
               onClick={() => changeAuth(false)}
               adminAuth={!adminAuth}
-            >Nouveau collaborateur</LeftChoice>
+            >Collaborateur</LeftChoice>
             <LeftChoice
               onClick={() => changeAuth(true)}
               adminAuth={adminAuth}
@@ -35,29 +37,32 @@ export const Auth = () => {
                       label={"Email"}
                       placeholder={"mail@exemple.com"}
                       type={"mail"}
+                      value={email}
+                      onChange={setEmail}
                     />
                     <FormularInput
                       label={"Mot de passe"}
                       placeholder={"Min. 8 characters"}
                       type={"password"}
+                      value={psw}
+                      onChange={setPsw}
                     />
                 </LeftFrom>
                 : 
                 <LeftFrom>
                     <FormularInput
-                      label={"UID"}
-                      placeholder={"F000"}
-                      type={"text"}
-                    />
-                    <FormularInput
                       label={"Email"}
                       placeholder={"mail@exemple.com"}
                       type={"mail"}
+                      value={email}
+                      onChange={setEmail}
                     />
                     <FormularInput
                       label={"Mot de passe"}
                       placeholder={"Min. 8 characters"}
                       type={"password"}
+                      value={psw}
+                      onChange={setPsw}
                     />
                 </LeftFrom>
             }
