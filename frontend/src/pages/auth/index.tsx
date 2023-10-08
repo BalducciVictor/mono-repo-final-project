@@ -2,16 +2,23 @@ import styled from "styled-components";
 import { useState } from 'react';
 import { MainLogo } from "../../components/icons/mainLogo";
 import { FormularInput } from "./components/molecules/FormularInput";
+import { useMutation } from 'react-query';
 import AuthImage from "../../assets/auth.png";
+import { fetchToken } from "../../api/queries";
 
 export const Auth = () => {
   const [adminAuth, setAdminAuth] = useState(true);
   const [email, setEmail] = useState('');
-  const [psw, setPsw] = useState('');
+  const [password, setPassword] = useState('');
+  const mutation = useMutation(() => fetchToken({ email, password }));
 
   function changeAuth( admin: boolean) {
     setAdminAuth(admin);
   }
+
+  const handleLogin = () => {
+    mutation.mutate();
+  };
 
   return (
     <MainWrapper>
@@ -44,8 +51,8 @@ export const Auth = () => {
                       label={"Mot de passe"}
                       placeholder={"Min. 8 characters"}
                       type={"password"}
-                      value={psw}
-                      onChange={setPsw}
+                      value={password}
+                      onChange={setPassword}
                     />
                 </LeftFrom>
                 : 
@@ -61,12 +68,12 @@ export const Auth = () => {
                       label={"Mot de passe"}
                       placeholder={"Min. 8 characters"}
                       type={"password"}
-                      value={psw}
-                      onChange={setPsw}
+                      value={password}
+                      onChange={setPassword}
                     />
                 </LeftFrom>
             }
-          <LeftButton>Sing in</LeftButton>
+          <LeftButton onClick={handleLogin}>Sing in</LeftButton>
         </LeftContent>
       </LeftSection>
       <RightSection>
