@@ -6,6 +6,7 @@ import { useMutation } from 'react-query';
 import AuthImage from "../../assets/auth.png";
 import { fetchToken } from "../../api/queries";
 import { useNavigate } from "react-router-dom";
+import { useUser } from '../../userContext';
 
 export const Auth = () => {
   const [adminAuth, setAdminAuth] = useState(true);
@@ -13,6 +14,7 @@ export const Auth = () => {
   const [password, setPassword] = useState('');
   const mutation = useMutation(() => fetchToken({ email, password }));
   const navigate = useNavigate();
+  const { user, setUser } = useUser();
 
   function changeAuth( admin: boolean) {
     setAdminAuth(admin);
@@ -23,6 +25,7 @@ export const Auth = () => {
   };
 
   if (mutation.isSuccess) {
+    setUser({ token: `${mutation.data.accessToken}`, role: `${mutation.data.user.role}` });
     navigate('/dashboard');
   }
 
