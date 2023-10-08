@@ -5,12 +5,14 @@ import { FormularInput } from "./components/molecules/FormularInput";
 import { useMutation } from 'react-query';
 import AuthImage from "../../assets/auth.png";
 import { fetchToken } from "../../api/queries";
+import { useNavigate } from "react-router-dom";
 
 export const Auth = () => {
   const [adminAuth, setAdminAuth] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const mutation = useMutation(() => fetchToken({ email, password }));
+  const navigate = useNavigate();
 
   function changeAuth( admin: boolean) {
     setAdminAuth(admin);
@@ -19,6 +21,10 @@ export const Auth = () => {
   const handleLogin = () => {
     mutation.mutate();
   };
+
+  if (mutation.isSuccess) {
+    navigate('/dashboard');
+  }
 
   return (
     <MainWrapper>
