@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
-import { UserState } from './type/usertype';
+import { UserState } from './types/usertypes';
 
 type UserContextType = {
     user: UserState;

@@ -3,7 +3,7 @@ import { Routes, Route, BrowserRouter, Navigate, } from 'react-router-dom';
 import { Auth } from './pages/auth';
 import { Dashboard } from './pages/dashboard';
 import { UserProvider, useUser } from './userContext';
-import { UserState } from './type/usertype';
+import { UserState } from './types/usertypes';
 
 interface ProtectedRouteProps {
   children: React.ReactNode | any;
