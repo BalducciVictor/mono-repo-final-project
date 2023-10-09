@@ -12,5 +12,8 @@
   "workspaces": [
     "backend/*",
     "frontend/*"
-  ]
+  ],
+  "dependencies": {
+    "react-query": "^3.39.3"
+  }
 }

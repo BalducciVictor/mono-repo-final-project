@@ -4,6 +4,7 @@ import './index.css';
 import { App } from './main';
 import reportWebVitals from './reportWebVitals';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { GlobalStyled } from './styles/global';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +18,7 @@ root.render(
       <GlobalStyled />
       <App />
     </QueryClientProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
