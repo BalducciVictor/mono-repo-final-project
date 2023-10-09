@@ -9,10 +9,15 @@ import { IUserRepository } from "../interfaces/repository/IUserRepository";
 import { UpdateUserRequestDto } from "src/application/dto/User/Request/update-user-request.dto";
 import * as bcrypt from "bcryptjs";
 import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
+import { ICompanyRepository } from "../interfaces/repository/ICompanyRepository";
+import { GetUserCompanyGroupResponseDto } from "src/application/dto/Documentation/Response/get-user-company-group-response.dto";
 
 @Injectable()
 export class UserService implements IUserService {
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(
+    private readonly userRepository: IUserRepository,
+    private readonly companyRepository: ICompanyRepository
+  ) {}
 
   public async create(
     createUserDto: CreateUserRequestDto
@@ -36,6 +41,37 @@ export class UserService implements IUserService {
     }
 
     return await this.userRepository.get(userId);
+  }
+
+  public async getUsersByCompanyId(
+    companyId: string
+  ): Promise<Array<UserResponseDto>> {
+    const existingUsers: Array<UserResponseDto> =
+      await this.userRepository.getUsersByCompanyId(companyId);
+
+    if (!existingUsers) {
+      throw new NotFoundException(`User not found`);
+    }
+
+    return existingUsers;
+  }
+
+  public async getUserGroup(
+    userId: string
+  ): Promise<GetUserCompanyGroupResponseDto> {
+    const existingUser: UserResponseDto = await this.userRepository.get(userId);
+    if (!existingUser) {
+      throw new NotFoundException(`User not found`);
+    }
+
+    const companyGroup: GetUserCompanyGroupResponseDto | null =
+      await this.companyRepository.getUserGroup(existingUser.companyId, userId);
+
+    if (!companyGroup) {
+      throw new NotFoundException(`Group not found`);
+    }
+
+    return companyGroup;
   }
 
   public async getByMail(userMail: string): Promise<UserResponseDto> {

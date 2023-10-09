@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
-import { DocumentationContentType } from "src/domain/enum/documentationContentType";
+import { DocumentationContentType } from "../../../domain/enum/documentationContentType";
 
 export type DocumentationContentDocument =
   HydratedDocument<DocumentationContent>;
@@ -11,7 +11,6 @@ export class DocumentationContent {
   content: string;
   @Prop({ required: true, enum: Object.values(DocumentationContentType) })
   contentType: DocumentationContentType;
-  _id: any;
 }
 
 export const DocumentationContentSchema =

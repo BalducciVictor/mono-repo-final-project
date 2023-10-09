@@ -4,17 +4,16 @@ import * as jwt from "jsonwebtoken";
 import { User } from "../entities/user/user";
 import { LoginUserResponseDto } from "src/application/dto/User/auth/login-user-response.dto";
 import * as bcrypt from "bcryptjs";
+import { IAuthService } from "../interfaces/services/IAuthService";
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
   constructor(private usersService: IUserService) {}
 
   async signIn(email: string, pass: string): Promise<LoginUserResponseDto> {
     const user: User = await this.usersService.getByMail(email);
     const isPasswordValid = await bcrypt.compare(pass, user.password);
-    if (!isPasswordValid) {
-      throw new UnauthorizedException();
-    }
+    if (!isPasswordValid) throw new UnauthorizedException();
 
     const payload = {
       username: user.email,

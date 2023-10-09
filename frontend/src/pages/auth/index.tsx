@@ -1,15 +1,34 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { MainLogo } from '../../components/icons/mainLogo';
-import { FormularInput } from './components/molecules/FormularInput';
-import AuthImage from '../../assets/auth.png';
+import { MainLogo } from "../../components/icons/mainLogo";
+import { FormularInput } from "./components/molecules/FormularInput";
+import { useMutation } from 'react-query';
+import AuthImage from "../../assets/auth.png";
+import { fetchToken } from "../../api/queries";
+import { useNavigate } from "react-router-dom";
+import { useUser } from '../../userContext';
 import { fontSize } from '../../styles/const';
+
 
 export const Auth = () => {
   const [adminAuth, setAdminAuth] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const mutation = useMutation(() => fetchToken({ email, password }));
+  const navigate = useNavigate();
+  const { user, setUser } = useUser();
 
   function changeAuth(admin: boolean) {
     setAdminAuth(admin);
+  }
+
+  const handleLogin = () => {
+    mutation.mutate();
+  };
+
+  if (mutation.isSuccess) {
+    setUser({ token: `${mutation.data.accessToken}`, role: `${mutation.data.user.role}` });
+    navigate('/dashboard');
   }
 
   return (
@@ -25,42 +44,49 @@ export const Auth = () => {
             <LeftChoice
               onClick={() => changeAuth(false)}
               adminAuth={!adminAuth}
-            >
-              Nouveau collaborateur
-            </LeftChoice>
-            <LeftChoice onClick={() => changeAuth(true)} adminAuth={adminAuth}>
-              Admin
-            </LeftChoice>
+            >Collaborateur</LeftChoice>
+            <LeftChoice
+              onClick={() => changeAuth(true)}
+              adminAuth={adminAuth}
+            >Admin</LeftChoice>
           </LeftChoiceAuth>
-          {adminAuth ? (
-            <LeftFrom>
-              <FormularInput
-                label={'Email'}
-                placeholder={'mail@exemple.com'}
-                type={'mail'}
-              />
-              <FormularInput
-                label={'Mot de passe'}
-                placeholder={'Min. 8 characters'}
-                type={'password'}
-              />
-            </LeftFrom>
-          ) : (
-            <LeftFrom>
-              <FormularInput label={'UID'} placeholder={'F000'} type={'text'} />
-              <FormularInput
-                label={'Email'}
-                placeholder={'mail@exemple.com'}
-                type={'mail'}
-              />
-              <FormularInput
-                label={'Mot de passe'}
-                placeholder={'Min. 8 characters'}
-                type={'password'}
-              />
-            </LeftFrom>
-          )}
-          <LeftButton>Sing in</LeftButton>
+            {
+              adminAuth ? 
+                <LeftFrom>
+                    <FormularInput
+                      label={"Email"}
+                      placeholder={"mail@exemple.com"}
+                      type={"mail"}
+                      value={email}
+                      onChange={setEmail}
+                    />
+                    <FormularInput
+                      label={"Mot de passe"}
+                      placeholder={"Min. 8 characters"}
+                      type={"password"}
+                      value={password}
+                      onChange={setPassword}
+                    />
+                </LeftFrom>
+                : 
+                <LeftFrom>
+                    <FormularInput
+                      label={"Email"}
+                      placeholder={"mail@exemple.com"}
+                      type={"mail"}
+                      value={email}
+                      onChange={setEmail}
+                    />
+                    <FormularInput
+                      label={"Mot de passe"}
+                      placeholder={"Min. 8 characters"}
+                      type={"password"}
+                      value={password}
+                      onChange={setPassword}
+                    />
+                </LeftFrom>
+            }
+          <LeftButton onClick={handleLogin}>Sing in</LeftButton>
         </LeftContent>
       </LeftSection>
       <RightSection>

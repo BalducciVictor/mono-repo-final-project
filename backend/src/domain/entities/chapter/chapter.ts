@@ -1,6 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Types } from "mongoose";
 import { DocumentationDocument, DocumentationSchema } from "./documentation";
+import {
+  QuestionnaireSchema,
+  QuestionnaireDocument,
+} from "../quiz/questionnaire";
 
 export type ChapterDocument = HydratedDocument<Chapter>;
 
@@ -12,6 +16,12 @@ export class Chapter {
   @Prop({ required: true })
   hasQuiz: boolean;
 
+  @Prop({ type: [QuestionnaireSchema], default: [] })
+  questionnaire: Types.DocumentArray<QuestionnaireDocument>;
+
+  @Prop({ required: true })
+  category: string;
+
   @Prop({ required: true })
   description: string;
 
@@ -20,8 +30,6 @@ export class Chapter {
 
   @Prop({ type: [DocumentationSchema], default: [] })
   documents: Types.DocumentArray<DocumentationDocument>;
-
-  _id: any;
 }
 
 export const ChapterSchema = SchemaFactory.createForClass(Chapter);

@@ -7,16 +7,18 @@ import {
   Delete,
   Put,
   UseGuards,
+  Query,
 } from "@nestjs/common";
-import { User } from "src/domain/entities/user/user";
+import { User } from "../../domain/entities/user/user";
 import { CreateUserRequestDto } from "../dto/User/Request/create-user-request.dto";
 import { UpdateUserRequestDto } from "../dto/User/Request/update-user-request.dto";
 import { ApiOperation, ApiResponse, ApiTags, ApiParam } from "@nestjs/swagger";
 import { UserUseCase } from "../useCases/user/user.use-case";
-import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
+import { JwtAuthGuard } from "../../infrastructure/config/modules/auth/guards/jwt-auth.gard";
 import { Roles } from "../decorator/user/roles.decorator";
 import { UserResponseDto } from "../dto/User/Response/user-response.dto";
-import { UserType } from "src/domain/enum/userType";
+import { UserType } from "../../domain/enum/userType";
+import { GetUserCompanyGroupResponseDto } from "../dto/Documentation/Response/get-user-company-group-response.dto";
 
 @ApiTags("users")
 @Controller("users")
@@ -45,6 +47,32 @@ export default class UserController {
   @ApiParam({ name: "userId", description: "User ID" })
   async get(@Param("userId") userId: string): Promise<UserResponseDto> {
     return await this.userUseCase.getUser(userId);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  @Roles([UserType.ADMIN, UserType.SUPERADMIN, UserType.USER])
+  @ApiOperation({
+    summary: "Get Users by company id",
+  })
+  @ApiResponse({ status: 200, description: "The found users.", type: User })
+  @ApiParam({ name: "companyId", description: "Company ID" })
+  async getUsersByCompany(
+    @Query("companyId") companyId: string
+  ): Promise<Array<UserResponseDto>> {
+    return await this.userUseCase.getUsersByCompany(companyId);
+  }
+
+  @Get("company/:userId")
+  @ApiOperation({
+    summary: "Get User group",
+  })
+  @ApiResponse({ status: 200, description: "The found users.", type: User })
+  @ApiParam({ name: "userId", description: "User ID" })
+  async getGroupUser(
+    @Param("userId") userId: string
+  ): Promise<GetUserCompanyGroupResponseDto> {
+    return await this.userUseCase.getUserGroup(userId);
   }
 
   @Delete(":userId")

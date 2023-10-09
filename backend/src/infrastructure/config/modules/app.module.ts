@@ -3,7 +3,7 @@ import { User, UserSchema } from "../../../domain/entities/user/user";
 import { Module } from "@nestjs/common";
 import { UserService } from "../../../domain/services/user.service";
 import { UserRepository } from "../../repository/user.repository";
-import { IUserService } from "src/domain/interfaces/services/IUserService";
+import { IUserService } from "../../../domain/interfaces/services/IUserService";
 import { IUserRepository } from "../../../domain/interfaces/repository/IUserRepository";
 import { IChapterService } from "../../../domain/interfaces/services/IChapterService";
 import { ChapterService } from "../../../domain/services/chapter.service";
@@ -19,16 +19,32 @@ import UserController from "../../../application/controllers/user.controller";
 import ChapterController from "../../../application/controllers/chapter.controller";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { AuthService } from "src/domain/services/auth.service";
-import { AuthController } from "src/application/controllers/auth.controller";
+import { AuthService } from "../../../domain/services/auth.service";
+import { AuthController } from "../../../application/controllers/auth.controller";
 import { ConfigModule } from "@nestjs/config";
-import { CompanyRepository } from "src/infrastructure/repository/company.respository";
-import { ICompanyRepository } from "src/domain/interfaces/repository/ICompanyRepository";
-import { ICompanyService } from "src/domain/interfaces/services/ICompanyService";
-import { CompanyService } from "src/domain/services/company.service";
-import { Company, CompanySchema } from "src/domain/entities/company/company";
-import CompanyController from "src/application/controllers/company.controller";
-import { CompanyUseCase } from "src/application/useCases/company/company.use-case";
+import { CompanyRepository } from "../../../infrastructure/repository/company.respository";
+import { ICompanyRepository } from "../../../domain/interfaces/repository/ICompanyRepository";
+import { ICompanyService } from "../../../domain/interfaces/services/ICompanyService";
+import { CompanyService } from "../../../domain/services/company.service";
+import {
+  Company,
+  CompanySchema,
+} from "../../../domain/entities/company/company";
+import CompanyController from "../../../application/controllers/company.controller";
+import { CompanyUseCase } from "../../../application/useCases/company/company.use-case";
+import { ContentController } from "src/application/controllers/content.controller";
+import { BlobContentService } from "src/domain/services/blobContent.service";
+import { IBlobContentService } from "src/domain/interfaces/services/IBlobContentService";
+import { IQuestionnaireService } from "src/domain/interfaces/services/IQuestionnaireService";
+import { QuestionnaireService } from "src/domain/services/questionnaire.service";
+import { QuestionnaireController } from "src/application/controllers/questionnaire.controller";
+import {
+  Questionnaire,
+  QuestionnaireSchema,
+} from "src/domain/entities/quiz/questionnaire";
+import { ContentUseCase } from "src/application/useCases/content/content.use-case";
+import { QuestionnaireUseCase } from "src/application/useCases/questionnaire/questionnaire.use-case";
+import { AuthUseCase } from "src/application/useCases/auth/auth.use-case";
 
 @Module({
   imports: [
@@ -43,17 +59,26 @@ import { CompanyUseCase } from "src/application/useCases/company/company.use-cas
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Chapter.name, schema: ChapterSchema }]),
     MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]),
+    MongooseModule.forFeature([
+      { name: Questionnaire.name, schema: QuestionnaireSchema },
+    ]),
   ],
   controllers: [
     UserController,
     ChapterController,
     AuthController,
     CompanyController,
+    ContentController,
+    QuestionnaireController,
   ],
   providers: [
+    //DeclareUseCase
     UserUseCase,
     ChapterUseCase,
     CompanyUseCase,
+    ContentUseCase,
+    QuestionnaireUseCase,
+    AuthUseCase,
 
     ///Declare Services
     AuthService,
@@ -68,6 +93,14 @@ import { CompanyUseCase } from "src/application/useCases/company/company.use-cas
     {
       provide: ICompanyService,
       useClass: CompanyService,
+    },
+    {
+      provide: IBlobContentService,
+      useClass: BlobContentService,
+    },
+    {
+      provide: IQuestionnaireService,
+      useClass: QuestionnaireService,
     },
     ///Declare Repository
     {

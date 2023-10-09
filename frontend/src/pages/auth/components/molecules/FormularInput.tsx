@@ -4,13 +4,15 @@ type InputProps = {
     label: string;
     type: string;
     placeholder: string;
+    onChange?: any;
+    value?: string;
 };
 
-export const FormularInput = ({ label, type, placeholder }: InputProps) => {
+export const FormularInput = ({ label, type, placeholder, onChange }: InputProps) => {
     return (
         <WrapperInput>
             <LabelText>{ label }</LabelText>
-            <Input type={type} placeholder={placeholder}/>
+            <Input type={type} placeholder={placeholder} onChange={(e) => onChange(e.target.value)}/>
         </WrapperInput>
     )
 }

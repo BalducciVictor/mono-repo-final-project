@@ -8,8 +8,6 @@ import {
   Put,
   UseGuards,
 } from "@nestjs/common";
-import { CreateChapterRequestDto } from "../dto/Chapter/Request/create-chapter-request.dto";
-import { UpdateChapterRequestDto } from "../dto/Chapter/Request/update-chapter-request.dto";
 import {
   ApiOperation,
   ApiResponse,
@@ -17,13 +15,14 @@ import {
   ApiParam,
   ApiBearerAuth,
 } from "@nestjs/swagger";
-import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
+import { JwtAuthGuard } from "../../infrastructure/config/modules/auth/guards/jwt-auth.gard";
 import { Roles } from "../decorator/user/roles.decorator";
-import { UserType } from "src/domain/enum/userType";
+import { UserType } from "../../domain/enum/userType";
 import { CreateCompanyRequestDto } from "../dto/Company/Request/create-company-group-request.dto";
 import { CompanyResponseDto } from "../dto/Company/Response/company-response.dto";
 import { CompanyUseCase } from "../useCases/company/company.use-case";
 import { UpdateCompanyRequestDto } from "../dto/Company/Request/update-company-group-request.dto";
+import { AddCompanyGroupRequestDto } from "../dto/Company/CompanyGroup/Request/add-company-group-request.dto";
 
 @ApiBearerAuth()
 @ApiTags("company")
@@ -76,7 +75,7 @@ export default class CompanyController {
   })
   @ApiResponse({
     status: 200,
-    description: "The found chapters.",
+    description: "The found companies.",
     type: Array<CompanyResponseDto>,
   })
   @ApiResponse({ status: 403, description: "Forbidden." })
@@ -115,5 +114,28 @@ export default class CompanyController {
     @Body() updateCompanyDto: UpdateCompanyRequestDto
   ): Promise<CompanyResponseDto> {
     return await this.companyUseCase.updateCompany(companyId, updateCompanyDto);
+  }
+
+  @Put("group/:companyId")
+  @UseGuards(JwtAuthGuard)
+  @Roles([UserType.ADMIN, UserType.SUPERADMIN])
+  @ApiOperation({
+    summary: "Company Chapter",
+  })
+  @ApiResponse({
+    status: 200,
+    description: "Company add .",
+    type: CompanyResponseDto,
+  })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  @ApiParam({ name: "companyId", description: "Company ID" })
+  async addGroupCompany(
+    @Param("companyId") companyId: string,
+    @Body() updateCompanyDto: AddCompanyGroupRequestDto
+  ): Promise<CompanyResponseDto> {
+    return await this.companyUseCase.addCompanyGroup(
+      companyId,
+      updateCompanyDto
+    );
   }
 }

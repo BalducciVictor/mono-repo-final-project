@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { IUserRepository } from "../interfaces/repository/IUserRepository";
 import { IChapterRepository } from "../interfaces/repository/IChapterRepository";
 import { IChapterService } from "../interfaces/services/IChapterService";
 import { CreateChapterRequestDto } from "src/application/dto/Chapter/Request/create-chapter-request.dto";
@@ -8,10 +7,7 @@ import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter
 
 @Injectable()
 export class ChapterService implements IChapterService {
-  constructor(
-    private readonly userRepository: IUserRepository,
-    private readonly chapterRepository: IChapterRepository
-  ) {}
+  constructor(private readonly chapterRepository: IChapterRepository) {}
 
   public async create(
     createChapterDto: CreateChapterRequestDto
