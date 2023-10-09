@@ -24,7 +24,14 @@ async function bootstrap() {
   SwaggerModule.setup("api", app, document);
 
   const PORT = process.env.PORT || 8000;
+  app.enableCors({
+    origin: [
+      "http://localhost:3000",
+      "http://onby-frontend.aqgmcfeucjeycthw.francecentral.azurecontainer.io/",
+    ],
+    methods: ["GET", "POST", "DELETE", "PUT"],
+  });
+
   await app.listen(PORT);
-  console.log(`Application is running on: localhost:${PORT}/api`);
 }
 bootstrap();
