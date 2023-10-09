@@ -6,6 +6,25 @@ import { color, iconSize, space } from '../styles/const';
 import { HomeIcon } from './icons/homeIcon';
 import { BrandIcon } from './icons/brandIcon';
 import { ProfileIcon } from './icons/profileIcon';
+import { ExitIcon } from './icons/exitIcon';
+import { useUser } from '../userContext';
+
+export const SignOut = () => {
+  const {user, setUser} = useUser();
+
+  const handleClick = () => {
+    setUser({token: null, role: null });
+  }
+
+  return (
+    <SignOutContainer onClick={handleClick}>
+      <ExitIcon size={iconSize.m} color={color.light.PureWhite} />
+      <Text>
+        Sign out
+      </Text>
+    </SignOutContainer>
+  )
+}
 
 export const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -40,6 +59,9 @@ export const Sidebar: React.FC = () => {
               Hugues
             </Text>
           </SidebarLink>
+        </SidebarItem>
+        <SidebarItem>
+          <SignOut/>
         </SidebarItem>
       </MiddleSideBar>
     </SidebarContainer>
@@ -89,4 +111,11 @@ const SidebarLink = styled(Link)`
   align-items: center;
   color: #fff;
   text-decoration: none;
+`;
+
+const SignOutContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
 `;
