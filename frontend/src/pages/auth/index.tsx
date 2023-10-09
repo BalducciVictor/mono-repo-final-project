@@ -1,92 +1,91 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import { useState } from 'react';
-import { MainLogo } from "../../components/icons/mainLogo";
-import { FormularInput } from "./components/molecules/FormularInput";
-import AuthImage from "../../assets/auth.png";
+import { MainLogo } from '../../components/icons/mainLogo';
+import { FormularInput } from './components/molecules/FormularInput';
+import AuthImage from '../../assets/auth.png';
+import { fontSize } from '../../styles/const';
 
 export const Auth = () => {
   const [adminAuth, setAdminAuth] = useState(true);
 
-  function changeAuth( admin: boolean) {
+  function changeAuth(admin: boolean) {
     setAdminAuth(admin);
   }
 
   return (
     <MainWrapper>
       <LeftSection>
-        <MainLogo/>
+        <MainLogo />
         <LeftContent>
           <LeftTitle>Welcome Back!</LeftTitle>
-          <LeftDescription>Merci de choisir votre profil pour vous connecter</LeftDescription>
+          <LeftDescription>
+            Merci de choisir votre profil pour vous connecter
+          </LeftDescription>
           <LeftChoiceAuth>
             <LeftChoice
               onClick={() => changeAuth(false)}
               adminAuth={!adminAuth}
-            >Nouveau collaborateur</LeftChoice>
-            <LeftChoice
-              onClick={() => changeAuth(true)}
-              adminAuth={adminAuth}
-            >Admin</LeftChoice>
+            >
+              Nouveau collaborateur
+            </LeftChoice>
+            <LeftChoice onClick={() => changeAuth(true)} adminAuth={adminAuth}>
+              Admin
+            </LeftChoice>
           </LeftChoiceAuth>
-            {
-              adminAuth ? 
-                <LeftFrom>
-                    <FormularInput
-                      label={"Email"}
-                      placeholder={"mail@exemple.com"}
-                      type={"mail"}
-                    />
-                    <FormularInput
-                      label={"Mot de passe"}
-                      placeholder={"Min. 8 characters"}
-                      type={"password"}
-                    />
-                </LeftFrom>
-                : 
-                <LeftFrom>
-                    <FormularInput
-                      label={"UID"}
-                      placeholder={"F000"}
-                      type={"text"}
-                    />
-                    <FormularInput
-                      label={"Email"}
-                      placeholder={"mail@exemple.com"}
-                      type={"mail"}
-                    />
-                    <FormularInput
-                      label={"Mot de passe"}
-                      placeholder={"Min. 8 characters"}
-                      type={"password"}
-                    />
-                </LeftFrom>
-            }
+          {adminAuth ? (
+            <LeftFrom>
+              <FormularInput
+                label={'Email'}
+                placeholder={'mail@exemple.com'}
+                type={'mail'}
+              />
+              <FormularInput
+                label={'Mot de passe'}
+                placeholder={'Min. 8 characters'}
+                type={'password'}
+              />
+            </LeftFrom>
+          ) : (
+            <LeftFrom>
+              <FormularInput label={'UID'} placeholder={'F000'} type={'text'} />
+              <FormularInput
+                label={'Email'}
+                placeholder={'mail@exemple.com'}
+                type={'mail'}
+              />
+              <FormularInput
+                label={'Mot de passe'}
+                placeholder={'Min. 8 characters'}
+                type={'password'}
+              />
+            </LeftFrom>
+          )}
           <LeftButton>Sing in</LeftButton>
         </LeftContent>
       </LeftSection>
       <RightSection>
-        <RightImage src={AuthImage} alt="auth icon"/>
+        <RightImage src={AuthImage} alt="auth icon" />
         <RightTitle>Bienvenue sur Onby !</RightTitle>
         <RightDescription>
-          Vous avez récemment rejoint notre groupe, avant tout bienvenue !
-          Onby est une plateforme interne qui va vous accompagner 
-          à vous connecter à notre environnement de développement
-          afin d’avoir accès à nos produits.
+          Vous avez récemment rejoint notre groupe, avant tout bienvenue ! Onby
+          est une plateforme interne qui va vous accompagner à vous connecter à
+          notre environnement de développement afin d’avoir accès à nos
+          produits.
         </RightDescription>
       </RightSection>
     </MainWrapper>
-  )
-}
+  );
+};
 
 const MainWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr; 
+  grid-template-columns: 1fr 1fr;
   height: 100vh;
 `;
 
 const LeftSection = styled.section`
   display: grid;
-  grid-template-rows: 30px 1fr; 
+  grid-template-rows: 30px 1fr;
   padding: 30px;
 `;
 
@@ -97,7 +96,7 @@ const LeftContent = styled.div`
   text-align: left;
   width: fit-content;
   justify-self: center;
-`
+`;
 
 const LeftTitle = styled.h1`
   font-size: 40px;
@@ -107,7 +106,7 @@ const LeftTitle = styled.h1`
 
 const LeftDescription = styled.p`
   color: #565656;
-  font-size: 16px;
+  font-size: ${fontSize.s};
   font-style: normal;
   font-weight: 500;
   margin: 10px 0 30px 0;
@@ -117,7 +116,7 @@ const LeftChoiceAuth = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
-`
+`;
 const LeftChoice = styled.button<{ adminAuth: boolean }>`
   font-size: 16px;
   font-style: normal;
@@ -127,17 +126,16 @@ const LeftChoice = styled.button<{ adminAuth: boolean }>`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  border-bottom: ${(props) =>
-    props.adminAuth ? "2px solid #4BC1A5" : "0px solid #4BC1A5"};
-  color: ${(props) =>
-    props.adminAuth ? "#121212" : "#8F8F8F"};
-`
+  border-bottom: ${props =>
+    props.adminAuth ? '2px solid #4BC1A5' : '0px solid #4BC1A5'};
+  color: ${props => (props.adminAuth ? '#121212' : '#8F8F8F')};
+`;
 
 const LeftFrom = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
-`
+`;
 
 const LeftButton = styled.button`
   width: 100%;
@@ -145,16 +143,16 @@ const LeftButton = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  border: 1px solid #31B898;
-  background: #31B898;
-  color: #FFF;
+  border: 1px solid #31b898;
+  background: #31b898;
+  color: #fff;
   font-size: 16px;
   font-style: normal;
   margin-top: 40px;
-`
+`;
 
 const RightSection = styled.section`
-  background-color: #1C2632;
+  background-color: #1c2632;
   display: flex;
   flex-direction: column;
   justify-content: center;

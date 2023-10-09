@@ -1,12 +1,15 @@
 export const color = {
   light: {
     PureWhite: '#ffffff',
-    WhiteSmoke: '##F7F9F9',
+    WhiteSmoke: '#F7F9F9',
+    lightGrey: '#ececec',
+    lightbrandGreen: '#A9F9E680',
     brandGreen: '#58DBBC',
   },
   medium: {
     fontGrey: '#999999',
     Manatee: '#848897',
+    mainGreen: '#31B898',
   },
   darker: {
     brandBlue: '#1C2632',
@@ -25,9 +28,12 @@ export const fontSize = {
 };
 
 export const space = {
+  xxs: '4px',
   xs: '8px',
   s: '16px',
+  sm: '20px',
   m: '24px',
+  ml: '32px',
   l: '48px',
   xl: '80px',
 };

@@ -6,8 +6,6 @@ import { color, iconSize, space } from '../styles/const';
 import { HomeIcon } from './icons/homeIcon';
 import { BrandIcon } from './icons/brandIcon';
 import { ProfileIcon } from './icons/profileIcon';
-import { RightArrow } from './icons/arrowIcons';
-import { ExitIcon } from './icons/exitIcon';
 
 export const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -64,16 +62,13 @@ const Text = styled.p`
   margin: 0;
   margin-left: ${space.xs};
   transition: opacity 0.3s ease;
-  &.hide-text {
-    display: none;
-  }
 `;
 
 const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 40px;
+  width: 136px;
   height: 100%;
   background-color: ${color.darker.brandBlue};
   color: #fff;
