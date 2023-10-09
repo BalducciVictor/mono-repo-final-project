@@ -8,6 +8,7 @@ import { fetchToken } from "../../api/queries";
 import { useNavigate } from "react-router-dom";
 import { useUser } from '../../userContext';
 import { fontSize } from '../../styles/const';
+import { SignIn } from '../../services/api';
 
 
 export const Auth = () => {
@@ -22,8 +23,12 @@ export const Auth = () => {
     setAdminAuth(admin);
   }
 
-  const handleLogin = () => {
-    mutation.mutate();
+  const handleLogin = async () => {
+    try {
+      await SignIn({email, password});
+    } catch(e:any) {
+      console.log(e.message)
+    }
   };
 
   if (mutation.isSuccess) {
