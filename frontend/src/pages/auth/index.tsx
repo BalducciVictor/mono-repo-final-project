@@ -8,6 +8,7 @@ import { fetchToken } from "../../api/queries";
 import { useNavigate } from "react-router-dom";
 import { useUser } from '../../userContext';
 import { fontSize } from '../../styles/const';
+import sessionAPI from '../../services/sessionStorageAPI';
 
 
 export const Auth = () => {
@@ -28,6 +29,7 @@ export const Auth = () => {
 
   if (mutation.isSuccess) {
     setUser({ token: `${mutation.data.accessToken}`, role: `${mutation.data.user.role}` });
+    sessionAPI.setToken(`${mutation.data.accessToken}`);
     navigate('/dashboard');
   }
 
