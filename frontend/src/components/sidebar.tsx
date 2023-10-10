@@ -39,7 +39,7 @@ export const Sidebar: React.FC = () => {
       </TopSideBar>
       <MiddleSideBar>
         <SidebarItem>
-          <SidebarLink to="dashboard">
+          <SidebarLink to="">
             <HomeIcon size={iconSize.m} color={color.light.PureWhite} />
             <Text className={isHovered ? 'show-text' : 'hide-text'}>Home</Text>
           </SidebarLink>

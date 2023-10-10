@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Button } from "./button";
 
 interface PopUpProps {
   isOpen: boolean;
@@ -13,7 +14,7 @@ export const PopUp: React.FC<PopUpProps> = ({ isOpen, onClose, children }) => {
   return (
     <ContainerModal>
       <Modal>
-        <button onClick={onClose}>Close</button>
+        <Button onClick={onClose}>Close</Button>
         {children}
       </Modal>
     </ContainerModal>
@@ -21,19 +22,19 @@ export const PopUp: React.FC<PopUpProps> = ({ isOpen, onClose, children }) => {
 };
 
 const ContainerModal = styled.div`
-  position: 'fixed';
+  position: fixed;
   top: 0;
   left: 0;
-  width: '100vw';
-  height: '100vh';
-  background-color: 'rgba(0, 0, 0, 0.7)';
-  display: 'flex';
-  align-items: 'center';
-  justify-content: 'center';
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Modal = styled.div`
-  background-color: 'white';
-  padding: '20px';
-  border-radius: '8px';
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
 `;
