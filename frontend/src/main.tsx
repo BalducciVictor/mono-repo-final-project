@@ -2,8 +2,8 @@ import React from 'react';
 import { Routes, Route, BrowserRouter, Navigate, } from 'react-router-dom';
 import { Auth } from './pages/auth';
 import { Dashboard } from './pages/dashboard';
-import { UserProvider, useUser } from './userContext';
-import { UserState } from './types/usertypes';
+import { UserProvider } from './userContext';
+import sessionAPI from './services/sessionStorageAPI';
 
 interface ProtectedRouteProps {
   children: React.ReactNode | any;
@@ -14,8 +14,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps>  = ({
   redirectPath = '/',
   children,
 }) => {
-  const { user } = useUser();
-  if (user.token == null) {
+  if (!sessionAPI.getToken()) {
     return <Navigate to={redirectPath} replace />;
   }
 

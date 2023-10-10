@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import { StudentCapIcon } from './icons/studentCapIcon';
 import { color, iconSize, space } from '../styles/const';
 import { HomeIcon } from './icons/homeIcon';
@@ -8,12 +8,16 @@ import { BrandIcon } from './icons/brandIcon';
 import { ProfileIcon } from './icons/profileIcon';
 import { ExitIcon } from './icons/exitIcon';
 import { useUser } from '../userContext';
+import sessionAPI from '../services/sessionStorageAPI';
 
 export const SignOut = () => {
   const {user, setUser} = useUser();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    setUser({token: null, role: null });
+    setUser({role: null });
+    sessionAPI.removeToken()
+    navigate('/')
   }
 
   return (

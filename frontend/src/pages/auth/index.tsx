@@ -28,7 +28,7 @@ export const Auth = () => {
   };
 
   if (mutation.isSuccess) {
-    setUser({ token: `${mutation.data.accessToken}`, role: `${mutation.data.user.role}` });
+    setUser({role: `${mutation.data.user.role}` });
     sessionAPI.setToken(`${mutation.data.accessToken}`);
     navigate('/dashboard');
   }
