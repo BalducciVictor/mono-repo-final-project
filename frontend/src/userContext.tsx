@@ -1,10 +1,6 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
+import { UserState } from './types/usertypes';
 
-type UserState = {
-    token: string | null;
-    role: string | null;
-};
-  
 type UserContextType = {
     user: UserState;
     setUser: React.Dispatch<React.SetStateAction<UserState>>;
