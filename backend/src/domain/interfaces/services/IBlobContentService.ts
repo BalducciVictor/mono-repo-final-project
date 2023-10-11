@@ -6,4 +6,6 @@ export abstract class IBlobContentService {
     content: Buffer,
     contentType: string
   ) => Promise<CreateContentResponseDto>;
+
+  deleteFile: (blobName: string) => Promise<void>;
 }

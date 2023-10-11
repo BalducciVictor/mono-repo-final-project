@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Post,
   Query,
   UploadedFile,
@@ -13,21 +14,17 @@ import {
   ApiOperation,
   ApiResponse,
 } from "@nestjs/swagger";
-import { UserType } from "src/domain/enum/userType";
-import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
+import { UserType } from "../../domain/enum/userType";
+import { JwtAuthGuard } from "../../infrastructure/config/modules/auth/guards/jwt-auth.gard";
 import { Roles } from "../decorator/user/roles.decorator";
 import { CreateContentResponseDto } from "../dto/Content/Response/create-content-reponse.dto";
-import { IBlobContentService } from "src/domain/interfaces/services/IBlobContentService";
 import { ContentUseCase } from "../useCases/content/content.use-case";
 
 @ApiBearerAuth()
 @ApiTags("upload")
 @Controller("upload")
 export class ContentController {
-  constructor(
-    private readonly blobStorageService: IBlobContentService,
-    private readonly contentUseCase: ContentUseCase
-  ) {}
+  constructor(private readonly contentUseCase: ContentUseCase) {}
 
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -43,5 +40,17 @@ export class ContentController {
     @Query("contentType") contentType: string
   ): Promise<CreateContentResponseDto> {
     return await this.contentUseCase.uploadFile(file, contentType);
+  }
+
+  @Delete()
+  @UseGuards(JwtAuthGuard)
+  @Roles([UserType.ADMIN, UserType.SUPERADMIN])
+  @ApiOperation({
+    summary: "Delete Blob",
+  })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  @ApiResponse({ status: 201, description: "Created." })
+  async deleteFile(@Query("fileName") fileName: string): Promise<void> {
+    await this.contentUseCase.deleteFile(fileName);
   }
 }

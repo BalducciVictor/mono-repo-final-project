@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { CreateQuestionnaireRequestDto } from "src/application/dto/Questionnaire/Request/create-questionnaire-request.dto";
-import { UpdateQuestionnaireRequestDto } from "src/application/dto/Questionnaire/Request/update-questionnaire-request.dto";
-import { QuestionnaireResponseDto } from "src/application/dto/Questionnaire/Response/questionnaire-response.dto";
-import { IQuestionnaireService } from "src/domain/interfaces/services/IQuestionnaireService";
+import { CreateQuestionnaireRequestDto } from "../../../application/dto/Questionnaire/Request/create-questionnaire-request.dto";
+import { UpdateQuestionnaireRequestDto } from "../../../application/dto/Questionnaire/Request/update-questionnaire-request.dto";
+import { QuestionnaireResponseDto } from "../../../application/dto/Questionnaire/Response/questionnaire-response.dto";
+import { IQuestionnaireService } from "../../../domain/interfaces/services/IQuestionnaireService";
 
 @Injectable()
 export class QuestionnaireUseCase {

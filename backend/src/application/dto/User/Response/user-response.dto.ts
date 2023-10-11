@@ -48,5 +48,5 @@ export class UserResponseDto {
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
-  validatedChapterId: number[];
+  validatedChapterId: string[];
 }

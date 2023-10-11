@@ -1,16 +1,17 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import { CreateUserRequestDto } from "src/application/dto/User/Request/create-user-request.dto";
+import { CreateUserRequestDto } from "../../application/dto/User/Request/create-user-request.dto";
 import { IUserService } from "../interfaces/services/IUserService";
 import { IUserRepository } from "../interfaces/repository/IUserRepository";
-import { UpdateUserRequestDto } from "src/application/dto/User/Request/update-user-request.dto";
+import { UpdateUserRequestDto } from "../../application/dto/User/Request/update-user-request.dto";
 import * as bcrypt from "bcryptjs";
-import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
+import { UserResponseDto } from "../../application/dto/User/Response/user-response.dto";
 import { ICompanyRepository } from "../interfaces/repository/ICompanyRepository";
-import { GetUserCompanyGroupResponseDto } from "src/application/dto/Documentation/Response/get-user-company-group-response.dto";
+import { GetUserCompanyGroupResponseDto } from "../../application/dto/Documentation/Response/get-user-company-group-response.dto";
 
 @Injectable()
 export class UserService implements IUserService {
@@ -24,6 +25,19 @@ export class UserService implements IUserService {
   ): Promise<UserResponseDto> {
     if ((await this.userRepository.getByMail(createUserDto.email)) != null)
       throw new ConflictException(`This user already exist`);
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(createUserDto.email)) {
+      throw new BadRequestException("Invalid email format");
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    if (!passwordRegex.test(createUserDto.password)) {
+      throw new BadRequestException(
+        "Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      );
+    }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser: CreateUserRequestDto = {

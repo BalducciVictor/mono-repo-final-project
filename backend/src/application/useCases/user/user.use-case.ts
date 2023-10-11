@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { CreateUserRequestDto } from "src/application/dto/User/Request/create-user-request.dto";
-import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
-import { UpdateUserRequestDto } from "src/application/dto/User/Request/update-user-request.dto";
+import { CreateUserRequestDto } from "../../../application/dto/User/Request/create-user-request.dto";
+import { UserResponseDto } from "../../../application/dto/User/Response/user-response.dto";
+import { UpdateUserRequestDto } from "../../../application/dto/User/Request/update-user-request.dto";
 import { IUserService } from "../../../domain/interfaces/services/IUserService";
-import { GetUserCompanyGroupResponseDto } from "src/application/dto/Documentation/Response/get-user-company-group-response.dto";
+import { GetUserCompanyGroupResponseDto } from "../../../application/dto/Documentation/Response/get-user-company-group-response.dto";
 
 @Injectable()
 export class UserUseCase {

@@ -32,19 +32,19 @@ import {
 } from "../../../domain/entities/company/company";
 import CompanyController from "../../../application/controllers/company.controller";
 import { CompanyUseCase } from "../../../application/useCases/company/company.use-case";
-import { ContentController } from "src/application/controllers/content.controller";
-import { BlobContentService } from "src/domain/services/blobContent.service";
-import { IBlobContentService } from "src/domain/interfaces/services/IBlobContentService";
-import { IQuestionnaireService } from "src/domain/interfaces/services/IQuestionnaireService";
-import { QuestionnaireService } from "src/domain/services/questionnaire.service";
-import { QuestionnaireController } from "src/application/controllers/questionnaire.controller";
+import { ContentController } from "../../../application/controllers/content.controller";
+import { BlobContentService } from "../../../domain/services/blobContent.service";
+import { IBlobContentService } from "../../../domain/interfaces/services/IBlobContentService";
+import { IQuestionnaireService } from "../../../domain/interfaces/services/IQuestionnaireService";
+import { QuestionnaireService } from "../../../domain/services/questionnaire.service";
+import { QuestionnaireController } from "../../../application/controllers/questionnaire.controller";
 import {
   Questionnaire,
   QuestionnaireSchema,
-} from "src/domain/entities/quiz/questionnaire";
-import { ContentUseCase } from "src/application/useCases/content/content.use-case";
-import { QuestionnaireUseCase } from "src/application/useCases/questionnaire/questionnaire.use-case";
-import { AuthUseCase } from "src/application/useCases/auth/auth.use-case";
+} from "../../../domain/entities/questionnaire/questionnaire";
+import { ContentUseCase } from "../../../application/useCases/content/content.use-case";
+import { QuestionnaireUseCase } from "../../../application/useCases/questionnaire/questionnaire.use-case";
+import { AuthUseCase } from "../../../application/useCases/auth/auth.use-case";
 
 @Module({
   imports: [
