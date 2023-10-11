@@ -4,7 +4,7 @@ import { DocumentationDocument, DocumentationSchema } from "./documentation";
 import {
   QuestionnaireSchema,
   QuestionnaireDocument,
-} from "../quiz/questionnaire";
+} from "../questionnaire/questionnaire";
 
 export type ChapterDocument = HydratedDocument<Chapter>;
 

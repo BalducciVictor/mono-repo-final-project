@@ -11,8 +11,8 @@ import { Injectable } from "@nestjs/common";
 import {
   Questionnaire,
   QuestionnaireDocument,
-} from "src/domain/entities/quiz/questionnaire";
-import { CreateQuestionnaireRequestDto } from "src/application/dto/Questionnaire/Request/create-questionnaire-request.dto";
+} from "../../domain/entities/questionnaire/questionnaire";
+import { CreateQuestionnaireRequestDto } from "../../application/dto/Questionnaire/Request/create-questionnaire-request.dto";
 
 @Injectable()
 export class ChapterRepository implements IChapterRepository {

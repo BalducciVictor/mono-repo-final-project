@@ -3,14 +3,14 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import { CreateUserRequestDto } from "src/application/dto/User/Request/create-user-request.dto";
+import { CreateUserRequestDto } from "../../application/dto/User/Request/create-user-request.dto";
 import { IUserService } from "../interfaces/services/IUserService";
 import { IUserRepository } from "../interfaces/repository/IUserRepository";
-import { UpdateUserRequestDto } from "src/application/dto/User/Request/update-user-request.dto";
+import { UpdateUserRequestDto } from "../../application/dto/User/Request/update-user-request.dto";
 import * as bcrypt from "bcryptjs";
-import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
+import { UserResponseDto } from "../../application/dto/User/Response/user-response.dto";
 import { ICompanyRepository } from "../interfaces/repository/ICompanyRepository";
-import { GetUserCompanyGroupResponseDto } from "src/application/dto/Documentation/Response/get-user-company-group-response.dto";
+import { GetUserCompanyGroupResponseDto } from "../../application/dto/Documentation/Response/get-user-company-group-response.dto";
 
 @Injectable()
 export class UserService implements IUserService {

@@ -15,8 +15,8 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import { Roles } from "../decorator/user/roles.decorator";
-import { JwtAuthGuard } from "src/infrastructure/config/modules/auth/guards/jwt-auth.gard";
-import { UserType } from "src/domain/enum/userType";
+import { JwtAuthGuard } from "../../infrastructure/config/modules/auth/guards/jwt-auth.gard";
+import { UserType } from "../../domain/enum/userType";
 import { CreateQuestionnaireRequestDto } from "../dto/Questionnaire/Request/create-questionnaire-request.dto";
 import { QuestionnaireResponseDto } from "../dto/Questionnaire/Response/questionnaire-response.dto";
 import { QuestionnaireUseCase } from "../useCases/questionnaire/questionnaire.use-case";

@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { IChapterRepository } from "../interfaces/repository/IChapterRepository";
 import { IChapterService } from "../interfaces/services/IChapterService";
-import { CreateChapterRequestDto } from "src/application/dto/Chapter/Request/create-chapter-request.dto";
-import { UpdateChapterRequestDto } from "src/application/dto/Chapter/Request/update-chapter-request.dto";
-import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
+import { CreateChapterRequestDto } from "../../application/dto/Chapter/Request/create-chapter-request.dto";
+import { UpdateChapterRequestDto } from "../../application/dto/Chapter/Request/update-chapter-request.dto";
+import { ChapterResponseDto } from "../../application/dto/Chapter/Response/chapter-response.dto";
 
 @Injectable()
 export class ChapterService implements IChapterService {

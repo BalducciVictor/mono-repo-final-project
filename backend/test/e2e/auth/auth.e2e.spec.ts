@@ -5,8 +5,8 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
-import { AuthService } from "../../src/domain/services/auth.service";
-import { AppModule } from "../../src/infrastructure/config/modules/app.module";
+import { AuthService } from "../../../src/domain/services/auth.service";
+import { AppModule } from "../../../src/infrastructure/config/modules/app.module";
 import request from "supertest";
 
 describe("AuthController (e2e)", () => {
