@@ -12,7 +12,7 @@ export const Dashboard = () => {
       <Sidebar />
       <Content>
         <Routes>
-          <Route path="dashboard" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="chapters" element={<Chapter />} />
           <Route path="profile" element={<Profile />} />
         </Routes>

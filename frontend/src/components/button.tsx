@@ -17,14 +17,8 @@ interface ButtonStyledProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'default' | 'highlighted';
 }
 
-export const Button = ({
-  children,
-  variant = 'default',
-}: {
-  children: ReactNode;
-  variant?: 'default' | 'highlighted';
-}) => {
-  return <ButtonStyled variant={variant}>{children}</ButtonStyled>;
+export const Button: React.FC<ButtonStyledProps> = ({ children, variant = 'default', ...props }) => {
+  return <ButtonStyled variant={variant} {...props}>{children}</ButtonStyled>;
 };
 
 const ButtonStyled = styled.button<ButtonStyledProps>`
