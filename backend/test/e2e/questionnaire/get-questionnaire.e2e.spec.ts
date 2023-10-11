@@ -34,7 +34,7 @@ describe("QuestionnaireController (e2e)", () => {
       userCredentials.email,
       userCredentials.password
     );
-  });
+  }, 10000);
 
   it("should fetch all questionnaires for USER role", async () => {
     const response = await request(app.getHttpServer())

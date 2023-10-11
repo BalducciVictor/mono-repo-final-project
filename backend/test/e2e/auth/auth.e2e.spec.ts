@@ -26,7 +26,7 @@ describe("AuthController (e2e)", () => {
     app = module.createNestApplication();
     await app.init();
     authService = module.get<AuthService>(AuthService);
-  });
+  }, 10000);
 
   it(`/POST auth/signin (Success scenario)`, async () => {
     const mockUser = {

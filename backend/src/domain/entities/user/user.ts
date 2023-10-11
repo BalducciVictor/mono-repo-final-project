@@ -29,8 +29,8 @@ export class User {
   @Prop({ required: true })
   currentChapterStepId: number;
 
-  @Prop([Number])
-  validatedChapterId: number[];
+  @Prop([String])
+  validatedChapterId: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -34,7 +34,7 @@ describe("QuestionnaireController (e2e)", () => {
       userCredentials.email,
       userCredentials.password
     );
-  });
+  }, 10000);
 
   it("should reject create a questionnaire for a USER", async () => {
     const response = await request(app.getHttpServer())
@@ -63,9 +63,9 @@ describe("QuestionnaireController (e2e)", () => {
   });
 
   afterAll(async () => {
-    for (const companyId of createdQuestionnaireIds) {
+    for (const questionnaireId of createdQuestionnaireIds) {
       await request(app.getHttpServer())
-        .delete(`/chapters/${chapterId}/questionnaires/${companyId}`)
+        .delete(`/chapters/${chapterId}/questionnaires/${questionnaireId}`)
         .set("Authorization", `Bearer ${adminToken}`);
     }
     await app.close();

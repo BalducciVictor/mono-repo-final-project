@@ -45,5 +45,5 @@ export class UpdateUserRequestDto {
   @ApiProperty()
   @IsNumber({}, { each: true })
   @IsNotEmpty()
-  validatedChapterId?: number[];
+  validatedChapterId?: string[];
 }

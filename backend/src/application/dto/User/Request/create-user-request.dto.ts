@@ -50,5 +50,5 @@ export class CreateUserRequestDto {
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
-  validatedChapterId: number[];
+  validatedChapterId: string[];
 }

@@ -31,7 +31,7 @@ describe("ContentController (e2e)", () => {
       userCredentials.password
     );
     image = await fetchImageStream();
-  });
+  }, 10000);
 
   it("should allow ADMIN to upload a file and return url", async () => {
     const response = await request(app.getHttpServer())

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -24,6 +25,19 @@ export class UserService implements IUserService {
   ): Promise<UserResponseDto> {
     if ((await this.userRepository.getByMail(createUserDto.email)) != null)
       throw new ConflictException(`This user already exist`);
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(createUserDto.email)) {
+      throw new BadRequestException("Invalid email format");
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    if (!passwordRegex.test(createUserDto.password)) {
+      throw new BadRequestException(
+        "Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      );
+    }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser: CreateUserRequestDto = {

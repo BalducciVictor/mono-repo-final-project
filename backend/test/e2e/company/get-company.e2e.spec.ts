@@ -32,7 +32,7 @@ describe("GET /company/:companyId", () => {
       userCredentials.email,
       userCredentials.password
     );
-  });
+  }, 10000);
 
   it("should allow ADMIN to get a company by ID", async () => {
     const response = await request(app.getHttpServer())

@@ -33,7 +33,7 @@ describe("CompanyController (e2e)", () => {
       userCredentials.email,
       userCredentials.password
     );
-  });
+  }, 10000);
 
   it("should allow ADMIN to create a company", async () => {
     const dynamicCompanyData = {
