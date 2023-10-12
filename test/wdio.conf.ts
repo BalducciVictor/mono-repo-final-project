@@ -61,10 +61,17 @@ export const config: Options.Testrunner = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
+        maxInstances: 1,
         browserName: 'chrome',
         'goog:chromeOptions': {
-            binary: '/path/to/google-chrome', // Specify path to Chrome
-        },
+            args: [
+                '--no-sandbox',
+                '--disable-infobars',
+                '--headless',
+                '--disable-gpu',
+                '--window-size=1440,735'
+            ],
+        }
     }],
 
     //
