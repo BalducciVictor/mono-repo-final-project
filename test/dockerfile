@@ -1,33 +1,20 @@
 FROM ianwalter/puppeteer:latest
+
 WORKDIR /app
-ADD . /app
 
-RUN apt-get update && apt-get install -y openjdk-11-jdk
-
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
+COPY . .
 
 RUN npm install
 
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+
+# Installez OpenJDK
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jdk && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
+RUN export JAVA_HOME
+
 CMD ["npm", "run", "testReport"]
-
-# FROM node:16
-
-# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-#     && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
-#     && apt-get update -y \
-#     && apt-get install -y google-chrome-stable \
-#     && rm -rf /var/lib/apt/lists/*
-
-# WORKDIR /app
-
-# COPY /package.json ./
-
-# RUN npm install
-
-# COPY . ./
-
-# RUN apt-get update && apt-get install -y openjdk-11-jdk
-
-# ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
-
-# CMD ["npm", "run", "testReport"]
