@@ -5,7 +5,7 @@ import {getChapters} from "../../../services/api"
 import { fontSize, color, space } from '../../../styles/const';
 
 interface Chapters {
-  id:string,
+  _id:string,
   chapterName: string,
   category: string,
   description: string,
@@ -22,28 +22,6 @@ export const Chapter = () => {
         const result = await getChapters();
         setChapters(result);
       } catch (e: any) {
-        setChapters([{
-            id:"1234",
-            chapterName: "Javascript",
-            category: "language",
-            description: "Lorem ipsum dolor sit amet consectetur. Nulla metus in eu neque tellus tellus dictumst eget amet. Nulla metus in eu neque tellus tellus dictumst",
-            timeRead: "120"
-          },
-          {
-            id:"2345",
-            chapterName: "AdobeXD",
-            category: "logicile",
-            description: "Lorem ipsum dolor sit amet consectetur. Nulla metus in eu neque tellus tellus dictumst eget amet. Nulla metus in eu neque tellus tellus dictumst",
-            timeRead: "120"
-          },
-          {
-            id:"3456",
-            chapterName: "Illustrator",
-            category: "logicile",
-            description: "Lorem ipsum dolor sit amet consectetur. Nulla metus in eu neque tellus tellus dictumst eget amet. Nulla metus in eu neque tellus tellus dictumst",
-            timeRead: "120"
-          },
-        ]);
         console.log(e);
       }
     })();
@@ -52,20 +30,24 @@ export const Chapter = () => {
   return (
     <ChapterWrapper>
       <Title>Mes Chapitres</Title>
-      <ListeOfChapter>
-        {Chapters &&
-          Chapters.map((value: Chapters) => {
-            return (
-              <ChapterCard
-                id={value.id}
-                chapterName={value.chapterName}
-                category={value.category}
-                description={value.description}
-                timeRead={value.timeRead}
-              />
-            );
-          })}
-      </ListeOfChapter>
+      {
+        Chapters.length ? 
+          <ListeOfChapter>
+            {Chapters &&
+              Chapters.map((value: Chapters) => {
+                return (
+                  <ChapterCard
+                    id={value._id}
+                    chapterName={value.chapterName}
+                    category={value.category}
+                    description={value.description}
+                    timeRead={value.timeRead}
+                  />
+                );
+              })}
+          </ListeOfChapter>
+        : <p>il y a aucun Chapitre de disponible</p>
+      }
       </ChapterWrapper>
   );
 };

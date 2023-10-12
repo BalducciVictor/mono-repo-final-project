@@ -27,7 +27,7 @@ export const ChapterCard = ({ id, img, chapterName, category, description, timeR
             <section>
                 <ImageChapter src={ChapterImage} alt="chapter" />
             </section>
-            <section>
+            <RightSection>
                 <Title>{chapterName}</Title>
                 <Category>{category}</Category>
                 <Description>{description}</Description>
@@ -35,7 +35,7 @@ export const ChapterCard = ({ id, img, chapterName, category, description, timeR
                     <TimeToRead>Temps de lecture -{timeRead}min</TimeToRead>
                     <Button onClick={() => {goChapter(id)}}>Accéder</Button>
                 </BottomOfCard>
-            </section>
+            </RightSection>
         </MainWrapper>
     );
 };
@@ -56,6 +56,11 @@ const ImageChapter = styled.img`
     width: 100%;
 `;
 
+const RightSection = styled.section`
+    display: grid;
+    grid-template-rows: 13% 13% 50% 1fr;
+`;
+
 const Title = styled.h1`
     color: ${color.darker.fontDark};
     font-size: ${fontSize.m};
@@ -71,12 +76,10 @@ const Category = styled.h2`
 const BottomOfCard = styled.div`
     display: flex;
     align-items: center;
-    margin-top: ${space.sm};
 `;
 
 const Description = styled.p`
     color: ${color.darker.fontDark};
-    margin-top: ${space.xs};
     font-size: ${fontSize.s};
     line-height: normal;
     max-height: 50px;

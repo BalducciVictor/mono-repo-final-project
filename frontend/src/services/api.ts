@@ -18,9 +18,9 @@ const api = async ({
     const apiUrl = `${process.env.REACT_APP_API_URL}${url}`;
 
     const headers: HeadersInit = {
-        "X-CSRFToken": `Token ${sessionAPI.getToken() as string}`,
+        "X-CSRFToken": `Bearer ${sessionAPI.getToken() as string}`,
         "Content-Type": "application/json",
-        Authorization: `Token ${sessionAPI.getToken() as string}`,
+        Authorization: `Bearer ${sessionAPI.getToken() as string}`,
     };
 
     let queryParams = "";
@@ -58,11 +58,11 @@ export function signIn(email: string, password: string) {
 };
 
 export function getChapters() {
-    return api({method: "GET", url: `chapters/`,})
+    return api({method: "GET", url: `chapter/`,})
 };
 
 export function getChapter(chapterId: string) {
-    return api({method: "GET", url: `chapters/${chapterId}`,})
+    return api({method: "GET", url: `chapter/${chapterId}`,})
 };
 
 export function postChapter(data: Chapter) {
