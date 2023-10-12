@@ -25,8 +25,11 @@ export class Chapter {
   @Prop({ required: true })
   description: string;
 
-  @Prop({ required: true })
-  adminMail: string;
+  @Prop({ required: true, min: 0 })
+  timeToRead: number;
+
+  @Prop({ required: true, ref: "Company" })
+  companyId: Types.ObjectId;
 
   @Prop({ type: [DocumentationSchema], default: [] })
   documents: Types.DocumentArray<DocumentationDocument>;

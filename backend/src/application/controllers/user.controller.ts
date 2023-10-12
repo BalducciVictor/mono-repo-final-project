@@ -19,6 +19,7 @@ import { Roles } from "../decorator/user/roles.decorator";
 import { UserResponseDto } from "../dto/User/Response/user-response.dto";
 import { UserType } from "../../domain/enum/userType";
 import { GetUserCompanyGroupResponseDto } from "../dto/Documentation/Response/get-user-company-group-response.dto";
+import { ChapterResponseDto } from "../dto/Chapter/Response/chapter-response.dto";
 
 @ApiTags("users")
 @Controller("users")
@@ -35,6 +36,22 @@ export default class UserController {
   @ApiResponse({ status: 403, description: "Forbidden." })
   async create(@Body() user: CreateUserRequestDto): Promise<UserResponseDto> {
     return await this.userUseCase.createUser(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(":userId/chapters")
+  @Roles([UserType.ADMIN, UserType.SUPERADMIN, UserType.USER])
+  @ApiOperation({
+    summary: "Get all chapters for a specific user",
+  })
+  @ApiResponse({ status: 200, description: "List of chapters for the user." })
+  @ApiResponse({ status: 404, description: "User not found." })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  @ApiParam({ name: "userId", description: "User ID" })
+  async getAllChapters(
+    @Param("userId") userId: string
+  ): Promise<Array<ChapterResponseDto>> {
+    return await this.userUseCase.getAllChaptersByUserId(userId);
   }
 
   @Get(":userId")

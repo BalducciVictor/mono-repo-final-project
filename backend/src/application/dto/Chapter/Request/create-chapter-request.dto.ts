@@ -5,6 +5,7 @@ import {
   IsBoolean,
   ValidateNested,
   IsArray,
+  IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { CreateDocumentationRequestDto } from "../../Documentation/Request/create-documentation-request.dto";
@@ -35,6 +36,14 @@ export class CreateChapterRequestDto {
   @IsString()
   @IsNotEmpty()
   description: string;
+
+  @ApiProperty()
+  @IsString()
+  companyId: string;
+
+  @ApiProperty()
+  @IsNumber()
+  timeToRead?: number;
 
   @ApiProperty()
   @IsArray()
