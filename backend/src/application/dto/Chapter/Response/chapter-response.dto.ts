@@ -46,7 +46,7 @@ export class ChapterResponseDto {
 
   @ApiProperty()
   @IsNumber()
-  timeToRead?: number;
+  timeToRead: number;
 
   @ApiProperty()
   @IsArray()

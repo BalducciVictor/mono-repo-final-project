@@ -67,7 +67,6 @@ export class UserService implements IUserService {
     if (!existingUser) {
       throw new NotFoundException(`User not found`);
     }
-    console.log(existingUser.companyId.toString());
     return await this.chapterRepository.getAllByCompanyId(
       existingUser.companyId.toString()
     );
