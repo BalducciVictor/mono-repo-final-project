@@ -6,11 +6,17 @@ import { Button } from '../../../components/button';
 import { PopUp } from '../../../components/PopUp';
 import { useState } from 'react';
 import { useUser } from '../../../userContext';
-import { UserRole } from '../../../types/usertypes';
+import { UserFormData, UserRole } from '../../../types/usertypes';
+import { CreateUserForm } from './components/formCreateUser';
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {user} = useUser();
+
+  const handleSubmitForm = (data: UserFormData) => {
+    console.log(data);
+    setIsModalOpen(false);
+  };
   
   return (
     <HomeContainer>
@@ -22,7 +28,7 @@ export const Home = () => {
         <>
           <Button onClick={() => setIsModalOpen(true)}>Create new user</Button>
           <PopUp isOpen={isModalOpen} onClose={() => {setIsModalOpen(false)}}>
-            <h2>Ici le form</h2>
+            <CreateUserForm onSubmit={handleSubmitForm}/>
           </PopUp> 
         </>
         : ''

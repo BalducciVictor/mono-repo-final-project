@@ -4,5 +4,16 @@ export type UserState = {
 
 export enum UserRole {
     Admin = 'ADMIN',
-    User = 'DEFAULT'
+    User = 'USER',
+    SuperAdmin = 'SUPERADMIN',
 }
+
+export interface UserFormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    companyId: string;
+    groupId: string;
+    role: string;
+  }
