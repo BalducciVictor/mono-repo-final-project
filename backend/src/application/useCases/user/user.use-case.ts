@@ -1,9 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserRequestDto } from "../../../application/dto/User/Request/create-user-request.dto";
 import { UserResponseDto } from "../../../application/dto/User/Response/user-response.dto";
 import { UpdateUserRequestDto } from "../../../application/dto/User/Request/update-user-request.dto";
 import { IUserService } from "../../../domain/interfaces/services/IUserService";
 import { GetUserCompanyGroupResponseDto } from "../../../application/dto/Documentation/Response/get-user-company-group-response.dto";
+import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
 
 @Injectable()
 export class UserUseCase {
@@ -34,5 +35,11 @@ export class UserUseCase {
 
   async createUser(user: CreateUserRequestDto): Promise<UserResponseDto> {
     return await this.userService.create(user);
+  }
+
+  async getAllChaptersByUserId(
+    userId: string
+  ): Promise<Array<ChapterResponseDto>> {
+    return await this.userService.getAllByUserId(userId);
   }
 }

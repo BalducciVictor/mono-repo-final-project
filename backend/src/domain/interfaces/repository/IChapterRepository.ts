@@ -20,4 +20,7 @@ export abstract class IChapterRepository {
     chapter: ChapterDocument,
     createQuestionnaireDto: CreateQuestionnaireRequestDto
   ) => Promise<QuestionnaireDocument | null>;
+  getAllByCompanyId: (
+    companyId: string
+  ) => Promise<Array<ChapterDocument> | null>;
 }

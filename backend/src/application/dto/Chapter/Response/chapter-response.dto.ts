@@ -5,47 +5,53 @@ import {
   IsBoolean,
   ValidateNested,
   IsArray,
+  IsNumber,
 } from "class-validator";
 import { CreateDocumentationRequestDto } from "../../Documentation/Request/create-documentation-request.dto";
 import { Type } from "class-transformer";
 import { QuestionnaireResponseDto } from "../../Questionnaire/Response/questionnaire-response.dto";
+import { Types } from "mongoose";
 
 export class ChapterResponseDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  adminMail?: string;
+  chapterName: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  chapterName?: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  category?: string;
+  category: string;
 
   @ApiProperty()
   @IsBoolean()
   @IsNotEmpty()
-  hasQuiz?: boolean;
+  hasQuiz: boolean;
 
   @ApiProperty()
   @IsBoolean()
   @IsNotEmpty()
   @Type(() => QuestionnaireResponseDto)
-  questionnaire?: Array<QuestionnaireResponseDto>;
+  questionnaire: Array<QuestionnaireResponseDto>;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  description?: string;
+  description: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @Type(() => Types.ObjectId)
+  companyId: Types.ObjectId;
+
+  @ApiProperty()
+  @IsNumber()
+  timeToRead?: number;
 
   @ApiProperty()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateDocumentationRequestDto)
   @IsNotEmpty()
-  documents?: Array<CreateDocumentationRequestDto>;
+  documents: Array<CreateDocumentationRequestDto>;
 }
