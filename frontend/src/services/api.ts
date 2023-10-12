@@ -61,6 +61,10 @@ export function getChapters() {
     return api({method: "GET", url: `chapter/`,})
 };
 
+export function getChaptersByUser(userId: string) {
+    return api({method: "GET", url: `users/${userId}/chapters/`,})
+};
+
 export function getChapter(chapterId: string) {
     return api({method: "GET", url: `chapter/${chapterId}`,})
 };
