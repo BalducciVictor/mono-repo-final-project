@@ -26,7 +26,7 @@ export const Home = () => {
       {
         user.role == UserRole.Admin ?
         <>
-          <Button onClick={() => setIsModalOpen(true)}>Create new user</Button>
+          <Button onClick={() => setIsModalOpen(true)}>Creer un nouveau utilisateur</Button>
           <PopUp isOpen={isModalOpen} onClose={() => {setIsModalOpen(false)}}>
             <CreateUserForm onSubmit={handleSubmitForm}/>
           </PopUp> 
