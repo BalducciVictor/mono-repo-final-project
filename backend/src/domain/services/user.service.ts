@@ -3,6 +3,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { CreateUserRequestDto } from "../../application/dto/User/Request/create-user-request.dto";
 import { IUserService } from "../interfaces/services/IUserService";
@@ -125,10 +126,18 @@ export class UserService implements IUserService {
     updateUserDto: UpdateUserRequestDto
   ): Promise<UserResponseDto> {
     const existingUser: UserResponseDto = await this.userRepository.get(userId);
-    if (!existingUser) {
-      throw new NotFoundException(`User not found`);
-    }
+    if (!existingUser) throw new NotFoundException(`User not found`);
+
     this.checkUserConstraints(updateUserDto);
+    const isPasswordValid = await bcrypt.compare(
+      existingUser.password,
+      updateUserDto.password
+    );
+    if (!isPasswordValid)
+      throw new BadRequestException(
+        "New password should be different from the old one"
+      );
+
     return await this.userRepository.update(userId, updateUserDto);
   }
 
