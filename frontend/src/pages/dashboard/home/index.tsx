@@ -7,9 +7,11 @@ import { PopUp } from '../../../components/PopUp';
 import { useState } from 'react';
 import { useUser } from '../../../userContext';
 import { UserRole } from '../../../types/usertypes';
+import { UserList } from './components/userList';
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUserListOpen, setIsUserListOpen] = useState(false);
   const {user} = useUser();
   
   return (
@@ -24,6 +26,10 @@ export const Home = () => {
           <PopUp isOpen={isModalOpen} onClose={() => {setIsModalOpen(false)}}>
             <h2>Ici le form</h2>
           </PopUp> 
+          <Button onClick={() => setIsUserListOpen(true)}>Afficher les utilisateurs</Button>
+          <PopUp isOpen={isUserListOpen} onClose={() => setIsUserListOpen(false)}>
+            <UserList companyId={/* someCompanyId */1} />
+          </PopUp>
         </>
         : ''
       }
