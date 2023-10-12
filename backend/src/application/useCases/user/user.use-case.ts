@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { CreateUserRequestDto } from "../../../application/dto/User/Request/create-user-request.dto";
 import { UserResponseDto } from "../../../application/dto/User/Response/user-response.dto";
 import { UpdateUserRequestDto } from "../../../application/dto/User/Request/update-user-request.dto";
