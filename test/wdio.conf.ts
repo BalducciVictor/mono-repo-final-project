@@ -135,8 +135,8 @@ export const config: Options.Testrunner = {
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: [
         'spec',
-        ['allure', 
-        {outputDir: 'allure-results', 
+        ['allure', {
+        outputDir: 'allure-results', 
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: true,
     }]],
