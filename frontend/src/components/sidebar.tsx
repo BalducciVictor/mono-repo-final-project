@@ -15,7 +15,7 @@ export const SignOut = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    setUser({role: null });
+    setUser({role: null, id: null, companyId: null, currentChapterId: null, currentChapterStepId: null, email:null, firstName: null, lastName: null, validatedChapterId: null});
     sessionAPI.removeToken()
     navigate('/')
   }
