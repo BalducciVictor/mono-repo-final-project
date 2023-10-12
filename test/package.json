@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "wdio": "wdio run ./wdio.conf.ts"
+    "wdio": "wdio run ./wdio.conf.ts",
+    "report": "allure generate allure-results --clean && allure open",
+    "testReport": "wdio run ./wdio.conf.ts && allure generate allure-results --clean && allure open"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "allure-commandline": "^2.24.1",
     "call-bind": "^1.0.2",
     "create-wdio": "^8.2.5"
   },

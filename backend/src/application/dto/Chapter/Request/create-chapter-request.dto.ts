@@ -43,7 +43,7 @@ export class CreateChapterRequestDto {
 
   @ApiProperty()
   @IsNumber()
-  timeToRead?: number;
+  timeToRead: number;
 
   @ApiProperty()
   @IsArray()

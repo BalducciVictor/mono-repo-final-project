@@ -23,6 +23,7 @@ import { CompanyResponseDto } from "../dto/Company/Response/company-response.dto
 import { CompanyUseCase } from "../useCases/company/company.use-case";
 import { UpdateCompanyRequestDto } from "../dto/Company/Request/update-company-group-request.dto";
 import { AddCompanyGroupRequestDto } from "../dto/Company/CompanyGroup/Request/add-company-group-request.dto";
+import { ChapterResponseDto } from "../dto/Chapter/Response/chapter-response.dto";
 
 @ApiBearerAuth()
 @ApiTags("company")
@@ -65,6 +66,25 @@ export default class CompanyController {
     @Param("companyId") companyId: string
   ): Promise<CompanyResponseDto> {
     return await this.companyUseCase.getCompany(companyId);
+  }
+
+  @Get(":companyId/chapters")
+  @UseGuards(JwtAuthGuard)
+  @Roles([UserType.ADMIN, UserType.USER, UserType.SUPERADMIN])
+  @ApiOperation({
+    summary: "Get chapters by companyId",
+  })
+  @ApiResponse({
+    status: 200,
+    description: "The found chapters by companyId.",
+    type: CompanyResponseDto,
+  })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  @ApiParam({ name: "companyId", description: "Company ID" })
+  async getAllChapterByCompanyId(
+    @Param("companyId") companyId: string
+  ): Promise<Array<ChapterResponseDto>> {
+    return await this.companyUseCase.getAllChapterByCompanyId(companyId);
   }
 
   @Get()

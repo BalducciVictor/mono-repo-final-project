@@ -3,6 +3,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { CreateUserRequestDto } from "../../application/dto/User/Request/create-user-request.dto";
 import { IUserService } from "../interfaces/services/IUserService";
@@ -23,24 +24,30 @@ export class UserService implements IUserService {
     private readonly chapterRepository: IChapterRepository
   ) {}
 
+  private checkUserConstraints(
+    user: CreateUserRequestDto | UpdateUserRequestDto
+  ): void {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(user.email)) {
+      throw new BadRequestException("Invalid email format");
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    if (!passwordRegex.test(user.password)) {
+      throw new BadRequestException(
+        "Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      );
+    }
+  }
+
   public async create(
     createUserDto: CreateUserRequestDto
   ): Promise<UserResponseDto> {
     if ((await this.userRepository.getByMail(createUserDto.email)) != null)
       throw new ConflictException(`This user already exist`);
 
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailRegex.test(createUserDto.email)) {
-      throw new BadRequestException("Invalid email format");
-    }
-
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
-    if (!passwordRegex.test(createUserDto.password)) {
-      throw new BadRequestException(
-        "Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character"
-      );
-    }
+    this.checkUserConstraints(createUserDto);
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser: CreateUserRequestDto = {
@@ -67,7 +74,6 @@ export class UserService implements IUserService {
     if (!existingUser) {
       throw new NotFoundException(`User not found`);
     }
-    console.log(existingUser.companyId.toString());
     return await this.chapterRepository.getAllByCompanyId(
       existingUser.companyId.toString()
     );
@@ -120,9 +126,17 @@ export class UserService implements IUserService {
     updateUserDto: UpdateUserRequestDto
   ): Promise<UserResponseDto> {
     const existingUser: UserResponseDto = await this.userRepository.get(userId);
-    if (!existingUser) {
-      throw new NotFoundException(`User not found`);
-    }
+    if (!existingUser) throw new NotFoundException(`User not found`);
+
+    this.checkUserConstraints(updateUserDto);
+    const isPasswordValid = await bcrypt.compare(
+      existingUser.password,
+      updateUserDto.password
+    );
+    if (!isPasswordValid)
+      throw new BadRequestException(
+        "New password should be different from the old one"
+      );
 
     return await this.userRepository.update(userId, updateUserDto);
   }
