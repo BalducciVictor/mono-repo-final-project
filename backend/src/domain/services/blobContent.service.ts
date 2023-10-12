@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { BlobServiceClient } from "@azure/storage-blob";
-import { CreateContentResponseDto } from "src/application/dto/Content/Response/create-content-reponse.dto";
+import { CreateContentResponseDto } from "../../application/dto/Content/Response/create-content-reponse.dto";
 import { IBlobContentService } from "../interfaces/services/IBlobContentService";
 
 @Injectable()
@@ -32,5 +32,13 @@ export class BlobContentService implements IBlobContentService {
     responseDto.url = blockBlobClient.url;
 
     return responseDto;
+  }
+
+  async deleteFile(blobName: string): Promise<void> {
+    const containerClient =
+      this.blobServiceClient.getContainerClient("imagescontainer");
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    await blockBlobClient.delete();
   }
 }

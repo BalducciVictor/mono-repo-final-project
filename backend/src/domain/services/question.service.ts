@@ -1,7 +1,0 @@
-//Create
-
-//Find
-
-//Modify
-
-//Delete

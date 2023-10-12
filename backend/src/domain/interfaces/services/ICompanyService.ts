@@ -1,3 +1,4 @@
+import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
 import { AddCompanyGroupRequestDto } from "src/application/dto/Company/CompanyGroup/Request/add-company-group-request.dto";
 import { CreateCompanyRequestDto } from "src/application/dto/Company/Request/create-company-group-request.dto";
 import { UpdateCompanyRequestDto } from "src/application/dto/Company/Request/update-company-group-request.dto";
@@ -16,4 +17,7 @@ export abstract class ICompanyService {
   ) => Promise<CompanyResponseDto>;
   delete: (companyId: string) => Promise<void>;
   getAll: () => Promise<Array<CompanyResponseDto>>;
+  getAllChapterByCompanyId: (
+    companyId: string
+  ) => Promise<Array<ChapterResponseDto>>;
 }

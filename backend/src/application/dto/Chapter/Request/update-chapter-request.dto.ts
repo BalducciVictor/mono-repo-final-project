@@ -1,35 +1,38 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, IsBoolean } from "class-validator";
+import { IsNotEmpty, IsString, IsBoolean, IsNumber } from "class-validator";
 import { UpdateDocumentationRequestDto } from "../../Documentation/Request/update-documentation-request.dto";
 
 export class UpdateChapterRequestDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  adminMail: string;
+  chapterName?: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  chapterName: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  category: string;
+  category?: string;
 
   @ApiProperty()
   @IsBoolean()
   @IsNotEmpty()
-  hasQuiz: boolean;
+  hasQuiz?: boolean;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description?: string;
+
+  @ApiProperty()
+  @IsString()
+  companyId?: string;
+
+  @ApiProperty()
+  @IsNumber()
+  timeToRead?: number;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  documents: UpdateDocumentationRequestDto[];
+  documents?: UpdateDocumentationRequestDto[];
 }

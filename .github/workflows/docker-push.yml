@@ -13,6 +13,14 @@ jobs:
     steps:
     - name: Check out the repo
       uses: actions/checkout@v2
+      
+    - name: Install dependencies
+      working-directory: ./backend
+      run: npm install
+
+    - name: Run e2e tests
+      working-directory: ./backend
+      run: npm run test:e2e
 
     - name: Login to ACR
       run: docker login finalprojectacr.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}

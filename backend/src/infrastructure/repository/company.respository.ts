@@ -6,8 +6,8 @@ import { UpdateCompanyRequestDto } from "../../application/dto/Company/Request/u
 import { CompanyResponseDto } from "../../application/dto/Company/Response/company-response.dto";
 import { Company } from "../../domain/entities/company/company";
 import { ICompanyRepository } from "../../domain/interfaces/repository/ICompanyRepository";
-import { GetUserCompanyGroupResponseDto } from "src/application/dto/Documentation/Response/get-user-company-group-response.dto";
-import { AddCompanyGroupRequestDto } from "src/application/dto/Company/CompanyGroup/Request/add-company-group-request.dto";
+import { GetUserCompanyGroupResponseDto } from "../../application/dto/Documentation/Response/get-user-company-group-response.dto";
+import { AddCompanyGroupRequestDto } from "../../application/dto/Company/CompanyGroup/Request/add-company-group-request.dto";
 
 @Injectable()
 export class CompanyRepository implements ICompanyRepository {

@@ -11,8 +11,8 @@ import { Injectable } from "@nestjs/common";
 import {
   Questionnaire,
   QuestionnaireDocument,
-} from "src/domain/entities/quiz/questionnaire";
-import { CreateQuestionnaireRequestDto } from "src/application/dto/Questionnaire/Request/create-questionnaire-request.dto";
+} from "../../domain/entities/questionnaire/questionnaire";
+import { CreateQuestionnaireRequestDto } from "../../application/dto/Questionnaire/Request/create-questionnaire-request.dto";
 
 @Injectable()
 export class ChapterRepository implements IChapterRepository {
@@ -23,16 +23,22 @@ export class ChapterRepository implements IChapterRepository {
   ) {}
 
   async get(id: string): Promise<ChapterDocument | null> {
-    return this.chapterModel.findById(id).exec();
+    return await this.chapterModel.findById(id).exec();
   }
 
   async getAll(): Promise<Array<ChapterDocument> | null> {
-    return this.chapterModel.find().exec();
+    return await this.chapterModel.find().exec();
+  }
+
+  async getAllByCompanyId(
+    companyId: string
+  ): Promise<Array<ChapterDocument> | null> {
+    return await this.chapterModel.find({ companyId: companyId }).exec();
   }
 
   async create(chapter: CreateChapterRequestDto): Promise<ChapterDocument> {
     const newChapter = new this.chapterModel(chapter);
-    return newChapter.save();
+    return await newChapter.save();
   }
 
   async delete(id: string): Promise<void> {

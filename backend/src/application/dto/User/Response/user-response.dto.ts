@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsNotEmpty, IsString, IsNumber } from "class-validator";
+import { IsNotEmpty, IsString, IsArray } from "class-validator";
 import { Types } from "mongoose";
 
 export class UserResponseDto {
@@ -25,7 +25,6 @@ export class UserResponseDto {
   password: string;
 
   @ApiProperty()
-  @IsNumber()
   @IsNotEmpty()
   @Type(() => Types.ObjectId)
   companyId: Types.ObjectId;
@@ -36,17 +35,17 @@ export class UserResponseDto {
   role: string;
 
   @ApiProperty()
-  @IsNumber()
+  @IsArray()
   @IsNotEmpty()
-  currentChapterId: number;
+  currentChapterIds: Array<string>;
 
   @ApiProperty()
-  @IsNumber()
+  @IsArray()
   @IsNotEmpty()
-  currentChapterStepId: number;
+  currentChapterStepId: Array<string>;
 
   @ApiProperty()
-  @IsNumber()
+  @IsArray()
   @IsNotEmpty()
-  validatedChapterId: number[];
+  validatedChapterId: Array<string>;
 }

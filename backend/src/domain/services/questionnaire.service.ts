@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { IQuestionnaireService } from "../interfaces/services/IQuestionnaireService";
-import { CreateQuestionnaireRequestDto } from "src/application/dto/Questionnaire/Request/create-questionnaire-request.dto";
+import { CreateQuestionnaireRequestDto } from "../../application/dto/Questionnaire/Request/create-questionnaire-request.dto";
 import { IChapterRepository } from "../interfaces/repository/IChapterRepository";
-import { QuestionnaireResponseDto } from "src/application/dto/Questionnaire/Response/questionnaire-response.dto";
+import { QuestionnaireResponseDto } from "../../application/dto/Questionnaire/Response/questionnaire-response.dto";
 
 @Injectable()
 export class QuestionnaireService implements IQuestionnaireService {

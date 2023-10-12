@@ -17,7 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json --forceExit"
   },
   "dependencies": {
     "@azure/storage-blob": "^12.16.0",
@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^10.2.7",
     "@nestjs/swagger": "^7.1.10",
     "@types/multer": "^1.4.8",
+    "axios": "^1.5.1",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",

@@ -11,7 +11,8 @@
   "license": "ISC",
   "workspaces": [
     "backend/*",
-    "frontend/*"
+    "frontend/*",
+    "test/*"
   ],
   "dependencies": {
     "react-query": "^3.39.3"
