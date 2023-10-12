@@ -1,5 +1,6 @@
 import sessionAPI from "./sessionStorageAPI"
 import type { Chapter } from "../types/requestTypes"
+import { UserFormData } from "../types/usertypes";
 
 interface ApiOptions {
     method: "GET" | "POST" | "PUT" | "DELETE";
@@ -42,11 +43,12 @@ const api = async ({
     try {
         const response = await fetch(requestUrl, requestOptions);
         if (!response.ok) {
-            throw new Error(await response.json());
+            const data = await response.json();
+            throw new Error(data.message || "Erreur inconnue"); // Utilisez data.message ici
         }
         return await response.json();
     } catch (error: any) {
-        throw new Error("error");
+        throw new Error(error.message);
     }
 };
 
@@ -88,3 +90,7 @@ export function getAllCompany() {
 export function getChapterByCompany(companyId: string) {
     return api({method: "GET", url: `company/${companyId}/chapters/`})
 };
+
+export function postUser(data: UserFormData){
+    return api({method: "POST", url: `users`, data})
+}
