@@ -12,12 +12,15 @@ import * as bcrypt from "bcryptjs";
 import { UserResponseDto } from "../../application/dto/User/Response/user-response.dto";
 import { ICompanyRepository } from "../interfaces/repository/ICompanyRepository";
 import { GetUserCompanyGroupResponseDto } from "../../application/dto/Documentation/Response/get-user-company-group-response.dto";
+import { IChapterRepository } from "../interfaces/repository/IChapterRepository";
+import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
 
 @Injectable()
 export class UserService implements IUserService {
   constructor(
     private readonly userRepository: IUserRepository,
-    private readonly companyRepository: ICompanyRepository
+    private readonly companyRepository: ICompanyRepository,
+    private readonly chapterRepository: IChapterRepository
   ) {}
 
   public async create(
@@ -55,6 +58,19 @@ export class UserService implements IUserService {
     }
 
     return await this.userRepository.get(userId);
+  }
+
+  public async getAllByUserId(
+    userId: string
+  ): Promise<Array<ChapterResponseDto>> {
+    const existingUser: UserResponseDto = await this.userRepository.get(userId);
+    if (!existingUser) {
+      throw new NotFoundException(`User not found`);
+    }
+    console.log(existingUser.companyId.toString());
+    return await this.chapterRepository.getAllByCompanyId(
+      existingUser.companyId.toString()
+    );
   }
 
   public async getUsersByCompanyId(

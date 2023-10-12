@@ -25,7 +25,6 @@ export class UserResponseDto {
   password: string;
 
   @ApiProperty()
-  @IsNumber()
   @IsNotEmpty()
   @Type(() => Types.ObjectId)
   companyId: Types.ObjectId;
