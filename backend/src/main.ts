@@ -27,7 +27,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       "http://localhost:3000",
-      "http://onby-frontend.aqgmcfeucjeycthw.francecentral.azurecontainer.io/",
+      "http://onby-front.ghgmbbhubqhfbnc2.francecentral.azurecontainer.io/",
     ],
     methods: ["GET", "POST", "DELETE", "PUT"],
   });
