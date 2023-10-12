@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useUser } from '../../../userContext';
 import { ChapterCard } from "./components/organismes/ChapterCard";
-import {getChapters} from "../../../services/api"
+import { getChapters, getChaptersByUser } from "../../../services/api"
 import { fontSize, color, space } from '../../../styles/const';
 
 interface Chapters {
@@ -14,12 +15,20 @@ interface Chapters {
 
 export const Chapter = () => {
   const [Chapters, setChapters] = useState<Chapters[]>([]);
+  const { user, setUser } = useUser(); 
 
   useEffect(() => {
     (async () => {
       try {
-        const result = await getChapters();
-        setChapters(result);
+        if (user.role === "ADMIN") {
+          const result = await getChapters();
+          setChapters(result);
+        } else {
+          if (user.id) {
+            const result = await getChaptersByUser(user.id);
+            setChapters(result);
+          } 
+        }
       } catch (e: any) {
         console.log(e);
       }
@@ -42,6 +51,7 @@ export const Chapter = () => {
                     category={value.category}
                     description={value.description}
                     timeRead={value.timeRead}
+                    role={user.role || ''}
                   />
                 );
               })}

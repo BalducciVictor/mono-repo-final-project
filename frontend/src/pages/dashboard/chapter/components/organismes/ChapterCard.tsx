@@ -11,9 +11,10 @@ type ChapterCardProps = {
     category?: string;
     description?: any;
     timeRead?: string;
+    role?: string;
 };
 
-export const ChapterCard = ({ id, img, chapterName, category, description, timeRead }: ChapterCardProps) => {
+export const ChapterCard = ({ id, img, chapterName, category, description, timeRead, role }: ChapterCardProps) => {
     const goChapter= async (id: string) => {
         try {
             await getChapter(id);
@@ -33,7 +34,7 @@ export const ChapterCard = ({ id, img, chapterName, category, description, timeR
                 <Description>{description}</Description>
                 <BottomOfCard>
                     <TimeToRead>Temps de lecture -{timeRead}min</TimeToRead>
-                    <Button onClick={() => {goChapter(id)}}>Accéder</Button>
+                    <Button onClick={() => {goChapter(id)}}>{role === "ADMIN" ? "Modifier" : "Accéder"}</Button>
                 </BottomOfCard>
             </RightSection>
         </MainWrapper>

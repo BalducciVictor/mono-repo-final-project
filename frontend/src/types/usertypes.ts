@@ -1,7 +1,7 @@
 export type UserState = {
     role: string | null;
-    id: number | null;
-    companyId: number | null;
+    id: string | null;
+    companyId: string | null;
     currentChapterId: number | null;
     currentChapterStepId: number | null;
     email: string | null;
