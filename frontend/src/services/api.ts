@@ -80,3 +80,11 @@ export function getUser(userId: string) {
 export function getQuestionnaire(chapterId: string, questionnaireId: string ) {
     return api({method: "POST", url: `chapters/${chapterId}/questionnaires/${questionnaireId}`})
 };
+
+export function getAllCompany() {
+    return api({method: "GET", url: `company/`})
+};
+
+export function getChapterByCompany(companyId: string) {
+    return api({method: "GET", url: `company/${companyId}/chapters/`})
+};

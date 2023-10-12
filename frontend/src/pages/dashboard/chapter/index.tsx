@@ -2,27 +2,42 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useUser } from '../../../userContext';
 import { ChapterCard } from "./components/organismes/ChapterCard";
-import { getChapters, getChaptersByUser } from "../../../services/api"
+import { SearchBar } from './components/molecules/SearchBar';
+import { FilterRole } from './components/molecules/FilterRole';
+import { getChapters, getChaptersByUser, getAllCompany, getChapterByCompany } from "../../../services/api"
 import { fontSize, color, space } from '../../../styles/const';
 
 interface Chapters {
-  _id:string,
+  _id: string,
   chapterName: string,
   category: string,
   description: string,
   timeRead: string,
 }
 
+interface Company {
+  _id: string,
+  name: string,
+}
+
 export const Chapter = () => {
+  const [allChapters, setAllChapters] = useState<Chapters[]>([]);
   const [Chapters, setChapters] = useState<Chapters[]>([]);
-  const { user, setUser } = useUser(); 
+  const [allCompany, setAllCompany] = useState<Company[]>([]);
+  const [selectedCompany, setSelectedCompany] = useState<string>("");
+  const { user, setUser } = useUser();
+  const [Search, setSearch] = useState<string>("");
+  const [filteredChapters, setFilteredChapters] = useState<Chapters[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
         if (user.role === "ADMIN") {
+          const allCompany = await getAllCompany();
           const result = await getChapters();
+          setAllCompany(allCompany);
           setChapters(result);
+          setAllChapters(result);
         } else {
           if (user.id) {
             const result = await getChaptersByUser(user.id);
@@ -35,14 +50,45 @@ export const Chapter = () => {
     })();
   }, []);
 
+  useEffect(() => {
+      if (!selectedCompany) setChapters(allChapters);
+      else {
+        (async () => {
+            try {
+                const result = await getChapterByCompany(selectedCompany);
+                setChapters(result);
+            } catch (e: any) {
+                console.log(e);
+            }
+        })();
+      }
+  }, [selectedCompany]);
+
+  useEffect(() => {
+    if(Search === "") {
+      setFilteredChapters([]);
+    } else {
+      const filtered = Chapters.filter(chapter => 
+        chapter.chapterName.toLowerCase().includes(Search.toLowerCase())
+      );
+      setFilteredChapters(filtered);
+    }
+  }, [Search]);
+
   return (
     <ChapterWrapper>
-      <Title>Mes Chapitres</Title>
+      <Header>
+        <Title>Mes Chapitres</Title>
+        <SearchBar onChange={setSearch}/>
+      </Header>
+      {
+        user.role === "ADMIN" && <FilterRole onChange={setSelectedCompany} categories={allCompany}/> 
+      }
       {
         Chapters.length ? 
           <ListeOfChapter>
-            {Chapters &&
-              Chapters.map((value: Chapters) => {
+            {
+              (filteredChapters.length > 0 || Search.length > 0 ? filteredChapters : Chapters).map((value: Chapters) => {
                 return (
                   <ChapterCard
                     key={value._id}
@@ -54,7 +100,8 @@ export const Chapter = () => {
                     role={user.role || ''}
                   />
                 );
-              })}
+              })
+            }
           </ListeOfChapter>
         : <p>il y a aucun Chapitre de disponible</p>
       }
@@ -63,6 +110,9 @@ export const Chapter = () => {
 };
 
 const ChapterWrapper = styled.article`
+  display: flex;
+  flex-direction: column;
+  gap: ${space.ml};
 `;
 
 const Title = styled.h1`
@@ -71,7 +121,10 @@ const Title = styled.h1`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  margin-bottom: ${space.ml};
+`
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
 const ListeOfChapter = styled.ul`

@@ -4,6 +4,7 @@ import { UpdateCompanyRequestDto } from "../../../application/dto/Company/Reques
 import { CompanyResponseDto } from "../../../application/dto/Company/Response/company-response.dto";
 import { ICompanyService } from "../../../domain/interfaces/services/ICompanyService";
 import { AddCompanyGroupRequestDto } from "../../../application/dto/Company/CompanyGroup/Request/add-company-group-request.dto";
+import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
 
 @Injectable()
 export class CompanyUseCase {
@@ -39,5 +40,11 @@ export class CompanyUseCase {
     company: AddCompanyGroupRequestDto
   ): Promise<CompanyResponseDto> {
     return await this.companyService.addCompanyGroup(companyId, company);
+  }
+
+  async getAllChapterByCompanyId(
+    companyId: string
+  ): Promise<Array<ChapterResponseDto>> {
+    return await this.companyService.getAllChapterByCompanyId(companyId);
   }
 }

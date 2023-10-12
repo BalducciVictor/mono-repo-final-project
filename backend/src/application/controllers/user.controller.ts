@@ -12,7 +12,13 @@ import {
 import { User } from "../../domain/entities/user/user";
 import { CreateUserRequestDto } from "../dto/User/Request/create-user-request.dto";
 import { UpdateUserRequestDto } from "../dto/User/Request/update-user-request.dto";
-import { ApiOperation, ApiResponse, ApiTags, ApiParam } from "@nestjs/swagger";
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiParam,
+  ApiBearerAuth,
+} from "@nestjs/swagger";
 import { UserUseCase } from "../useCases/user/user.use-case";
 import { JwtAuthGuard } from "../../infrastructure/config/modules/auth/guards/jwt-auth.gard";
 import { Roles } from "../decorator/user/roles.decorator";
@@ -21,6 +27,7 @@ import { UserType } from "../../domain/enum/userType";
 import { GetUserCompanyGroupResponseDto } from "../dto/Documentation/Response/get-user-company-group-response.dto";
 import { ChapterResponseDto } from "../dto/Chapter/Response/chapter-response.dto";
 
+@ApiBearerAuth()
 @ApiTags("users")
 @Controller("users")
 export default class UserController {

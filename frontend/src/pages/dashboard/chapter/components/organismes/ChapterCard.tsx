@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import ChapterImage from "../../../../../assets/chapterCardimage.png";
 import { Button } from "../../../../../components/button";
-import {getChapter} from "../../../../../services/api";
+import { getChapter } from "../../../../../services/api";
 import { fontSize, color, space } from '../../../../../styles/const';
 
 type ChapterCardProps = {

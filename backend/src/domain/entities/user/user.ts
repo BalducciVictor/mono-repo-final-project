@@ -23,14 +23,14 @@ export class User {
   @Prop({ required: true })
   role: string;
 
-  @Prop({ required: true })
-  currentChapterId: number;
+  @Prop()
+  currentChapterIds: Array<string>;
 
-  @Prop({ required: true })
-  currentChapterStepId: number;
+  @Prop()
+  currentChapterStepId: Array<string>;
 
-  @Prop([String])
-  validatedChapterId: string[];
+  @Prop()
+  validatedChapterId: Array<string>;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
