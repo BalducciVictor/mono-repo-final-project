@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, IsNumber } from "class-validator";
+import { IsNotEmpty, IsString, IsNumber, IsArray } from "class-validator";
 
 export class UpdateUserRequestDto {
   @ApiProperty()
@@ -33,17 +33,17 @@ export class UpdateUserRequestDto {
   role?: string;
 
   @ApiProperty()
-  @IsNumber()
+  @IsArray()
   @IsNotEmpty()
-  currentChapterId?: number;
+  currentChapterIds?: Array<string>;
 
   @ApiProperty()
-  @IsNumber()
+  @IsArray()
   @IsNotEmpty()
-  currentChapterStepId?: number;
+  currentChapterStepId?: Array<string>;
 
   @ApiProperty()
-  @IsNumber({}, { each: true })
+  @IsArray()
   @IsNotEmpty()
-  validatedChapterId?: string[];
+  validatedChapterId?: Array<string>;
 }
