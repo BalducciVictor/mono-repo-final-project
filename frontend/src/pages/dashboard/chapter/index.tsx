@@ -17,7 +17,6 @@ export const Chapter = () => {
 
   useEffect(() => {
     (async () => {
-      console.log("test")
       try {
         const result = await getChapters();
         setChapters(result);
@@ -37,6 +36,7 @@ export const Chapter = () => {
               Chapters.map((value: Chapters) => {
                 return (
                   <ChapterCard
+                    key={value._id}
                     id={value._id}
                     chapterName={value.chapterName}
                     category={value.category}
