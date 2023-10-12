@@ -28,7 +28,7 @@ export const Auth = () => {
   };
 
   if (mutation.isSuccess) {
-    setUser({role: `${mutation.data.user.role}` });
+    setUser({role: `${mutation.data.user.role}`, id: mutation.data.user._id, companyId: mutation.data.user.companyId, currentChapterId: mutation.data.user.currentChapterId, currentChapterStepId: mutation.data.user.currentChapterStepId, email: `${mutation.data.user.email}`, firstName: `${mutation.data.user.firstName}`, lastName: `${mutation.data.user.lastName}`, validatedChapterId: mutation.data.user.lastName });
     sessionAPI.setToken(`${mutation.data.accessToken}`);
     navigate('/dashboard');
   }

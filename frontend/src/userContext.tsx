@@ -13,7 +13,7 @@ type UserProviderProps = {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserState>({ role: null });
+  const [user, setUser] = useState<UserState>({ role: null, id: null, companyId: null, currentChapterId: null, currentChapterStepId: null, email: null, firstName: null, lastName: null, validatedChapterId: null });
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}
