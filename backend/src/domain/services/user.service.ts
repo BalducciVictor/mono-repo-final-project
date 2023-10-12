@@ -23,24 +23,30 @@ export class UserService implements IUserService {
     private readonly chapterRepository: IChapterRepository
   ) {}
 
+  private checkUserConstraints(
+    user: CreateUserRequestDto | UpdateUserRequestDto
+  ): void {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(user.email)) {
+      throw new BadRequestException("Invalid email format");
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    if (!passwordRegex.test(user.password)) {
+      throw new BadRequestException(
+        "Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      );
+    }
+  }
+
   public async create(
     createUserDto: CreateUserRequestDto
   ): Promise<UserResponseDto> {
     if ((await this.userRepository.getByMail(createUserDto.email)) != null)
       throw new ConflictException(`This user already exist`);
 
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailRegex.test(createUserDto.email)) {
-      throw new BadRequestException("Invalid email format");
-    }
-
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
-    if (!passwordRegex.test(createUserDto.password)) {
-      throw new BadRequestException(
-        "Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character"
-      );
-    }
+    this.checkUserConstraints(createUserDto);
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser: CreateUserRequestDto = {
@@ -122,7 +128,7 @@ export class UserService implements IUserService {
     if (!existingUser) {
       throw new NotFoundException(`User not found`);
     }
-
+    this.checkUserConstraints(updateUserDto);
     return await this.userRepository.update(userId, updateUserDto);
   }
 
