@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { DeleteUserById, getUserByCompagnyId } from "../../../../services/api";
+import { useUser } from "../../../../userContext";
 
 interface User {
-  id: number;
+  _id: number;
   firstName: string;
   lastName: string;
-  company: string;
+  email: string;
 }
 
 interface UserListProps {
-  companyId: number;
+  companyId: string;
 }
 
 interface RowProps {
     user: {
-        id: number;
+        _id: number;
         firstName: string;
         lastName: string;
-        company: string;
+        email: string;
     };
     onDelete: (id: number) => void;
 }
@@ -25,67 +27,68 @@ interface RowProps {
 export const Row: React.FC<RowProps> = ({ user, onDelete }) => {
     return (
         <TableRow>
-            <td>{user.id}</td>
+            <td>{user._id}</td>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
-            <td>{user.company}</td>
-            <td><DeleteButton onClick={() => onDelete(user.id)}>Supprimer</DeleteButton></td>
+            <td>{user.email}</td>
+            <td><DeleteButton onClick={() => onDelete(user._id)}>Supprimer</DeleteButton></td>
         </TableRow>
     );
 };
 
 export const UserList: React.FC<UserListProps> = ({ companyId }) => {
-  const [users, setUsers] = useState<User[]>([]);
-  
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(`/users?companyId=${companyId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch users.");
+    const [users, setUsers] = useState<User[]>([]);
+    const {user} = useUser();
+    const [apiMessage, setApiMessage] = useState<string>('')
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+        try {
+            const response = await getUserByCompagnyId(`${user.companyId}`);
+            setUsers(response)
+            setApiMessage('Suppression utilisateur reussite')
+        } catch (error:any) {
+            console.error("An error occurred:", error.message);
         }
-        const fetchedUsers: User[] = await response.json();
-        setUsers(fetchedUsers);
-      } catch (error:any) {
-        console.error("An error occurred:", error.message);
-      }
     };
 
     fetchUsers();
   }, [companyId]);
 
-  const handleDelete = (userId: number) => {
-    const updatedUsers = users.filter(user => user.id !== userId);
+  const handleDelete = async(userId: number) => {
+    const updatedUsers = users.filter(user => user._id !== userId);
     setUsers(updatedUsers);
+    try {
+        const responce = await DeleteUserById(`${userId}`);
+        const updatedUsers = users.filter(user => user._id !== userId);
+        setUsers(updatedUsers);
+    } catch (error:any) {
+        console.error("An error occurred:", error.message);
+    }
   };
 
   return (
-    <div>
-      {/* Ici des filtres */}
-      <table>
-        <StyledTable>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Compagnie</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            {users.map(user => (
-                <Row key={user.id} user={user} onDelete={handleDelete} />
-            ))}
-            </tbody>
-        </StyledTable>
-      </table>
-    </div>
+    <StyledTable>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {users.map(user => (
+            <Row key={user._id} user={user} onDelete={handleDelete} />
+        ))}
+        </tbody>
+        <p>{apiMessage}</p>
+    </StyledTable>
   );
 };
 
 const StyledTable = styled.table`
-    width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 16px;
@@ -105,7 +108,7 @@ const StyledTable = styled.table`
     }
 
     button {
-        background-color: #f44336;  // Rouge
+        background-color: #f44336;
         color: white;
         border: none;
         padding: 5px 10px;
