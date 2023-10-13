@@ -33,6 +33,9 @@ export class Chapter {
 
   @Prop({ type: [DocumentationSchema], default: [] })
   documentation: Types.DocumentArray<DocumentationDocument>;
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: "User" }], default: [] })
+  viewedBy: Types.ObjectId[];
 }
 
 export const ChapterSchema = SchemaFactory.createForClass(Chapter);

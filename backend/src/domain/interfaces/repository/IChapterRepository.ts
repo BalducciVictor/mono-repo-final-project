@@ -22,4 +22,8 @@ export abstract class IChapterRepository {
   getAllByCompanyId: (
     companyId: string
   ) => Promise<Array<ChapterDocument> | null>;
+  markAsViewed: (
+    chapterId: string,
+    userId: string
+  ) => Promise<ChapterResponseDto | null>;
 }

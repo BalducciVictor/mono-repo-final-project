@@ -16,9 +16,7 @@ export class JwtAuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    if (!token) {
-      throw new UnauthorizedException();
-    }
+    if (!token) throw new UnauthorizedException();
     try {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.SECRET_KEY,
@@ -29,9 +27,7 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     const roles = this.reflector.get(Roles, context.getHandler());
-    if (!roles) {
-      return true;
-    }
+    if (!roles) return true;
 
     const user = request.user;
     return roles.includes(user.role);

@@ -32,4 +32,11 @@ export class ChapterUseCase {
   ): Promise<ChapterResponseDto> {
     return await this.chapterService.update(chapterId, chapter);
   }
+
+  async markAsViewed(
+    chapterId: string,
+    userId: string
+  ): Promise<ChapterResponseDto> {
+    return await this.chapterService.markAsViewed(chapterId, userId);
+  }
 }

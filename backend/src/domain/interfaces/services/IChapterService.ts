@@ -13,4 +13,8 @@ export abstract class IChapterService {
   ) => Promise<ChapterResponseDto>;
   delete: (chapterId: string) => Promise<void>;
   getAll: () => Promise<Array<ChapterResponseDto>>;
+  markAsViewed: (
+    chapterId: string,
+    userId: string
+  ) => Promise<ChapterResponseDto>;
 }
