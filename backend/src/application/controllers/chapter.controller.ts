@@ -114,4 +114,26 @@ export default class ChapterController {
   ): Promise<ChapterResponseDto> {
     return await this.chapterUseCase.updateChapter(chapterId, updateChapterDto);
   }
+
+  @Put(":chapterId/markAsViewed/:userId")
+  @UseGuards(JwtAuthGuard)
+  @Roles([UserType.ADMIN, UserType.SUPERADMIN, UserType.ADMIN])
+  @ApiOperation({
+    summary: "mark this chapter view by this user",
+  })
+  @ApiResponse({
+    status: 200,
+    description: "Chapter Updated with view",
+    type: ChapterResponseDto,
+  })
+  @ApiResponse({ status: 403, description: "Forbidden." })
+  @ApiParam({ name: "chapterId", description: "Chapter ID" })
+  @ApiParam({ name: "userId", description: "User ID" })
+  async markAsViewed(
+    @Param("chapterId") chapterId: string,
+    @Param("userId") userId: string
+  ): Promise<ChapterResponseDto> {
+    console.log(chapterId, userId);
+    return await this.chapterUseCase.markAsViewed(chapterId, userId);
+  }
 }

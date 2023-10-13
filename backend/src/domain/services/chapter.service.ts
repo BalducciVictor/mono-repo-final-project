@@ -49,4 +49,15 @@ export class ChapterService implements IChapterService {
 
     await this.chapterRepository.delete(chapterId);
   }
+
+  public async markAsViewed(
+    chapterId: string,
+    userId: string
+  ): Promise<ChapterResponseDto> {
+    const existingChapter: ChapterResponseDto =
+      await this.chapterRepository.get(chapterId);
+    if (!existingChapter) throw new NotFoundException(`Chapter not found`);
+
+    return await this.chapterRepository.markAsViewed(chapterId, userId);
+  }
 }

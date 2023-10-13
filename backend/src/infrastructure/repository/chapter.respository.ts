@@ -69,4 +69,17 @@ export class ChapterRepository implements IChapterRepository {
 
     return newQuestionnaires;
   }
+
+  async markAsViewed(
+    chapterId: string,
+    userId: string
+  ): Promise<ChapterResponseDto | null> {
+    return this.chapterModel.findByIdAndUpdate(
+      chapterId,
+      {
+        $addToSet: { viewedBy: userId },
+      },
+      { new: true }
+    );
+  }
 }
