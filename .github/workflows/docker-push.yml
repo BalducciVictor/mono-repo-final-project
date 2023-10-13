@@ -41,11 +41,11 @@ jobs:
 
     - name: Restart onbyapicontainer
       run: |
-        az container restart --resource-group FINAL-PROJECT --name onbyapicontainer
+        az container restart --resource-group FINALPROJECT --name onbyapicontainer
 
     - name: Restart onby-front
       run: |
-        az container restart --resource-group FINAL-PROJECT --name onby-front
+        az container restart --resource-group FINALPROJECT --name onby-front
 
     - name: Logout from Azure
       run: az logout
