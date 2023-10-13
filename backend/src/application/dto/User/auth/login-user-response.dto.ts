@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
-import { User } from "../../../../domain/entities/user/user";
+import { UserResponseDto } from "../Response/user-response.dto";
 
 export class LoginUserResponseDto {
   @ApiProperty()
@@ -10,5 +10,5 @@ export class LoginUserResponseDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  user: User;
+  user: UserResponseDto;
 }

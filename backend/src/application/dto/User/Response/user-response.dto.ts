@@ -22,7 +22,7 @@ export class UserResponseDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password?: string;
 
   @ApiProperty()
   @IsNotEmpty()

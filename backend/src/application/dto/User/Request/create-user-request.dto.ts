@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsNumber, IsArray } from "class-validator";
+import { Types } from "mongoose";
 
 export class CreateUserRequestDto {
   @ApiProperty()
@@ -23,9 +24,8 @@ export class CreateUserRequestDto {
   password: string;
 
   @ApiProperty()
-  @IsNumber()
   @IsNotEmpty()
-  companyId: string;
+  companyId: Types.ObjectId;
 
   @ApiProperty()
   @IsString()
