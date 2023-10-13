@@ -3,18 +3,21 @@ import { UserFormData } from "../../../../types/usertypes";
 import { Button } from "../../../../components/button";
 import styled from "styled-components";
 import { postUser } from "../../../../services/api";
+import { useUser } from "../../../../userContext";
   
 export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }> = ({ onSubmit }) => {
+    const {user} = useUser();
     const [formData, setFormData] = useState<UserFormData>({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      companyId: '',
-      groupId: '',
-      role: '',
+      firstName: null,
+      lastName: null,
+      email: null,
+      password: null,
+      companyId: user.companyId, 
+      groupId: null,
+      role: null,
     });
     const [apiMessage, setApiMessage] = useState<string | null>(null);
+    //const [groupeCompany, setGroupeCompagny] = useState<>();
     
     const handleUserFormChange = (name: string, value: string) => {
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -24,10 +27,7 @@ export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }
         e.preventDefault();
         try {
             const response = await postUser(formData);
-            console.log(response.message);
-            if (response.message) {
-                setApiMessage(response.message);
-            }
+            setApiMessage("Utilisateur bien créé");
         } catch (err:any) {
             console.log(err)
             setApiMessage(err.message);
@@ -38,24 +38,22 @@ export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }
         <WrapperForm>
             <form onSubmit={handleSubmit}>
                 <Label>Prénom</Label>
-                <StyledInput name="firstName" value={formData.firstName} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="First Name" required/>
+                <StyledInput name="firstName" value={formData.firstName  ?? ''} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="First Name" required/>
                 <Label>Nom</Label>
-                <StyledInput name="lastName" value={formData.lastName} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Last Name" required/>
+                <StyledInput name="lastName" value={formData.lastName ?? ''} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Last Name" required/>
                 <Label>Email</Label>
-                <StyledInput name="email" type="email" value={formData.email} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Email" required/>
+                <StyledInput name="email" type="email" value={formData.email  ?? ''} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Email" required/>
                 <Label>Mot de passe</Label>
-                <StyledInput name="password" type="password" value={formData.password} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Password" required/>
-                <Label>Numero de l'entreprise</Label>
-                <StyledInput name="companyId" value={formData.companyId} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Company ID" required/>
-                <Label>Numero du groupe</Label>
-                <StyledInput name="groupId" value={formData.groupId} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Group ID" required/>
+                <StyledInput name="password" type="password" value={formData.password  ?? ''} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Password" required/>
+                <Label>Selectionner un groupe</Label>
+                <StyledInput name="groupId" value={formData.groupId  ?? ''} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Group ID" required/>
                 <Label>Role</Label>
-                <select 
+                <select
                     name="role" 
-                    value={formData.role} 
+                    value={formData.role  ?? ''} 
                     onChange={(e) => handleUserFormChange(e.target.name, e.target.value)}
                     required
-                >   
+                > 
                     <option value="">Sélectionnez un rôle</option>
                     <option value="ADMIN">ADMIN</option>
                     <option value="USER">USER</option>
@@ -109,7 +107,9 @@ const InputForm = styled.div`
 `
 
 const ErrorMessage= styled.p`
-    color: red;
+    font-weight: bold;
+    margin: 10px;
+    font-size: 18px;
 `
 const StyledInput = styled.input`
     margin: 5px 0px 15px;

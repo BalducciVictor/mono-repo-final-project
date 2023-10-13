@@ -44,7 +44,7 @@ const api = async ({
         const response = await fetch(requestUrl, requestOptions);
         if (!response.ok) {
             const data = await response.json();
-            throw new Error(data.message || "Erreur inconnue"); // Utilisez data.message ici
+            throw new Error(data.message || "Erreur inconnue");
         }
         return await response.json();
     } catch (error: any) {
