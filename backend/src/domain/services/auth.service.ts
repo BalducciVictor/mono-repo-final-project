@@ -5,13 +5,14 @@ import { User } from "../entities/user/user";
 import { LoginUserResponseDto } from "../../application/dto/User/auth/login-user-response.dto";
 import * as bcrypt from "bcryptjs";
 import { IAuthService } from "../interfaces/services/IAuthService";
+import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
 
 @Injectable()
 export class AuthService implements IAuthService {
   constructor(private usersService: IUserService) {}
 
   async signIn(email: string, pass: string): Promise<LoginUserResponseDto> {
-    const user: User = await this.usersService.getByMail(email);
+    const user: UserResponseDto = await this.usersService.getByMail(email);
     const isPasswordValid = await bcrypt.compare(pass, user.password);
     if (!isPasswordValid) throw new UnauthorizedException();
 
@@ -25,7 +26,7 @@ export class AuthService implements IAuthService {
     });
 
     return {
-      user,
+      user: user,
       accessToken,
     };
   }
