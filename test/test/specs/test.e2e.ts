@@ -1,16 +1,13 @@
-import { expect, browser, $ } from '@wdio/globals'
+import { expect, browser, $$ } from '@wdio/globals'
 
 describe('My Login application', () => {
-    it('should login with valid credentials', async () => {
-        await browser.url(`https://the-internet.herokuapp.com/login`)
+    it('should have correct h1 text', async () => {
+        await browser.url(`http://onby-front.ghgmbbhubqhfbnc2.francecentral.azurecontainer.io/`)
 
-        await $('#username').setValue('tomsmith')
-        await $('#password').setValue('SuperSecretPassword!')
-        await $('button[type="submit"]').click()
+        const headers = await $$('h1')  // Sélection de tous les éléments h1
+        expect(headers).toBeElementsArrayOfSize({ gte: 1 })  // Vérifier qu'au moins un h1 existe
 
-        await expect($('#flash')).toBeExisting()
-        await expect($('#flash')).toHaveTextContaining(
-            'You logged into a secure area!')
+        // Vous pouvez également vérifier le texte du premier h1 si vous le souhaitez
+        expect(headers[0]).toHaveTextContaining('Expected Text Here')
     })
 })
-
