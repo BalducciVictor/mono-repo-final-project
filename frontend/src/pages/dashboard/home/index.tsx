@@ -1,30 +1,35 @@
 import styled from 'styled-components';
-import { TitleH1 } from '../../../components/Title';
+import { TitleH1, TitleH2 } from '../../../components/Title';
 import { IntroBlock } from './components/sections/introBlock';
 import { CurrentChapters } from './components/sections/currentChapters';
 import { Button } from '../../../components/button';
 import { PopUp } from '../../../components/PopUp';
 import { useState } from 'react';
 import { useUser } from '../../../userContext';
-import { UserRole } from '../../../types/usertypes';
+import { UserFormData, UserRole } from '../../../types/usertypes';
+import { CreateUserForm } from './components/formCreateUser';
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {user} = useUser();
+
+  const handleSubmitForm = (data: UserFormData) => {
+    console.log(data);
+    setIsModalOpen(false);
+  };
   
   return (
     <HomeContainer>
       <TitleH1>Dashboard</TitleH1>
-      <IntroBlock />
-      <CurrentChapters />
       {
         user.role == UserRole.Admin ?
-        <>
-          <Button onClick={() => setIsModalOpen(true)}>Create new user</Button>
+        <WrapperUser>
+          <TitleH2>Gestion des utilisateurs</TitleH2>
+          <Button onClick={() => setIsModalOpen(true)}>Creer un nouveau utilisateur</Button>
           <PopUp isOpen={isModalOpen} onClose={() => {setIsModalOpen(false)}}>
-            <h2>Ici le form</h2>
+            <CreateUserForm onSubmit={handleSubmitForm}/>
           </PopUp> 
-        </>
+        </WrapperUser>
         : ''
       }
     </HomeContainer>
@@ -32,3 +37,7 @@ export const Home = () => {
 };
 
 const HomeContainer = styled.div``;
+
+const WrapperUser = styled.div`
+  margin: 20px 0px;
+`;

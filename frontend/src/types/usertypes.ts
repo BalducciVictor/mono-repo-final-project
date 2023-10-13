@@ -1,7 +1,7 @@
 export type UserState = {
     role: string | null;
     id: string | null;
-    companyId: string | null;
+    companyId: number | null;
     currentChapterId: number | null;
     currentChapterStepId: number | null;
     email: string | null;
@@ -12,5 +12,16 @@ export type UserState = {
 
 export enum UserRole {
     Admin = 'ADMIN',
-    User = 'DEFAULT'
+    User = 'USER',
+    SuperAdmin = 'SUPERADMIN',
 }
+
+export interface UserFormData {
+    firstName: string | null;
+    lastName: string | null;
+    email: string | null;
+    password: string | null;
+    companyId: number | null;
+    groupId: number | null;
+    role: string | null;
+  }

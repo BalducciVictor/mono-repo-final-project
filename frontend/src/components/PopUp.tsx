@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "./button";
 
 interface PopUpProps {
   isOpen: boolean;
@@ -14,7 +13,7 @@ export const PopUp: React.FC<PopUpProps> = ({ isOpen, onClose, children }) => {
   return (
     <ContainerModal>
       <Modal>
-        <Button onClick={onClose}>Close</Button>
+        <CloseIcon onClick={onClose}>&times;</CloseIcon>
         {children}
       </Modal>
     </ContainerModal>
@@ -34,7 +33,19 @@ const ContainerModal = styled.div`
 `;
 
 const Modal = styled.div`
+  position: relative;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
+`;
+
+const CloseIcon = styled.span`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px; 
+  &:hover {
+    color: gray;
+  }
 `;
