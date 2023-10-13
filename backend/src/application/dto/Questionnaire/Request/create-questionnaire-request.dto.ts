@@ -12,5 +12,5 @@ export class CreateQuestionnaireRequestDto {
   @ApiProperty()
   @IsArray()
   @Type(() => CreateQuestionRequestDto)
-  questions: CreateQuestionRequestDto[];
+  questions: Array<CreateQuestionRequestDto>;
 }

@@ -4,16 +4,15 @@ type InputProps = {
     label: string;
     type: string;
     placeholder: string;
-    onChange?: any;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value?: string;
-    name?: string;
 };
 
-export const FormularInput = ({ label, type, placeholder, onChange, name }: InputProps) => {
+export const FormularInput = ({ label, type, placeholder, onChange }: InputProps) => {
     return (
         <WrapperInput>
             <LabelText>{ label }</LabelText>
-            <Input name={name} type={type} placeholder={placeholder} onChange={(e) => onChange(e.target.value)}/>
+            <Input type={type} placeholder={placeholder} onChange={onChange}/>
         </WrapperInput>
     )
 }
@@ -33,7 +32,7 @@ const LabelText = styled.label`
 `;
 
 const Input = styled.input`
-    width: 348px;   
+    width: 100%;   
     padding: 12px 16px;
     border-radius: 4px;
     border: 1px solid #31B898;

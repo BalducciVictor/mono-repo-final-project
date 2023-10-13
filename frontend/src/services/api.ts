@@ -1,5 +1,7 @@
 import sessionAPI from "./sessionStorageAPI"
 import type { Chapter } from "../types/requestTypes"
+import { UserFormData } from "../types/usertypes";
+import { Interface } from "readline";
 
 interface ApiOptions {
     method: "GET" | "POST" | "PUT" | "DELETE";
@@ -42,11 +44,12 @@ const api = async ({
     try {
         const response = await fetch(requestUrl, requestOptions);
         if (!response.ok) {
-            throw new Error(await response.json());
+            const data = await response.json();
+            throw new Error(data.message || "Erreur inconnue");
         }
         return await response.json();
     } catch (error: any) {
-        throw new Error("error");
+        throw new Error(error.message);
     }
 };
 
@@ -77,6 +80,13 @@ export function getUser(userId: string) {
     return api({method: "POST", url: `users/${userId}`})
 };
 
+type putUserByUserData = {
+    email?: string;
+}
+export function putUserInfoByUser(userId: string, data: putUserByUserData) {
+    return api({method: "PUT", url: `users/${userId}/`, data})
+};
+
 export function getQuestionnaire(chapterId: string, questionnaireId: string ) {
     return api({method: "POST", url: `chapters/${chapterId}/questionnaires/${questionnaireId}`})
 };
@@ -85,6 +95,14 @@ export function getAllCompany() {
     return api({method: "GET", url: `company/`})
 };
 
+export function getCompanyById(companyId: string) {
+    return api({method: "GET", url: `company/${companyId}/`})
+};
+
 export function getChapterByCompany(companyId: string) {
     return api({method: "GET", url: `company/${companyId}/chapters/`})
 };
+
+export function postUser(data: UserFormData){
+    return api({method: "POST", url: `users`, data})
+}

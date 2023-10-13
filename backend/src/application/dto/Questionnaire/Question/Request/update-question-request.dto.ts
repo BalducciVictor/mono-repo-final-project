@@ -13,5 +13,5 @@ export class UpdateQuestionRequestDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => UpdateAnswerRequestDto)
-  answers?: UpdateAnswerRequestDto[];
+  answers?: Array<UpdateAnswerRequestDto>;
 }

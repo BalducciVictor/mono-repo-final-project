@@ -3,7 +3,6 @@ import { UpdateChapterRequestDto } from "src/application/dto/Chapter/Request/upd
 import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
 import { CreateQuestionnaireRequestDto } from "src/application/dto/Questionnaire/Request/create-questionnaire-request.dto";
 import { ChapterDocument } from "src/domain/entities/chapter/chapter";
-import { QuestionnaireDocument } from "src/domain/entities/questionnaire/questionnaire";
 
 export abstract class IChapterRepository {
   get: (chapterId: string) => Promise<ChapterDocument>;
@@ -16,10 +15,10 @@ export abstract class IChapterRepository {
     updateChapterDto: UpdateChapterRequestDto
   ) => Promise<ChapterResponseDto | null>;
   getAll: () => Promise<Array<ChapterResponseDto> | null>;
-  addQuestionnaire: (
+  addQuestionnaires: (
     chapter: ChapterDocument,
-    createQuestionnaireDto: CreateQuestionnaireRequestDto
-  ) => Promise<QuestionnaireDocument | null>;
+    createQuestionnaireDto: Array<CreateQuestionnaireRequestDto>
+  ) => Promise<Array<CreateQuestionnaireRequestDto> | null>;
   getAllByCompanyId: (
     companyId: string
   ) => Promise<Array<ChapterDocument> | null>;

@@ -37,8 +37,8 @@ export class QuestionnaireController {
   @ApiResponse({ status: 201, description: "Created." })
   create(
     @Param("chapterId") chapterId: string,
-    @Body() createQuestionnaireDto: CreateQuestionnaireRequestDto
-  ): Promise<QuestionnaireResponseDto> {
+    @Body() createQuestionnaireDto: Array<CreateQuestionnaireRequestDto>
+  ): Promise<Array<QuestionnaireResponseDto>> {
     return this.questionnaireUseCase.create(chapterId, createQuestionnaireDto);
   }
 

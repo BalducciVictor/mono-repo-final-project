@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { fontSize, color, space } from '../../../../../styles/const';
 

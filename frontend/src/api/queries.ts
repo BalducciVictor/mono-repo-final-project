@@ -1,3 +1,4 @@
+import sessionAPI from '../services/sessionStorageAPI';
 import { customFetch } from './baseQuery';
 
 interface AuthData {
@@ -15,3 +16,15 @@ const options: any = {
 };
 return customFetch('auth/signin', options);
 };
+
+export const fetchCreateUser = async (data: AuthData) => {
+    const options: any = {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authentication': `Bearer ${sessionAPI.getToken()}`
+        },
+        body: JSON.stringify(data),
+    };
+    return customFetch('users', options);
+    };
