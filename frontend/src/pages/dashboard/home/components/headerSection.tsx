@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '../../../../components/button';
+import { Button } from '../../../../components/atoms/button';
 import { TitleH2 } from '../../../../components/Title';
 import { space } from '../../../../styles/const';
 

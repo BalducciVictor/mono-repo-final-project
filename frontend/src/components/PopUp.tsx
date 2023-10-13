@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { Button } from "./button";
+import React from 'react';
+import styled from 'styled-components';
+import { Button } from './atoms/button';
 
 interface PopUpProps {
   isOpen: boolean;

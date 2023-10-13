@@ -11,24 +11,22 @@ import { useUser } from '../userContext';
 import sessionAPI from '../services/sessionStorageAPI';
 
 export const SignOut = () => {
-  const {user, setUser} = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
 
   const handleClick = () => {
-    setUser({role: null });
-    sessionAPI.removeToken()
-    navigate('/')
-  }
+    setUser({ role: null });
+    sessionAPI.removeToken();
+    navigate('/');
+  };
 
   return (
     <SignOutContainer onClick={handleClick}>
       <ExitIcon size={iconSize.m} color={color.light.PureWhite} />
-      <Text>
-        Sign out
-      </Text>
+      <Text>Sign out</Text>
     </SignOutContainer>
-  )
-}
+  );
+};
 
 export const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -43,7 +41,7 @@ export const Sidebar: React.FC = () => {
       </TopSideBar>
       <MiddleSideBar>
         <SidebarItem>
-          <SidebarLink to="">
+          <SidebarLink to="home">
             <HomeIcon size={iconSize.m} color={color.light.PureWhite} />
             <Text className={isHovered ? 'show-text' : 'hide-text'}>Home</Text>
           </SidebarLink>
@@ -65,7 +63,7 @@ export const Sidebar: React.FC = () => {
           </SidebarLink>
         </SidebarItem>
         <SidebarItem>
-          <SignOut/>
+          <SignOut />
         </SidebarItem>
       </MiddleSideBar>
     </SidebarContainer>
