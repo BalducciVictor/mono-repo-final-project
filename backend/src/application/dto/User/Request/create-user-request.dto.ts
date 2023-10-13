@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, IsNumber, IsArray } from "class-validator";
+import { IsNotEmpty, IsString, IsArray } from "class-validator";
 import { Types } from "mongoose";
 
 export class CreateUserRequestDto {
@@ -46,4 +46,7 @@ export class CreateUserRequestDto {
   @IsArray()
   @IsNotEmpty()
   validatedChapterId: Array<string>;
+
+  @ApiProperty()
+  createdAt: Date;
 }

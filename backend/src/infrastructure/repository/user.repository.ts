@@ -12,22 +12,26 @@ export class UserRepository implements IUserRepository {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async get(id: string): Promise<UserResponseDto | null> {
-    return this.userModel.findById(id).exec();
+    const user = await this.userModel.findById(id).exec();
+    return user ? user.toObject() : null;
   }
 
   async getUsersByCompanyId(
     companyId: string
   ): Promise<Array<UserResponseDto> | null> {
-    return this.userModel.find({ companyId: companyId }).exec();
+    const users = await this.userModel.find({ companyId: companyId }).exec();
+    return users.map((user) => user.toObject());
   }
 
   async getByMail(email: string): Promise<UserResponseDto | null> {
-    return await this.userModel.findOne({ email: email }).exec();
+    const user = await this.userModel.findOne({ email: email }).exec();
+    return user ? user.toObject() : null;
   }
 
   async create(user: CreateUserRequestDto): Promise<UserResponseDto> {
     const newUser = new this.userModel(user);
-    return newUser.save();
+    const savedUser = await newUser.save();
+    return savedUser.toObject();
   }
 
   async delete(id: string): Promise<void> {
