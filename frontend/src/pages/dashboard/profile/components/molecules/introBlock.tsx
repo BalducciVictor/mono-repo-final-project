@@ -2,11 +2,15 @@ import styled from 'styled-components';
 import { color, fontSize, space } from '../../../../../styles/const';
 import IdeogramImage from '../../../../../assets/ideogram.png';
 
-export const IntroBlock = () => {
+interface IntroBlockProps {
+  firstName: string | null;
+}
+
+export const IntroBlock = ({firstName}: IntroBlockProps) => {
   return (
     <IntroBlockStyled>
       <div>
-        <IntroBlockTitle>Hello, John !</IntroBlockTitle>
+        <IntroBlockTitle>Hello, {firstName} !</IntroBlockTitle>
         <IntroBlockText>
           Ici vous pouvez retrouver et modifier vos infos personnelles tel que le mail et le mot de passe.
         </IntroBlockText>

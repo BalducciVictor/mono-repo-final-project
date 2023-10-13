@@ -3,7 +3,6 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from "@nestjs/common";
 import { CreateUserRequestDto } from "../../application/dto/User/Request/create-user-request.dto";
 import { IUserService } from "../interfaces/services/IUserService";

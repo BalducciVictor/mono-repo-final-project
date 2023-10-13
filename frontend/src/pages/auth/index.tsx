@@ -4,18 +4,18 @@ import { MainLogo } from "../../components/icons/mainLogo";
 import { FormularInput } from "./components/molecules/FormularInput";
 import { useMutation } from 'react-query';
 import AuthImage from "../../assets/auth.png";
-import { fetchToken } from "../../api/queries";
 import { useNavigate } from "react-router-dom";
 import { useUser } from '../../userContext';
 import { fontSize } from '../../styles/const';
 import sessionAPI from '../../services/sessionStorageAPI';
+import { signIn } from '../../services/api';
 
 
 export const Auth = () => {
   const [adminAuth, setAdminAuth] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const mutation = useMutation(() => fetchToken({ email, password }));
+  const mutation = useMutation(() => signIn(email, password));
   const navigate = useNavigate();
   const { user, setUser } = useUser();
 
