@@ -6,7 +6,6 @@ import { Button } from '../../../components/button';
 import { PopUp } from '../../../components/PopUp';
 import { useState } from 'react';
 import { useUser } from '../../../userContext';
-import { UserRole } from '../../../types/usertypes';
 import { UserList } from './components/userList';
 import { UserFormData, UserRole } from '../../../types/usertypes';
 import { CreateUserForm } from './components/formCreateUser';
@@ -34,7 +33,7 @@ export const Home = () => {
           </PopUp> 
           <Button onClick={() => setIsUserListOpen(true)}>Afficher les utilisateurs</Button>
           <PopUp isOpen={isUserListOpen} onClose={() => setIsUserListOpen(false)}>
-            <UserList companyId={/* someCompanyId */1} />
+            <UserList companyId={`${user.companyId}`} />
           </PopUp>
         </WrapperUser>
         : ''
