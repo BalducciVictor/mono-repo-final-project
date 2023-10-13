@@ -12,6 +12,7 @@ interface User {
 
 interface UserListProps {
   companyId: string;
+  userAdded: boolean;
 }
 
 interface RowProps {
@@ -36,24 +37,23 @@ export const Row: React.FC<RowProps> = ({ user, onDelete }) => {
     );
 };
 
-export const UserList: React.FC<UserListProps> = ({ companyId }) => {
+export const UserList: React.FC<UserListProps> = ({ companyId, userAdded }) => {
     const [users, setUsers] = useState<User[]>([]);
     const {user} = useUser();
-    const [apiMessage, setApiMessage] = useState<string>('')
+    const [apiMessage, setApiMessage] = useState<string>('');
 
     useEffect(() => {
         const fetchUsers = async () => {
         try {
             const response = await getUserByCompagnyId(`${user.companyId}`);
             setUsers(response)
-            setApiMessage('Suppression utilisateur reussite')
         } catch (error:any) {
             console.error("An error occurred:", error.message);
         }
     };
 
     fetchUsers();
-  }, [companyId]);
+  }, [companyId, userAdded]);
 
   const handleDelete = async(userId: number) => {
     const updatedUsers = users.filter(user => user._id !== userId);
@@ -62,6 +62,7 @@ export const UserList: React.FC<UserListProps> = ({ companyId }) => {
         const responce = await DeleteUserById(`${userId}`);
         const updatedUsers = users.filter(user => user._id !== userId);
         setUsers(updatedUsers);
+        setApiMessage('Suppression utilisateur reussite')
     } catch (error:any) {
         console.error("An error occurred:", error.message);
     }
@@ -83,7 +84,7 @@ export const UserList: React.FC<UserListProps> = ({ companyId }) => {
             <Row key={user._id} user={user} onDelete={handleDelete} />
         ))}
         </tbody>
-        <p>{apiMessage}</p>
+        {apiMessage && <p>{apiMessage}</p>}
     </StyledTable>
   );
 };

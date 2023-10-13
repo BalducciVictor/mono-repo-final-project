@@ -12,12 +12,13 @@ import { CreateUserForm } from './components/formCreateUser';
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUserListOpen, setIsUserListOpen] = useState(false);
+  const [userAdded, setUserAdded] = useState(false);
   const {user} = useUser();
 
   const handleSubmitForm = (data: UserFormData) => {
     console.log(data);
     setIsModalOpen(false);
+    setUserAdded(prev => !prev)
   };
   
   return (
@@ -31,10 +32,7 @@ export const Home = () => {
           <PopUp isOpen={isModalOpen} onClose={() => {setIsModalOpen(false)}}>
             <CreateUserForm onSubmit={handleSubmitForm}/>
           </PopUp> 
-          <Button onClick={() => setIsUserListOpen(true)}>Afficher les utilisateurs</Button>
-          <PopUp isOpen={isUserListOpen} onClose={() => setIsUserListOpen(false)}>
-            <UserList companyId={`${user.companyId}`} />
-          </PopUp>
+          <UserList companyId={`${user.companyId}`} userAdded={userAdded} />
         </WrapperUser>
         : ''
       }
