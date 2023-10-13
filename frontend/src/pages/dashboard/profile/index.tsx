@@ -16,7 +16,7 @@ export const Profile = () => {
     (async () => {
       try {
         if(user.companyId) {
-          const Company = await getCompanyById(user.companyId);
+          const Company = await getCompanyById(`${user.companyId}`);
           setCompagny(Company.name);
         }
       } catch (e: any) {
