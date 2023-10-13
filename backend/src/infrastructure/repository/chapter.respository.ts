@@ -13,6 +13,7 @@ import {
   QuestionnaireDocument,
 } from "../../domain/entities/questionnaire/questionnaire";
 import { CreateQuestionnaireRequestDto } from "../../application/dto/Questionnaire/Request/create-questionnaire-request.dto";
+import { ChapterResponseDto } from "src/application/dto/Chapter/Response/chapter-response.dto";
 
 @Injectable()
 export class ChapterRepository implements IChapterRepository {
@@ -36,7 +37,7 @@ export class ChapterRepository implements IChapterRepository {
     return await this.chapterModel.find({ companyId: companyId }).exec();
   }
 
-  async create(chapter: CreateChapterRequestDto): Promise<ChapterDocument> {
+  async create(chapter: CreateChapterRequestDto): Promise<ChapterResponseDto> {
     const newChapter = new this.chapterModel(chapter);
     return await newChapter.save();
   }
@@ -48,7 +49,7 @@ export class ChapterRepository implements IChapterRepository {
   async update(
     id: string,
     updateChapterDto: UpdateChapterRequestDto
-  ): Promise<ChapterDocument | null> {
+  ): Promise<ChapterResponseDto | null> {
     const updatedChapter = await this.chapterModel
       .findByIdAndUpdate(id, updateChapterDto, { new: true })
       .exec();
@@ -56,16 +57,16 @@ export class ChapterRepository implements IChapterRepository {
     return updatedChapter ? updatedChapter.toObject() : null;
   }
 
-  async addQuestionnaire(
+  async addQuestionnaires(
     chapter: ChapterDocument,
-    createQuestionnaireDto: CreateQuestionnaireRequestDto
-  ): Promise<QuestionnaireDocument | null> {
-    const newQuestionnaire = new this.questionnaireModel(
-      createQuestionnaireDto
+    createQuestionnaireDtos: Array<CreateQuestionnaireRequestDto>
+  ): Promise<Array<CreateQuestionnaireRequestDto> | null> {
+    const newQuestionnaires = await this.questionnaireModel.insertMany(
+      createQuestionnaireDtos
     );
-    chapter.questionnaire.push(newQuestionnaire);
+    chapter.questionnaire.push(...newQuestionnaires);
     await chapter.save();
 
-    return newQuestionnaire;
+    return newQuestionnaires;
   }
 }

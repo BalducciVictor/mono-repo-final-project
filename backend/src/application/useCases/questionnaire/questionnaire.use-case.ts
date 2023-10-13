@@ -10,8 +10,8 @@ export class QuestionnaireUseCase {
 
   async create(
     chapterId: string,
-    createQuestionnaireDto: CreateQuestionnaireRequestDto
-  ): Promise<QuestionnaireResponseDto> {
+    createQuestionnaireDto: Array<CreateQuestionnaireRequestDto>
+  ): Promise<Array<QuestionnaireResponseDto>> {
     return await this.questionnaireService.create(
       chapterId,
       createQuestionnaireDto

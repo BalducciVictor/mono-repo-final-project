@@ -13,5 +13,5 @@ export class CreateQuestionRequestDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateAnswerRequestDto)
-  answers: CreateAnswerRequestDto[];
+  answers: Array<CreateAnswerRequestDto>;
 }
