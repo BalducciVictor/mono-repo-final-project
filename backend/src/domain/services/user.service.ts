@@ -27,13 +27,13 @@ export class UserService implements IUserService {
     user: CreateUserRequestDto | UpdateUserRequestDto
   ): void {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailRegex.test(user.email)) {
+    if (user.email && !emailRegex.test(user.email)) {
       throw new BadRequestException("Invalid email format");
     }
 
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
-    if (!passwordRegex.test(user.password)) {
+    if (user.password && !passwordRegex.test(user.password)) {
       throw new BadRequestException(
         "Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character"
       );
@@ -128,14 +128,19 @@ export class UserService implements IUserService {
     if (!existingUser) throw new NotFoundException(`User not found`);
 
     this.checkUserConstraints(updateUserDto);
-    const isPasswordValid = await bcrypt.compare(
-      existingUser.password,
-      updateUserDto.password
-    );
-    if (!isPasswordValid)
-      throw new BadRequestException(
-        "New password should be different from the old one"
+
+    if (updateUserDto.password) {
+      const isPasswordValid = await bcrypt.compare(
+        existingUser.password,
+        updateUserDto.password
       );
+      if (isPasswordValid)
+        throw new BadRequestException(
+          "New password should be different from the old one"
+        );
+
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
+    }
 
     return await this.userRepository.update(userId, updateUserDto);
   }
