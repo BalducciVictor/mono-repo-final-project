@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserFormData } from "../../../../types/usertypes";
 import { Button } from "../../../../components/button";
 import styled from "styled-components";
-import { postUser } from "../../../../services/api";
+import { getCompany, postUser } from "../../../../services/api";
 import { useUser } from "../../../../userContext";
   
 export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }> = ({ onSubmit }) => {
@@ -17,12 +17,12 @@ export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }
       role: null,
     });
     const [apiMessage, setApiMessage] = useState<string | null>(null);
-    //const [groupeCompany, setGroupeCompagny] = useState<>();
+    const [companyGroups, setCompanyGroups] = useState<Array<{groupName: string, _id: string}>>([]);
     
     const handleUserFormChange = (name: string, value: string) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-  
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -33,6 +33,22 @@ export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }
             setApiMessage(err.message);
         }
     };
+
+    const GetGroupCompagny = async() => {
+        try {
+            const response = await getCompany(`${user.companyId}`);
+            console.log(response)
+            if (response && response.companyGroup) {
+                setCompanyGroups(response.companyGroup);
+            }
+        } catch (err:any) {
+            console.log(err)
+        }
+    }
+
+    useEffect(()=>{
+        GetGroupCompagny();
+    },[])
 
     return (
         <WrapperForm>
@@ -45,8 +61,18 @@ export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }
                 <StyledInput name="email" type="email" value={formData.email  ?? ''} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Email" required/>
                 <Label>Mot de passe</Label>
                 <StyledInput name="password" type="password" value={formData.password  ?? ''} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Password" required/>
-                <Label>Selectionner un groupe</Label>
-                <StyledInput name="groupId" value={formData.groupId  ?? ''} onChange={(e) => handleUserFormChange(e.target.name, e.target.value)} placeholder="Group ID" required/>
+                <Label>Sélectionner un groupe</Label>
+                <select
+                    name="groupId"
+                    value={formData.groupId ?? ''}
+                    onChange={(e) => handleUserFormChange(e.target.name, e.target.value)}
+                    required
+                >
+                    <option value="">Sélectionnez un groupe</option>
+                    {companyGroups.map(group => (
+                        <option key={group._id} value={group._id}>{group.groupName}</option>
+                    ))}
+                </select>
                 <Label>Role</Label>
                 <select
                     name="role" 
@@ -102,12 +128,7 @@ const Label = styled.label`
     color: #333;
 `
 
-const InputForm = styled.div`
-    margin-bottom: 10px;
-`
-
 const ErrorMessage= styled.p`
-    font-weight: bold;
     margin: 10px;
     font-size: 18px;
 `

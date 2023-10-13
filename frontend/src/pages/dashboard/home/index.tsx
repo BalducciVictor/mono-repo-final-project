@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TitleH1 } from '../../../components/Title';
+import { TitleH1, TitleH2 } from '../../../components/Title';
 import { IntroBlock } from './components/sections/introBlock';
 import { CurrentChapters } from './components/sections/currentChapters';
 import { Button } from '../../../components/button';
@@ -21,16 +21,15 @@ export const Home = () => {
   return (
     <HomeContainer>
       <TitleH1>Dashboard</TitleH1>
-      <IntroBlock />
-      <CurrentChapters />
       {
         user.role == UserRole.Admin ?
-        <>
+        <WrapperUser>
+          <TitleH2>Gestion des utilisateurs</TitleH2>
           <Button onClick={() => setIsModalOpen(true)}>Creer un nouveau utilisateur</Button>
           <PopUp isOpen={isModalOpen} onClose={() => {setIsModalOpen(false)}}>
             <CreateUserForm onSubmit={handleSubmitForm}/>
           </PopUp> 
-        </>
+        </WrapperUser>
         : ''
       }
     </HomeContainer>
@@ -38,3 +37,7 @@ export const Home = () => {
 };
 
 const HomeContainer = styled.div``;
+
+const WrapperUser = styled.div`
+  margin: 20px 0px;
+`;

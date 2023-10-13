@@ -94,3 +94,7 @@ export function getChapterByCompany(companyId: string) {
 export function postUser(data: UserFormData){
     return api({method: "POST", url: `users`, data})
 }
+
+export function getCompany(companyId: string) {
+    return api({method: "GET", url: `company/${companyId}`})
+};
