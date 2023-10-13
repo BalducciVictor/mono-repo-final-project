@@ -11,8 +11,8 @@ export const IntroBlock = () => {
           Continue de monter en compétence en autonomie,
           <br /> n’importe où que tu te trouve, grâce à Onby !
         </IntroBlockText>
+        <IdeogramStyle src={IdeogramImage} alt="ideogram icon" />
       </div>
-      <IdeogramStyle src={IdeogramImage} alt="ideogram icon" />
     </IntroBlockStyled>
   );
 };
@@ -20,6 +20,7 @@ export const IntroBlock = () => {
 const IntroBlockStyled = styled.div`
   display: flex;
   justify-content: space-between;
+  position: relative;
   background-color: ${color.light.lightbrandGreen};
   padding: ${space.ml};
   margin-top: ${space.l};
@@ -39,9 +40,10 @@ const IntroBlockText = styled.p`
 
 const IdeogramStyle = styled.img`
   position: absolute;
+  top: 0px;
   height: 250px;
   width: 250px;
   right: 0;
-  top: 0;
+  top: -100px;
   margin-right: 200px;
 `;
