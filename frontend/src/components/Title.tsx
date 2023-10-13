@@ -17,5 +17,5 @@ export const TitleH2 = ({ children }: { children: ReactNode }) => {
 
 const TitleH2Styled = styled.h2`
   font-size: ${fontSize.l};
-  font-weight: 500;
+  font-weight: 600;
 `;
