@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { UserFormData } from "../../../../types/usertypes";
 import { Button } from "../../../../components/button";
 import styled from "styled-components";
-import { getCompany, postUser } from "../../../../services/api";
+import { getCompanyById, postUser } from "../../../../services/api";
 import { useUser } from "../../../../userContext";
   
 export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }> = ({ onSubmit }) => {
@@ -36,7 +36,7 @@ export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }
 
     const GetGroupCompagny = async() => {
         try {
-            const response = await getCompany(`${user.companyId}`);
+            const response = await getCompanyById(`${user.companyId}`);
             console.log(response)
             if (response && response.companyGroup) {
                 setCompanyGroups(response.companyGroup);
