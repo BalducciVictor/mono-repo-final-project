@@ -5,8 +5,8 @@ type InputProps = {
   label: string;
   type: string;
   placeholder?: string;
-  options?: string[]; // Tableau des options pour les boutons radio
-  selectedOption?: string; // Option sélectionnée
+  options?: string[];
+  selectedOption?: string;
   onChange?: (value: string) => void;
   value?: string;
   inputStyle?: React.CSSProperties;
@@ -31,7 +31,7 @@ export const FormularInput = ({
             <RadioLabel key={index}>
               <RadioInput
                 type="radio"
-                name={label} // Utilisez le nom du label comme nom du groupe de boutons radio
+                name={label}
                 value={option}
                 checked={option === selectedOption}
                 onChange={e => onChange && onChange(e.target.value)}

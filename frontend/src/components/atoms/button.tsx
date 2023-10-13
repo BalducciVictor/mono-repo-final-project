@@ -15,13 +15,13 @@ const buttonColors = {
 
 interface ButtonStyledProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'default' | 'highlighted';
-  buttonStyle?: CSSProperties; // Nouvelle prop pour le style personnalisé
+  buttonStyle?: CSSProperties;
 }
 
 export const Button: React.FC<ButtonStyledProps> = ({
   children,
   variant = 'default',
-  buttonStyle, // Récupération de la prop buttonStyle
+  buttonStyle,
   ...props
 }) => {
   return (
