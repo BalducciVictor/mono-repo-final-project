@@ -12,5 +12,5 @@ export class UpdateQuestionnaireRequestDto {
   @ApiProperty()
   @IsArray()
   @Type(() => UpdateQuestionRequestDto)
-  questions?: UpdateQuestionRequestDto[];
+  questions?: Array<UpdateQuestionRequestDto>;
 }

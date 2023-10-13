@@ -4,8 +4,8 @@ import { QuestionnaireResponseDto } from "src/application/dto/Questionnaire/Resp
 export abstract class IQuestionnaireService {
   create: (
     chapterId: string,
-    createQuestionnaireDto: CreateQuestionnaireRequestDto
-  ) => Promise<QuestionnaireResponseDto>;
+    createQuestionnaireDto: Array<CreateQuestionnaireRequestDto>
+  ) => Promise<Array<QuestionnaireResponseDto>>;
   findAll: (chapterId: string) => Promise<Array<QuestionnaireResponseDto>>;
   findOne: (
     chapterId: string,

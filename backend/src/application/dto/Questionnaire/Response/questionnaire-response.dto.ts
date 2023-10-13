@@ -12,5 +12,5 @@ export class QuestionnaireResponseDto {
   @ApiProperty()
   @IsArray()
   @Type(() => QuestionResponseDto)
-  questions: QuestionResponseDto[];
+  questions: Array<QuestionResponseDto>;
 }

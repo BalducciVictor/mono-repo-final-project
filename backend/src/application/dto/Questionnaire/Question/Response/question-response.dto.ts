@@ -13,5 +13,5 @@ export class QuestionResponseDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => AnswerResponseDto)
-  answers: AnswerResponseDto[];
+  answers: Array<AnswerResponseDto>;
 }

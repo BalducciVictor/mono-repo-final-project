@@ -10,13 +10,12 @@ export class QuestionnaireService implements IQuestionnaireService {
 
   async create(
     chapterId: string,
-    createQuestionnaireDto: CreateQuestionnaireRequestDto
-  ): Promise<QuestionnaireResponseDto> {
+    createQuestionnaireDto: Array<CreateQuestionnaireRequestDto>
+  ): Promise<Array<QuestionnaireResponseDto>> {
     const chapter = await this.chapterRepository.get(chapterId);
     if (!chapter)
       throw new NotFoundException(`Chapter with ID ${chapterId} not found.`);
-
-    return await this.chapterRepository.addQuestionnaire(
+    return await this.chapterRepository.addQuestionnaires(
       chapter,
       createQuestionnaireDto
     );
