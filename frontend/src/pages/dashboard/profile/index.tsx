@@ -38,18 +38,23 @@ export const Profile = () => {
   return (
     <ProfileWrapper>
       <Title>Mes Infos Personnelle</Title>
-      <IntroBlock firstName={user.firstName}/>
-      <ProfileCadre
-        id={user.id}
-        firstName={user.firstName}
-        lastName={user.lastName}
-        email={user.email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        companyName={company}
-        handleLogin={handleLogin}
-      />
+      {
+        user.role === "USER" &&
+        <ProfileUserWrapper>
+          <IntroBlock firstName={user.firstName}/>
+          <ProfileCadre
+            id={user.id}
+            firstName={user.firstName}
+            lastName={user.lastName}
+            email={user.email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            companyName={company}
+            handleLogin={handleLogin}
+          />
+        </ProfileUserWrapper>
+      }
     </ProfileWrapper>
   );
 };
@@ -59,6 +64,12 @@ const ProfileWrapper = styled.div`
   flex-direction: column;
   gap: 30px;
 `;
+
+const ProfileUserWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`
 
 const Title = styled.h1`
   color: ${color.darker.fontDark};
