@@ -52,6 +52,7 @@ export class UserService implements IUserService {
     const newUser: CreateUserRequestDto = {
       ...createUserDto,
       password: hashedPassword,
+      createdAt: new Date(),
     };
 
     return await this.userRepository.create(newUser);

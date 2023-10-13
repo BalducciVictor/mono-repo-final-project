@@ -44,14 +44,19 @@ describe("QuestionnaireController (e2e)", () => {
     expect(response.status).toBe(HttpStatus.FORBIDDEN);
   });
 
-  it("should create a questionnaire for an ADMIN", async () => {
+  it("should create multiple questionnaires for an ADMIN", async () => {
     const response = await request(app.getHttpServer())
       .post(`/chapters/${chapterId}/questionnaires`)
       .set("Authorization", `Bearer ${adminToken}`)
       .send(createQuestionnaireData);
+
     expect(response.status).toBe(HttpStatus.CREATED);
-    expect(response.body).toHaveProperty("_id");
-    createdQuestionnaireIds.push(response.body._id);
+    expect(Array.isArray(response.body)).toBeTruthy();
+
+    response.body.forEach((questionnaire) => {
+      expect(questionnaire).toHaveProperty("_id");
+      createdQuestionnaireIds.push(questionnaire._id);
+    });
   });
 
   it("should reject questionnaire creation for unauthorized user", async () => {

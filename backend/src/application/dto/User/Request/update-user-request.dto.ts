@@ -29,4 +29,7 @@ export class UpdateUserRequestDto {
 
   @ApiProperty()
   validatedChapterId?: Array<string>;
+
+  @ApiProperty()
+  createdAt: Date;
 }

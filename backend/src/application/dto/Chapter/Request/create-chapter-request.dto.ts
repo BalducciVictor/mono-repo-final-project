@@ -50,5 +50,5 @@ export class CreateChapterRequestDto {
   @ValidateNested({ each: true })
   @Type(() => CreateDocumentationRequestDto)
   @IsNotEmpty()
-  documents: CreateDocumentationRequestDto[];
+  documentation: CreateDocumentationRequestDto[];
 }

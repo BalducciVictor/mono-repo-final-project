@@ -31,6 +31,9 @@ export class User {
 
   @Prop()
   validatedChapterId: Array<string>;
+
+  @Prop()
+  createdAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

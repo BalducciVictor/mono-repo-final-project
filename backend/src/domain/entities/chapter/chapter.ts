@@ -32,7 +32,7 @@ export class Chapter {
   companyId: Types.ObjectId;
 
   @Prop({ type: [DocumentationSchema], default: [] })
-  documents: Types.DocumentArray<DocumentationDocument>;
+  documentation: Types.DocumentArray<DocumentationDocument>;
 }
 
 export const ChapterSchema = SchemaFactory.createForClass(Chapter);

@@ -34,5 +34,5 @@ export class UpdateChapterRequestDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  documents?: UpdateDocumentationRequestDto[];
+  documentation?: UpdateDocumentationRequestDto[];
 }
