@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm';
 import { color, fontSize, space } from '../../../styles/const';
 import { TitleH1 } from '../../../components/Title';
 import { Button } from '../../../components/atoms/button';
+import { ImagePicker } from '../../../components/molecules/imagePicker';
 
 interface Document {
   title: string;
@@ -48,6 +49,25 @@ export const ChapterCreation = ({
 
       setChapterTitle('');
       setInputText('');
+    }
+  };
+
+  const handleAddImage = (imageURL: string) => {
+    if (chapterTitle.trim() !== '') {
+      const newChapter: Document = {
+        title: chapterTitle,
+        step: documents.length + 1,
+        documentationContent: [
+          ...documents[documents.length - 1].documentationContent,
+          {
+            content: imageURL,
+            contentType: 'image',
+          },
+        ],
+      };
+
+      setDocuments([...documents.slice(0, -1), newChapter]);
+      setChapterTitle('');
     }
   };
 
@@ -94,7 +114,11 @@ export const ChapterCreation = ({
               inputStyle={{ resize: 'none', height: '500px' }}
             />
           </Wrapper>
-          <Button style={{ width: '100%' }} onClick={handleAddChapter}>
+          <ImagePicker onImageSelected={handleAddImage} />
+          <Button
+            style={{ width: '100%', marginTop: space.m }}
+            onClick={handleAddChapter}
+          >
             Valider le chapitre
           </Button>
         </InputsWrapper>
