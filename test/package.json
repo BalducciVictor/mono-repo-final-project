@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "wdio": "wdio run ./wdio.conf.ts",
     "report": "allure generate allure-results --clean && allure open",
-    "testReport": "wdio run ./wdio.conf.ts && allure generate allure-results --clean && allure open"
+    "clean-report": "rmdir /s allure-results"
   },
   "author": "",
   "license": "ISC",
