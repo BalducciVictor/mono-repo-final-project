@@ -15,7 +15,7 @@ export const SignOut = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    setUser({role: null, id: null, companyId: null, currentChapterId: null, currentChapterStepId: null, email:null, firstName: null, lastName: null, validatedChapterId: null});
+    setUser({role: null, id: null, companyId: null, currentChapterId: null, currentChapterStepId: null, email:null, firstName: null, lastName: null, validatedChapterId: null, refreshToken: null});
     sessionAPI.removeToken()
     sessionAPI.removeUser()
     navigate('/')
@@ -33,6 +33,7 @@ export const SignOut = () => {
 
 export const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const {user, setUser} = useUser();
 
   return (
     <SidebarContainer
@@ -61,7 +62,7 @@ export const Sidebar: React.FC = () => {
           <SidebarLink to="profile">
             <ProfileIcon size={iconSize.m} color={color.light.PureWhite} />
             <Text className={isHovered ? 'show-text' : 'hide-text'}>
-              Hugues
+              {user.firstName}
             </Text>
           </SidebarLink>
         </SidebarItem>
@@ -74,6 +75,7 @@ export const Sidebar: React.FC = () => {
 };
 
 const TopSideBar = styled.div`
+  margin-bottom: 10px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -95,20 +97,21 @@ const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 136px;
+  width: 180px;
   height: 100%;
   background-color: ${color.darker.brandBlue};
   color: #fff;
   padding: 20px;
   transition: width 0.3s ease;
-
-  &:hover {
-    width: 136px;
-  }
 `;
 
 const SidebarItem = styled.div`
-  margin: ${space.m} 0;
+  border-radius: 10px;
+  padding: ${space.m} ${space.s};
+  cursor: pointer;
+  &:hover{
+    background-color: #273445;;
+  }
 `;
 
 const SidebarLink = styled(Link)`
@@ -122,5 +125,4 @@ const SignOutContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  cursor: pointer;
 `;
