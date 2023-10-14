@@ -42,12 +42,18 @@ const api = async ({
 
   try {
     const response = await fetch(requestUrl, requestOptions);
+
     if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.message || 'Erreur inconnue');
+      throw new Error('Network response was not ok' + response.statusText);
     }
+
+    if (parseInt(response.headers.get('Content-Length') || '0') === 0) {
+      return null;
+    }
+
     return await response.json();
   } catch (error: any) {
+    console.error('API error:', error);
     throw new Error(error.message);
   }
 };
