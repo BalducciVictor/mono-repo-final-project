@@ -36,7 +36,9 @@ const Modal = styled.div`
   position: relative;
   background-color: white;
   padding: 20px;
+  max-height: 80%;
   border-radius: 8px;
+  overflow: scroll;
 `;
 
 const CloseIcon = styled.span`
