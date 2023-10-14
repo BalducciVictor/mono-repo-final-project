@@ -42,11 +42,13 @@ const api = async ({
     try {
         const response = await fetch(requestUrl, requestOptions);
         if (response.status === 401) {
-            const userInformation = sessionStorage.getItem(`USER_DATA`);
-            const parsedUserInformation = JSON.parse(userInformation || '{}');
-            const newToken = await refreshToken(parsedUserInformation.refreshToken);
-            sessionAPI.setToken(newToken.tokenRefreshed);
-            window.location.reload();
+            const userInformation = sessionAPI.getUser();
+            if (userInformation && userInformation.refreshToken) {
+                console.log(userInformation);
+                const newToken = await refreshToken(userInformation.refreshToken);
+                sessionAPI.setToken(newToken.tokenRefreshed);
+                window.location.reload(); //refresh to reload data
+            }
         }
         if (!response.ok) {
             const data = await response.json();

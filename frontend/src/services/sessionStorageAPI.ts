@@ -21,7 +21,7 @@ const sessionAPI = {
     sessionStorage.setItem(USER_STORAGE_KEY, userData);
   },
 
-  getUser: (): UserState | null => {
+  getUser: (): UserState | null | undefined => {
     const storedData = sessionStorage.getItem(USER_STORAGE_KEY);
     return storedData ? JSON.parse(storedData) : null;
   },
