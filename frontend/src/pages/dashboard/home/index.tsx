@@ -17,6 +17,7 @@ import AddUserIllustration from '../../../assets/addUserIllu.svg';
 import NewLeconIllustration from '../../../assets/newChapterIllu.svg';
 import NewTeamIllusttration from '../../../assets/addUserIllu.svg';
 import { Button } from '../../../components/atoms/button';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -109,7 +110,9 @@ export const Home = () => {
               <PopUp isOpen={isModalNewTeamOpen} onClose={() => {setIsModalNewTeamOpen(false)}}>
                 <p>Ici form new team</p>
               </PopUp>
-              <ActionButton text="Creer un nouveau cours" imageSrc={NewLeconIllustration} onClick={() => setIsModalNewCourseOpen(true)}/>
+              <Link to='/dashboard/create-chapter'>
+              <ActionButton text="Creer un nouveau cours" imageSrc={NewLeconIllustration} />
+              </Link>
               <PopUp isOpen={isModalNewCourseOpen} onClose={() => {setIsModalNewCourseOpen(false)}}>
                 <p>Ici form new chapter</p>
               </PopUp>
