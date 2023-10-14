@@ -9,15 +9,22 @@ import { useUser } from '../../../userContext';
 import { UserList } from './components/userList';
 import { UserFormData, UserRole } from '../../../types/usertypes';
 import { CreateUserForm } from './components/formCreateUser';
+import { ActionButton } from './components/action';
+
+import AddUserIllustration from '../../../assets/addUserIllu.svg';
+import NewLeconIllustration from '../../../assets/newChapterIllu.svg';
+import NewTeamIllusttration from '../../../assets/addUserIllu.svg';
 
 export const Home = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalCreateUserOpen, setIsModalCreateUserOpen] = useState(false);
+  const [isModalNewTeamOpen, setIsModalNewTeamOpen] = useState(false);
+  const [isModalNewCourseOpen, setIsModalNewCourseOpen] = useState(false);
   const [userAdded, setUserAdded] = useState(false);
   const {user} = useUser();
 
   const handleSubmitForm = (data: UserFormData) => {
     console.log(data);
-    setIsModalOpen(false);
+    setIsModalCreateUserOpen(false);
     setUserAdded(prev => !prev)
   };
   
@@ -31,13 +38,20 @@ export const Home = () => {
           <WrapperUser>
             <TitleH2>Actions</TitleH2>
             <WrapperActions>
-              <Button onClick={() => setIsModalOpen(true)}>Creer un nouveau utilisateur</Button>
-              <Button onClick={() => setIsModalOpen(true)}>Creer un nouveau groupe d'utilisateurs</Button>
+              <ActionButton text="Creer un nouveau utilisateur" imageSrc={AddUserIllustration} onClick={() => setIsModalCreateUserOpen(true)}/>
+              <PopUp isOpen={isModalCreateUserOpen} onClose={() => {setIsModalCreateUserOpen(false)}}>
+                <CreateUserForm onSubmit={handleSubmitForm}/>
+              </PopUp>
+              <ActionButton text="Creer un nouveau groupe d'utilisateurs" imageSrc={NewTeamIllusttration} onClick={() => setIsModalNewTeamOpen(true)}/>
+              <PopUp isOpen={isModalNewTeamOpen} onClose={() => {setIsModalNewTeamOpen(false)}}>
+                <p>Ici form new team</p>
+              </PopUp>
+              <ActionButton text="Creer un nouveau cours" imageSrc={NewLeconIllustration} onClick={() => setIsModalNewCourseOpen(true)}/>
+              <PopUp isOpen={isModalNewCourseOpen} onClose={() => {setIsModalNewCourseOpen(false)}}>
+                <p>Ici form new chapter</p>
+              </PopUp>
             </WrapperActions>
             <TitleH2>Listes Utilisateurs</TitleH2>
-            <PopUp isOpen={isModalOpen} onClose={() => {setIsModalOpen(false)}}>
-              <CreateUserForm onSubmit={handleSubmitForm}/>
-            </PopUp> 
             <UserList companyId={`${user.companyId}`} userAdded={userAdded} />
           </WrapperUser>
         </>
@@ -54,6 +68,7 @@ const WrapperUser = styled.div`
 `;
 
 const WrapperActions= styled.div`
+  margin: 20px 0px;
   display: flex;
   flex-direction: row;
 `

@@ -13,14 +13,15 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ imageSrc, text, onCl
             <p>{text}</p>
         </ButtonContainer>
     );
-  };
-  
+};
+
 const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     cursor: pointer;
     padding: 10px 20px;
+    margin: 0px 10px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 
