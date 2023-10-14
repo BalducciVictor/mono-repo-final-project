@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsArray } from "class-validator";
+import { IsString } from "class-validator";
 import { Types } from "mongoose";
 
 export class UpdateUserRequestDto {
@@ -32,4 +32,12 @@ export class UpdateUserRequestDto {
 
   @ApiProperty()
   createdAt: Date;
+
+  @ApiProperty()
+  @IsString()
+  refreshToken: string;
+
+  @ApiProperty()
+  @IsString()
+  refreshTokenExpiresAt: Date;
 }

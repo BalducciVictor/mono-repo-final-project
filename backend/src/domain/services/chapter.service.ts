@@ -12,6 +12,7 @@ export class ChapterService implements IChapterService {
   public async create(
     createChapterDto: CreateChapterRequestDto
   ): Promise<ChapterResponseDto> {
+    createChapterDto.createdAt = new Date();
     return await this.chapterRepository.create(createChapterDto);
   }
 
