@@ -34,10 +34,12 @@ export class BlobContentService implements IBlobContentService {
     return responseDto;
   }
 
-  async deleteFile(blobName: string): Promise<void> {
+  async deleteFile(blobUrl: string): Promise<void> {
+    const segments = blobUrl.split("/");
+    const lastSegment = segments[segments.length - 1];
     const containerClient =
       this.blobServiceClient.getContainerClient("imagescontainer");
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    const blockBlobClient = containerClient.getBlockBlobClient(lastSegment);
 
     await blockBlobClient.delete();
   }
