@@ -21,7 +21,7 @@ describe('Login page test', () => {
         AllureReporter.startStep('Vérifier qu’un seul élément h1 est présent');
         const headers = await $$("h1");
         AllureReporter.addAttachment('Nombre d\'éléments h1 trouvés', `${headers.length}`, 'text/plain');
-        expect(headers.length).toBe(2);
+        expect(headers.length).toBe(1);
         AllureReporter.endStep();
     })
         
