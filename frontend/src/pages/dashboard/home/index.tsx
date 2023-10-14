@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { TitleH1, TitleH2 } from '../../../components/Title';
 import { IntroBlock } from './components/sections/introBlock';
-import { CurrentChapters } from './components/sections/currentChapters';
-import { Button } from '../../../components/button';
 import { CompanyCard } from './components/molecules/CompanyCard';
 import { PopUp } from '../../../components/PopUp';
 import { useState, useEffect} from 'react';
@@ -18,6 +16,8 @@ import { ActionButton } from './components/action';
 import AddUserIllustration from '../../../assets/addUserIllu.svg';
 import NewLeconIllustration from '../../../assets/newChapterIllu.svg';
 import NewTeamIllusttration from '../../../assets/addUserIllu.svg';
+import { Button } from '../../../components/atoms/button';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -110,7 +110,9 @@ export const Home = () => {
               <PopUp isOpen={isModalNewTeamOpen} onClose={() => {setIsModalNewTeamOpen(false)}}>
                 <p>Ici form new team</p>
               </PopUp>
-              <ActionButton text="Creer un nouveau cours" imageSrc={NewLeconIllustration} onClick={() => setIsModalNewCourseOpen(true)}/>
+              <Link to='/dashboard/create-chapter'>
+              <ActionButton text="Creer un nouveau cours" imageSrc={NewLeconIllustration} />
+              </Link>
               <PopUp isOpen={isModalNewCourseOpen} onClose={() => {setIsModalNewCourseOpen(false)}}>
                 <p>Ici form new chapter</p>
               </PopUp>

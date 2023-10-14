@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 interface PopUpProps {
   isOpen: boolean;
@@ -46,7 +46,7 @@ const CloseIcon = styled.span`
   top: 10px;
   right: 10px;
   cursor: pointer;
-  font-size: 20px; 
+  font-size: 20px;
   &:hover {
     color: gray;
   }

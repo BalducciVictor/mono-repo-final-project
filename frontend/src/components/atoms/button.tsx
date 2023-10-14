@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
-import { ReactNode, ButtonHTMLAttributes } from 'react';
-import { color } from '../styles/const';
+import { ButtonHTMLAttributes, CSSProperties } from 'react';
+import { color } from '../../styles/const';
 
 const buttonColors = {
   default: {
@@ -15,10 +15,20 @@ const buttonColors = {
 
 interface ButtonStyledProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'default' | 'highlighted';
+  buttonStyle?: CSSProperties;
 }
 
-export const Button: React.FC<ButtonStyledProps> = ({ children, variant = 'default', ...props }) => {
-  return <ButtonStyled variant={variant} {...props}>{children}</ButtonStyled>;
+export const Button: React.FC<ButtonStyledProps> = ({
+  children,
+  variant = 'default',
+  buttonStyle,
+  ...props
+}) => {
+  return (
+    <ButtonStyled variant={variant} style={buttonStyle} {...props}>
+      {children}
+    </ButtonStyled>
+  );
 };
 
 const ButtonStyled = styled.button<ButtonStyledProps>`
@@ -26,7 +36,6 @@ const ButtonStyled = styled.button<ButtonStyledProps>`
   border: none;
   border-radius: 8px;
   cursor: pointer;
-
   ${props =>
     props.variant === 'default'
       ? css`
