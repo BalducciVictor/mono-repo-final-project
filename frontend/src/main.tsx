@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter, Navigate, } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import { Auth } from './pages/auth';
 import { Dashboard } from './pages/dashboard';
 import { UserProvider } from './userContext';
@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
   redirectPath: string;
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps>  = ({
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   redirectPath = '/',
   children,
 }) => {
@@ -22,7 +22,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps>  = ({
 };
 
 export const App = () => {
-
   return (
     <UserProvider>
       <BrowserRouter>

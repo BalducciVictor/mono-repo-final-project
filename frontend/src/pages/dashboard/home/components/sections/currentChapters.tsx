@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { space } from '../../../../../styles/const';
 import { ProgressChapterCard } from '../progressChapterCard';
+import { HeadSection } from '../headerSection';
 
 export const CurrentChapters = () => {
   return (
@@ -30,13 +31,6 @@ export const CurrentChapters = () => {
 const CurrentChaptersStyled = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const HeadSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: ${space.l} 0 0 0;
 `;
 
 const CardsStyled = styled.div`
