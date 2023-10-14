@@ -10,64 +10,6 @@ import { getChapterById } from '../../../services/api';
 import { useParams } from 'react-router-dom';
 import { Button } from '../../../components/atoms/button';
 
-const documentations = [
-  {
-    title: 'string',
-    step: 1,
-    documentationContent: [
-      {
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi',
-        contentType: 'text',
-      },
-    ],
-  },
-  {
-    title: 'string',
-    step: 2,
-    documentationContent: [
-      {
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi',
-        contentType: 'text',
-      },
-    ],
-  },
-  {
-    title: 'string',
-    step: 3,
-    documentationContent: [
-      {
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi',
-        contentType: 'text',
-      },
-    ],
-  },
-  {
-    title: 'string',
-    step: 4,
-    documentationContent: [
-      {
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi',
-        contentType: 'text',
-      },
-    ],
-  },
-  {
-    title: 'string',
-    step: 5,
-    documentationContent: [
-      {
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, lorem id facilisis interdum, libero velit auctor lectus, nec vestibulum leo libero at tellus. Etiam tincidunt metus a mauris tincidunt, eu vehicula orci venenatis. Aenean ac libero non justo fermentum finibus. Nullam ullamcorper massa in sapien fermentum, vel consequat elit vulputate. Nullam quis lorem sed ipsum efficitur interdum. Vivamus bibendum, justo sed laoreet cursus, nisi sapien fermentum nunc, a efficitur lorem odio vel purus. Integer eget scelerisque leo. Suspendisse non malesuada erat, id aliquet nunc. Integer a mauris non tortor ultrices interdum sed ac urna. Sed et ultrices nisi',
-        contentType: 'text',
-      },
-    ],
-  },
-];
-
 interface Chapter {
   category: string;
   chapterName: string;
@@ -82,9 +24,9 @@ interface Chapter {
     }[];
   }[];
   hasQuiz: boolean;
-  questionnaire: any[]; // Remplacez par le type correct si possible
+  questionnaire: any[];
   timeToRead: number;
-  viewedBy: string[]; // Remplacez par le type correct si possible
+  viewedBy: string[];
 }
 
 export const ReadChapter = () => {

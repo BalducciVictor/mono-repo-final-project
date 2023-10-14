@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { UserFormData } from '../../../../types/usertypes';
 import styled from 'styled-components';
 import { getCompanyById, postUser } from '../../../../services/api';
 import { useUser } from '../../../../userContext';
 import { Button } from '../../../../components/atoms/button';
+import { UserFormData } from '../../../../types/usertypes';
 
 export const CreateUserForm: React.FC<{
   onSubmit: (data: UserFormData) => void;

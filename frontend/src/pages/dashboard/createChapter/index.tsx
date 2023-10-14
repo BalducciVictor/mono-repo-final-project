@@ -61,15 +61,12 @@ export const CreateChapter: React.FC = () => {
   };
 
   return !isCourseCreation ? (
-    <>
-      {console.log(chapterData)}
-      <ChapterCreation
-        courseTitle={chapterData.chapterName}
-        documentations={chapterData.documentation}
-        setDocuments={handleDocumentChange}
-        handleSubmit={handleSubmit}
-      />
-    </>
+    <ChapterCreation
+      courseTitle={chapterData.chapterName}
+      documentations={chapterData.documentation}
+      setDocuments={handleDocumentChange}
+      handleSubmit={handleSubmit}
+    />
   ) : (
     <FirstStep
       setIsCourseCreation={setIsCourseCreation}
