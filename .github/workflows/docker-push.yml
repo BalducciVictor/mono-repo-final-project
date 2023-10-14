@@ -34,3 +34,18 @@ jobs:
       run: |
         docker build -t finalprojectacr.azurecr.io/frontend:latest ./frontend
         docker push finalprojectacr.azurecr.io/frontend:latest
+
+    - name: Connect to Azure
+      run: |
+        az login --service-principal -u ${{ secrets.APPID }} -p ${{ secrets.PASSWORD }} --tenant ${{ secrets.TENANT }}
+
+    - name: Restart onbyapicontainer
+      run: |
+        az container restart --resource-group FINALPROJECT --name onbyapicontainer
+
+    - name: Restart onby-front
+      run: |
+        az container restart --resource-group FINALPROJECT --name onby-front
+
+    - name: Logout from Azure
+      run: az logout

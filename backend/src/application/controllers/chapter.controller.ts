@@ -133,7 +133,6 @@ export default class ChapterController {
     @Param("chapterId") chapterId: string,
     @Param("userId") userId: string
   ): Promise<ChapterResponseDto> {
-    console.log(chapterId, userId);
     return await this.chapterUseCase.markAsViewed(chapterId, userId);
   }
 }

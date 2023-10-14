@@ -43,12 +43,18 @@ const api = async ({
 
     try {
         const response = await fetch(requestUrl, requestOptions);
+
         if (!response.ok) {
-            const data = await response.json();
-            throw new Error(data.message || "Erreur inconnue");
+            throw new Error('Network response was not ok' + response.statusText);
         }
+
+        if (parseInt(response.headers.get('Content-Length') || '0') === 0) {
+            return null;
+        }
+
         return await response.json();
     } catch (error: any) {
+        console.error('API error:', error);
         throw new Error(error.message);
     }
 };
@@ -95,6 +101,20 @@ export function getAllCompany() {
     return api({method: "GET", url: `company/`})
 };
 
+export function postNewCompany(name: string) {
+    return api({method: "POST", url: `company/`, data: {
+        name,
+    }})
+};
+
+export function putCompany(id: string, data:any) {
+    return api({method: "PUT", url: `company/${id}/`, data})
+};
+
+export function deleteCompany(companyId: string) {
+    return api({method: "DELETE", url: `company/${companyId}`})
+};
+
 export function getCompanyById(companyId: string) {
     return api({method: "GET", url: `company/${companyId}/`})
 };
@@ -105,4 +125,12 @@ export function getChapterByCompany(companyId: string) {
 
 export function postUser(data: UserFormData){
     return api({method: "POST", url: `users`, data})
+}
+
+export function getUserByCompagnyId(companyId: string){
+    return api({method: "GET", url: `users?companyId=${companyId}`})
+}
+
+export function DeleteUserById(userId: string){
+    return api({method: "DELETE", url: `users/${userId}`})
 }

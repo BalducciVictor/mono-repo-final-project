@@ -36,6 +36,9 @@ export class Chapter {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: "User" }], default: [] })
   viewedBy: Types.ObjectId[];
+
+  @Prop()
+  createdAt: Date;
 }
 
 export const ChapterSchema = SchemaFactory.createForClass(Chapter);

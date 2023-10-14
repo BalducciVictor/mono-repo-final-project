@@ -48,4 +48,11 @@ export class UserRepository implements IUserRepository {
 
     return updatedUser ? updatedUser.toObject() : null;
   }
+
+  async findUserByRefreshToken(token: string): Promise<UserResponseDto | null> {
+    return this.userModel.findOne({
+      refreshToken: token,
+      refreshTokenExpiresAt: { $gt: new Date() },
+    });
+  }
 }

@@ -12,4 +12,5 @@ export abstract class IUserRepository {
     id: string,
     updateUserDto: UpdateUserRequestDto
   ) => Promise<UserResponseDto | null>;
+  findUserByRefreshToken: (token: string) => Promise<UserResponseDto | null>;
 }

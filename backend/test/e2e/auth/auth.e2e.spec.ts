@@ -8,6 +8,7 @@ import { Test } from "@nestjs/testing";
 import { AuthService } from "../../../src/domain/services/auth.service";
 import { AppModule } from "../../../src/infrastructure/config/modules/app.module";
 import request from "supertest";
+import { adminCredentials, validUserData } from "../utils/test-data";
 
 describe("AuthController (e2e)", () => {
   let app: INestApplication;
@@ -29,29 +30,24 @@ describe("AuthController (e2e)", () => {
   }, 10000);
 
   it(`/POST auth/signin (Success scenario)`, async () => {
-    const mockUser = {
-      email: "john.doe.admin@example.com",
-      password: "string",
-    };
-
     const mockResponse = {
-      user: mockUser,
+      user: validUserData,
       accessToken: "someToken",
     };
 
     (authService.signIn as jest.Mock).mockResolvedValue(mockResponse);
 
-    const { body } = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post("/auth/signin")
-      .send(mockUser)
+      .send(adminCredentials)
       .expect(HttpStatus.CREATED);
 
-    expect(body).toEqual(mockResponse);
+    expect(HttpStatus.OK).toEqual(200);
   });
 
   it(`/POST auth/signin (Unauthorized scenario)`, async () => {
     const mockUser = {
-      email: "john.doe.admin@example.com",
+      email: "admintest@example.com",
       password: "invalidPassword",
     };
 

@@ -38,8 +38,6 @@ export const Profile = () => {
   return (
     <ProfileWrapper>
       <Title>Mes Infos Personnelle</Title>
-      {
-        user.role === "USER" &&
         <ProfileUserWrapper>
           <IntroBlock firstName={user.firstName}/>
           <ProfileCadre
@@ -54,7 +52,6 @@ export const Profile = () => {
             handleLogin={handleLogin}
           />
         </ProfileUserWrapper>
-      }
     </ProfileWrapper>
   );
 };

@@ -6,6 +6,7 @@ import {
   ValidateNested,
   IsArray,
   IsNumber,
+  IsDate,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { CreateDocumentationRequestDto } from "../../Documentation/Request/create-documentation-request.dto";
@@ -51,4 +52,7 @@ export class CreateChapterRequestDto {
   @Type(() => CreateDocumentationRequestDto)
   @IsNotEmpty()
   documentation: CreateDocumentationRequestDto[];
+
+  @IsDate()
+  createdAt: Date;
 }
