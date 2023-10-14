@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MainLogo } from "../../components/icons/mainLogo";
 import { FormularInput } from "./components/molecules/FormularInput";
 import { useMutation } from 'react-query';
@@ -28,9 +28,9 @@ export const Auth = () => {
   };
 
   if (mutation.isSuccess) {
-    setUser({role: `${mutation.data.user.role}`, id: mutation.data.user._id, companyId: mutation.data.user.companyId, currentChapterId: mutation.data.user.currentChapterId, currentChapterStepId: mutation.data.user.currentChapterStepId, email: `${mutation.data.user.email}`, firstName: `${mutation.data.user.firstName}`, lastName: `${mutation.data.user.lastName}`, validatedChapterId: mutation.data.user.lastName });
+    setUser({role: `${mutation.data.user.role}`, id: mutation.data.user._id, companyId: mutation.data.user.companyId, currentChapterId: mutation.data.user.currentChapterId, currentChapterStepId: mutation.data.user.currentChapterStepId, email: `${mutation.data.user.email}`, firstName: `${mutation.data.user.firstName}`, lastName: `${mutation.data.user.lastName}`, validatedChapterId: mutation.data.user.lastName, refreshToken: mutation.data.user.refreshToken });
     sessionAPI.setToken(`${mutation.data.accessToken}`);
-    sessionAPI.setUser({role: `${mutation.data.user.role}`, id: mutation.data.user._id, companyId: mutation.data.user.companyId, currentChapterId: mutation.data.user.currentChapterId, currentChapterStepId: mutation.data.user.currentChapterStepId, email: `${mutation.data.user.email}`, firstName: `${mutation.data.user.firstName}`, lastName: `${mutation.data.user.lastName}`, validatedChapterId: mutation.data.user.lastName });
+    sessionAPI.setUser({role: `${mutation.data.user.role}`, id: mutation.data.user._id, companyId: mutation.data.user.companyId, currentChapterId: mutation.data.user.currentChapterId, currentChapterStepId: mutation.data.user.currentChapterStepId, email: `${mutation.data.user.email}`, firstName: `${mutation.data.user.firstName}`, lastName: `${mutation.data.user.lastName}`, validatedChapterId: mutation.data.user.lastName, refreshToken: mutation.data.user.refreshToken });
     navigate('/dashboard');
   }
 
@@ -89,7 +89,7 @@ export const Auth = () => {
                     />
                 </LeftFrom>
             }
-          <LeftButton onClick={handleLogin}>Sing in</LeftButton>
+          <LeftButton onClick={handleLogin}>Sign in</LeftButton>
         </LeftContent>
       </LeftSection>
       <RightSection>

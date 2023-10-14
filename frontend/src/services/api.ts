@@ -1,8 +1,6 @@
 import sessionAPI from "./sessionStorageAPI"
 import type { Chapter } from "../types/requestTypes"
 import { UserFormData } from "../types/usertypes";
-import { Interface } from "readline";
-
 interface ApiOptions {
     method: "GET" | "POST" | "PUT" | "DELETE";
     url?: string;
@@ -16,7 +14,6 @@ const api = async ({
     data,
     searchParams
 }: ApiOptions): Promise<any> => {;
-    
     const apiUrl = `${process.env.REACT_APP_API_URL}${url}`;
 
     const headers: HeadersInit = {
@@ -40,9 +37,17 @@ const api = async ({
     };
 
     const requestUrl = new URL(`${apiUrl}${queryParams}`);
+    
 
     try {
         const response = await fetch(requestUrl, requestOptions);
+        if (response.status === 401) {
+            const userInformation = sessionStorage.getItem(`USER_DATA`);
+            const parsedUserInformation = JSON.parse(userInformation || '{}');
+            const newToken = await refreshToken(parsedUserInformation.refreshToken);
+            sessionAPI.setToken(newToken.tokenRefreshed);
+            window.location.reload();
+        }
         if (!response.ok) {
             const data = await response.json();
             throw new Error(data.message || "Erreur inconnue");
@@ -113,4 +118,8 @@ export function getUserByCompagnyId(companyId: string){
 
 export function DeleteUserById(userId: string){
     return api({method: "DELETE", url: `users/${userId}`})
+}
+
+export function refreshToken(refreshToken: string){
+    return api({method: "POST", url: `auth/refresh/${refreshToken}`})
 }

@@ -8,6 +8,7 @@ export type UserState = {
     firstName: string | null;
     lastName: string | null;
     validatedChapterId: Array<null> | null;
+    refreshToken: string| null;
 };
 
 export enum UserRole {
