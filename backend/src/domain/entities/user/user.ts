@@ -34,6 +34,12 @@ export class User {
 
   @Prop()
   createdAt: Date;
+
+  @Prop()
+  refreshToken: string;
+
+  @Prop()
+  refreshTokenExpiresAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

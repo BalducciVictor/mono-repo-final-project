@@ -39,7 +39,8 @@ export class ChapterRepository implements IChapterRepository {
 
   async create(chapter: CreateChapterRequestDto): Promise<ChapterResponseDto> {
     const newChapter = new this.chapterModel(chapter);
-    return await newChapter.save();
+    await newChapter.save();
+    return newChapter.toObject();
   }
 
   async delete(id: string): Promise<void> {
