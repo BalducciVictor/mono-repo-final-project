@@ -4,10 +4,10 @@ import * as jwt from "jsonwebtoken";
 import { LoginUserResponseDto } from "../../application/dto/User/auth/login-user-response.dto";
 import * as bcrypt from "bcryptjs";
 import { IAuthService } from "../interfaces/services/IAuthService";
-import { UserResponseDto } from "src/application/dto/User/Response/user-response.dto";
+import { UserResponseDto } from "../../application/dto/User/Response/user-response.dto";
 import { IUserRepository } from "../interfaces/repository/IUserRepository";
-import { UpdateUserRequestDto } from "src/application/dto/User/Request/update-user-request.dto";
-import { CreateRefreshTokenRequestDto } from "src/application/dto/User/auth/create-refresh-token-response.dto";
+import { UpdateUserRequestDto } from "../../application/dto/User/Request/update-user-request.dto";
+import { CreateRefreshTokenRequestDto } from "../../application/dto/User/auth/create-refresh-token-response.dto";
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -31,7 +31,6 @@ export class AuthService implements IAuthService {
       expiresIn: "1h",
     });
     user.refreshToken = await this.generateRefreshToken(user._id);
-    console.log(user.refreshToken);
     return {
       user: user,
       accessToken,

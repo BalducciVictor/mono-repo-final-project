@@ -45,7 +45,7 @@ import {
 import { ContentUseCase } from "../../../application/useCases/content/content.use-case";
 import { QuestionnaireUseCase } from "../../../application/useCases/questionnaire/questionnaire.use-case";
 import { AuthUseCase } from "../../../application/useCases/auth/auth.use-case";
-import { IAuthService } from "src/domain/interfaces/services/IAuthService";
+import { IAuthService } from "../../../domain/interfaces/services/IAuthService";
 
 @Module({
   imports: [

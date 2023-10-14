@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { LoginUserRequestDto } from "../../../application/dto/User/auth/login-user-request.dto";
 import { LoginUserResponseDto } from "../../../application/dto/User/auth/login-user-response.dto";
-import { IAuthService } from "src/domain/interfaces/services/IAuthService";
-import { CreateRefreshTokenRequestDto } from "src/application/dto/User/auth/create-refresh-token-response.dto";
+import { IAuthService } from "../../../domain/interfaces/services/IAuthService";
+import { CreateRefreshTokenRequestDto } from "../../../application/dto/User/auth/create-refresh-token-response.dto";
 
 @Injectable()
 export class AuthUseCase {
