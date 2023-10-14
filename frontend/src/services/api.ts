@@ -126,3 +126,11 @@ export function getChapterByCompany(companyId: string) {
 export function postUser(data: UserFormData){
     return api({method: "POST", url: `users`, data})
 }
+
+export function getUserByCompagnyId(companyId: string){
+    return api({method: "GET", url: `users?companyId=${companyId}`})
+}
+
+export function DeleteUserById(userId: string){
+    return api({method: "DELETE", url: `users/${userId}`})
+}

@@ -7,6 +7,11 @@ export class UserResponseDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  _id: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
   firstName: string;
 
   @ApiProperty()
@@ -52,4 +57,12 @@ export class UserResponseDto {
   @ApiProperty()
   @IsDate()
   createdAt: Date;
+
+  @ApiProperty()
+  @IsString()
+  refreshToken: string;
+
+  @ApiProperty()
+  @IsString()
+  refreshTokenExpiresAt: Date;
 }

@@ -28,6 +28,7 @@ export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }
         try {
             const response = await postUser(formData);
             setApiMessage("Utilisateur bien créé");
+            onSubmit(formData);
         } catch (err:any) {
             console.log(err)
             setApiMessage(err.message);
@@ -37,7 +38,6 @@ export const CreateUserForm: React.FC<{ onSubmit: (data: UserFormData) => void }
     const GetGroupCompagny = async() => {
         try {
             const response = await getCompanyById(`${user.companyId}`);
-            console.log(response)
             if (response && response.companyGroup) {
                 setCompanyGroups(response.companyGroup);
             }

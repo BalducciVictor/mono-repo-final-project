@@ -39,7 +39,7 @@ const Search = styled.div`
 
 const Input = styled.input`
     width: 348px;   
-    font-size: ${fontSize.s}
+    font-size: ${fontSize.s};
     padding: ${space.s} ${space.s};
     border-radius: 4px;
     border-radius: 100px;
