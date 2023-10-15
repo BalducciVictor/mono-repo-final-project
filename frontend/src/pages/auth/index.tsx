@@ -52,7 +52,7 @@ export const Auth = () => {
       validatedChapterId: mutation.data.user.lastName,
       refreshToken: mutation.data.user.refreshToken,
     });
-    navigate('/dashboard');
+    navigate('/dashboard/home');
   }
 
   return (
@@ -115,7 +115,9 @@ export const Auth = () => {
             </LeftFrom>
           )}
           {/* <Link to="/dashboard/home"> */}
-          <LeftButton data-testid="login-button" onClick={handleLogin}>Se connecter</LeftButton>
+          <LeftButton data-testid="login-button" onClick={handleLogin}>
+            Se connecter
+          </LeftButton>
           {/* </Link> */}
         </LeftContent>
       </LeftSection>
