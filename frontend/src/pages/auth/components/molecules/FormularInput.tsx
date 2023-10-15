@@ -10,6 +10,7 @@ type InputProps = {
   onChange?: (value: string) => void;
   value?: string;
   inputStyle?: React.CSSProperties;
+  dataTestId?: string;
 };
 
 export const FormularInput = ({
@@ -21,6 +22,7 @@ export const FormularInput = ({
   onChange,
   inputStyle,
   value,
+  dataTestId,
 }: InputProps) => {
   return (
     <WrapperInput>
@@ -49,6 +51,7 @@ export const FormularInput = ({
         />
       ) : (
         <Input
+          data-testid={dataTestId}
           value={value}
           type={type}
           placeholder={placeholder}
