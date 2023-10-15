@@ -4,21 +4,26 @@ import EXPECTED_HREF from '../../fixtures/testCaseHref.fixture';
 
 describe('HomePage Tests', () => {
 
-    beforeEach(() => {
-        browser.url('http://onby-front.ghgmbbhubqhfbnc2.francecentral.azurecontainer.io');
+    beforeEach(async () => {
+        await browser.url('http://onby-front.ghgmbbhubqhfbnc2.francecentral.azurecontainer.io');
     
         AllureReporter.addStep('Navigated to login page');
-        const emailInput = $('[data-testid="email-input-test"]');
-        const passwordInput = $('[data-testid="password-input-test"]');
-        const loginButton = $('[data-testid="login-button"]');  
+        const emailInput = await $('[data-testid="email-input-test"]');
+        const passwordInput = await $('[data-testid="password-input-test"]');
+        const loginButton = await $('[data-testid="login-button"]');  
     
-        emailInput.setValue('test.doe@test.com');
-        passwordInput.setValue('string'); 
-        loginButton.click();
+        await emailInput.setValue("maksym.yankivskyy@techcorp.com");
+        await passwordInput.setValue("Password123@"); 
+        await loginButton.click();
+
+        await browser.waitUntil(async () => {
+            return await browser.getUrl() !== 'http://onby-front.ghgmbbhubqhfbnc2.francecentral.azurecontainer.io';
+        }, {
+            timeout: 3000,
+            timeoutMsg: 'Expected URL to change after 3 seconds'
+        });
     
-        browser.pause(2000); 
-    
-        const currentUrl = browser.getUrl();
+        const currentUrl = await browser.getUrl();
         console.log(currentUrl)
         expect(currentUrl).toEqual('http://onby-front.ghgmbbhubqhfbnc2.francecentral.azurecontainer.io/dashboard/home');
     
@@ -43,7 +48,7 @@ describe('HomePage Tests', () => {
     });
     
 
-    it('should have the correct href for "Home"', async () => {
+    it('should have the correct href for "Acceuil"', async () => {
         const homeLink = await $('[data-testid="idHome"]');
         console.log(homeLink)
         const homeHref = await homeLink.getAttribute('href');
@@ -56,14 +61,12 @@ describe('HomePage Tests', () => {
     });
 
 
-    it('should have the correct href for "Chapters"', async () => {
+    it('should have the correct href for "Cours"', async () => {
         const chaptersLink = await $('[data-testid="idChapitres"]');
         console.log(chaptersLink)
         const chaptersHref = await chaptersLink.getAttribute('href');
         console.log(chaptersHref)
 
-
-        // Ajout des détails au rapport Allure
         AllureReporter.addAttachment("Actual href for Chapters", chaptersHref, 'text/plain');
         AllureReporter.addAttachment("Expected href for Chapters", EXPECTED_HREF.chapters, 'text/plain');
 
