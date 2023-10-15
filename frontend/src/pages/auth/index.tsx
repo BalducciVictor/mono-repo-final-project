@@ -78,7 +78,7 @@ export const Auth = () => {
           {adminAuth ? (
             <LeftFrom>
               <FormularInput
-                data-testid="email-input-test"
+                dataTestId="email-input-test"
                 label={'Email'}
                 placeholder={'mail@exemple.com'}
                 type={'mail'}
@@ -86,7 +86,7 @@ export const Auth = () => {
                 onChange={setEmail}
               />
               <FormularInput
-                data-testid="password-input-test"
+                dataTestId="password-input-test"
                 label={'Mot de passe'}
                 placeholder={'Min. 8 characters'}
                 type={'password'}
@@ -97,7 +97,7 @@ export const Auth = () => {
           ) : (
             <LeftFrom>
               <FormularInput
-                data-testid="email-input-test"
+                dataTestId="email-input-test"
                 label={'Email'}
                 placeholder={'mail@exemple.com'}
                 type={'mail'}
@@ -105,7 +105,7 @@ export const Auth = () => {
                 onChange={setEmail}
               />
               <FormularInput
-                data-testid="password-input-test"
+                dataTestId="password-input-test"
                 label={'Mot de passe'}
                 placeholder={'Min. 8 characters'}
                 type={'password'}
