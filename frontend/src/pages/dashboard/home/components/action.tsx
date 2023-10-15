@@ -4,18 +4,20 @@ import { space } from '../../../../styles/const';
 interface ActionButtonProps {
   imageSrc: string;
   text: string;
+  dataTestId?: string;
   onClick?: () => void;
 }
 
 export const ActionButton: React.FC<ActionButtonProps> = ({
-  imageSrc,
-  text,
-  onClick,
+    dataTestId,  
+    imageSrc,
+    text,
+    onClick,
 }) => {
   return (
     <ActionButtonStyled onClick={onClick}>
       <img src={imageSrc} />
-      <ButtonText>{text}</ButtonText>
+      <ButtonText data-testid={dataTestId}>{text}</ButtonText>
     </ActionButtonStyled>
   );
 };

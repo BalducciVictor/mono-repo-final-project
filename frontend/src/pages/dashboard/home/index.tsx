@@ -104,7 +104,7 @@ export const Home = () => {
       <HeadSection title='Vos actions'/>
       <ActionButtonsWrapper>
         <div>
-          <ActionButton imageSrc={AddUserIllustration} text="Créer un nouvel utilisateur" onClick={() => setIsModalCreateUserOpen(true)}/>
+          <ActionButton dataTestId="createCourse" imageSrc={AddUserIllustration} text="Créer un nouvel utilisateur" onClick={() => setIsModalCreateUserOpen(true)}/>
           <PopUp isOpen={isModalCreateUserOpen} onClose={() => {setIsModalCreateUserOpen(false)}}>
             <CreateUserForm onSubmit={handleSubmitForm}/>
           </PopUp>
