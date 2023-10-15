@@ -97,10 +97,10 @@ export const Home = () => {
   return (
     <HomeContainer>
       <TitleH1>Dashboard</TitleH1>
+      <IntroBlock/>
       {
-        user.role == UserRole.Admin ?
+        user.role === "SUPERADMIN" ?
         <div>
-          <IntroBlock/>
           <WrapperCompany>
           <TitleH2>Les Company</TitleH2>
             <ActionButton text="Creer une nouvelle company" imageSrc={AddUserIllustration} onClick={() => setIsModalOpenCompany(true)}/>
@@ -138,7 +138,26 @@ export const Home = () => {
             <UserList companyId={`${user.companyId}`} userAdded={userAdded} />
           </WrapperUser>
         </div>
-        : ''
+        :
+        <div>
+          <WrapperUser>
+            <TitleH2>Actions</TitleH2>
+            <WrapperActions>
+              <ActionButton text="Creer un nouveau utilisateur" imageSrc={AddUserIllustration} onClick={() => setIsModalCreateUserOpen(true)}/>
+              <PopUp isOpen={isModalCreateUserOpen} onClose={() => {setIsModalCreateUserOpen(false)}}>
+                <CreateUserForm onSubmit={handleSubmitForm}/>
+              </PopUp>
+              <Link to='/dashboard/create-chapter'>
+              <ActionButton text="Creer un nouveau cours" imageSrc={NewLeconIllustration} />
+              </Link>
+              <PopUp isOpen={isModalNewCourseOpen} onClose={() => {setIsModalNewCourseOpen(false)}}>
+                <p>Ici form new chapter</p>
+              </PopUp>
+            </WrapperActions>
+            <TitleH2>Listes Utilisateurs</TitleH2>
+            <UserList companyId={`${user.companyId}`} userAdded={userAdded} />
+          </WrapperUser>
+        </div>
       }
     </HomeContainer>
   );
