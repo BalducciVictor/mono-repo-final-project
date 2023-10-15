@@ -12,7 +12,7 @@ type CreateCompanyProps = {
 export const CreateCompanyForm = ({companyName, setCompanyName, handleSubmit}: CreateCompanyProps) => {
     return (
         <WrapperForm>
-            <h1>Ajouter une company</h1>
+            <h1>Ajouter une entreprise</h1>
             <form onSubmit={handleSubmit}>
                 <FormularInput
                     label={"Nom de L'entreprise"}

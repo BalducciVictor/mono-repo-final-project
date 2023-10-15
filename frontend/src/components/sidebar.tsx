@@ -55,7 +55,7 @@ export const Sidebar: React.FC = () => {
         <SidebarItem to="home">
           <SidebarLink>
             <HomeIcon size={iconSize.m} color={color.light.PureWhite} />
-            <Text className={isHovered ? 'show-text' : 'hide-text'}>
+            <Text data-testid="idHome" className={isHovered ? 'show-text' : 'hide-text'}>
               Accueil
             </Text>
           </SidebarLink>
@@ -63,7 +63,7 @@ export const Sidebar: React.FC = () => {
         <SidebarItem to="chapters">
           <SidebarLink>
             <StudentCapIcon size={iconSize.m} color={color.light.PureWhite} />
-            <Text className={isHovered ? 'show-text' : 'hide-text'}>Cours</Text>
+            <Text data-testid="idChapitres" className={isHovered ? 'show-text' : 'hide-text'}>Cours</Text>
           </SidebarLink>
         </SidebarItem>
         <SidebarItem to="profile">
@@ -93,6 +93,8 @@ const MiddleSideBar = styled.div`
   display: flex;
   margin-left: 5px;
   flex-direction: column;
+  gap: 10px;
+  margin-top: 50px;
 `;
 
 const Text = styled.p`

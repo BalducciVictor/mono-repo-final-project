@@ -39,7 +39,7 @@ export const Chapter = () => {
   useEffect(() => {
     (async () => {
       try {
-        if (user.role === 'ADMIN') {
+        if (user.role === 'ADMIN' || user.role === 'SUPERADMIN' ) {
           const allCompany = await getAllCompany();
           const result = await getChapters();
           setAllCompany(allCompany);
@@ -99,7 +99,7 @@ export const Chapter = () => {
         <Title>Mes cours</Title>
         <SearchBarAndFilter>
           <SearchBar onChange={setSearch} />
-          {user.role === 'ADMIN' && (
+          {user.role === 'SUPERADMIN' && (
             <FilterRole onChange={setSelectedCompany} categories={allCompany} />
           )}
         </SearchBarAndFilter>
@@ -160,6 +160,7 @@ const ListeOfChapter = styled.ul`
 
 const SearchBarAndFilter = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: row-reverse;
   gap: ${space.ml};
 `;
