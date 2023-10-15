@@ -20,6 +20,7 @@ const ButtonContainer = styled.div`
     flex-direction: row;
     align-items: center;
     cursor: pointer;
+    background-color: white;
     padding: 10px 20px;
     margin: 0px 10px;
     border-radius: 10px;
