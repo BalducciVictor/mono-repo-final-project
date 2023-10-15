@@ -29,7 +29,6 @@ interface RowProps {
 export const Row: React.FC<RowProps> = ({ user, onDelete }) => {
   return (
     <TableRow>
-      <td>{user._id}</td>
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
       <td>{user.email}</td>
@@ -80,7 +79,6 @@ export const UserList: React.FC<UserListProps> = ({ companyId, userAdded }) => {
       <StyledTable>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Prénom</th>
             <th>Nom</th>
             <th>Email</th>
