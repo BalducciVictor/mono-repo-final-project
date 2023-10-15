@@ -46,5 +46,10 @@ const ButtonStyled = styled.button<ButtonStyledProps>`
           background: ${buttonColors.highlighted.background};
           border: 1px solid ${buttonColors.highlighted.color};
           color: ${buttonColors.highlighted.color};
+
+          &:hover {
+            background: ${color.medium.mainGreen};
+            color: white;
+          }
         `};
 `;

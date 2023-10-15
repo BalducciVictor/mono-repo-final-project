@@ -29,7 +29,6 @@ export const SignOut = () => {
     });
     sessionAPI.removeToken();
     sessionAPI.removeUser();
-    navigate('/');
   };
 
   return (
@@ -56,7 +55,9 @@ export const Sidebar: React.FC = () => {
         <SidebarItem to="home">
           <SidebarLink>
             <HomeIcon size={iconSize.m} color={color.light.PureWhite} />
-            <Text className={isHovered ? 'show-text' : 'hide-text'}>Home</Text>
+            <Text className={isHovered ? 'show-text' : 'hide-text'}>
+              Accueil
+            </Text>
           </SidebarLink>
         </SidebarItem>
         <SidebarItem to="chapters">
@@ -73,7 +74,7 @@ export const Sidebar: React.FC = () => {
             </Text>
           </SidebarLink>
         </SidebarItem>
-        <SidebarItem to="">
+        <SidebarItem to="/">
           <SignOut />
         </SidebarItem>
       </MiddleSideBar>

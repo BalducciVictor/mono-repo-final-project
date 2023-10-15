@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { DeleteUserById, getUserByCompagnyId } from '../../../../services/api';
 import { useUser } from '../../../../userContext';
+import { space } from '../../../../styles/const';
 
 interface User {
   _id: number;
@@ -75,40 +76,49 @@ export const UserList: React.FC<UserListProps> = ({ companyId, userAdded }) => {
   };
 
   return (
-    <StyledTable>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Prénom</th>
-          <th>Nom</th>
-          <th>Email</th>
-          <th>Supprimer</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map(user => (
-          <Row key={user._id} user={user} onDelete={handleDelete} />
-        ))}
-      </tbody>
-      {apiMessage && <p>{apiMessage}</p>}
-    </StyledTable>
+    <Wrapper>
+      <StyledTable>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <Row key={user._id} user={user} onDelete={handleDelete} />
+          ))}
+        </tbody>
+        {apiMessage && <p>{apiMessage}</p>}
+      </StyledTable>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  background-color: white;
+  padding: ${space.xxs} ${space.s};
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+`;
 
 const StyledTable = styled.table`
   border-collapse: collapse;
   margin: 20px 0;
   font-size: 16px;
   text-align: left;
-
-  th,
+  background-color th,
   td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    background-color: 'white';
   }
 
   th {
-    background-color: #f2f2f2;
+    background-color: white;
   }
 
   tr:hover {
