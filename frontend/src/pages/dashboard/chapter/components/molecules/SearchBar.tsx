@@ -42,7 +42,6 @@ const Input = styled.input`
     font-size: ${fontSize.s};
     padding: ${space.s} ${space.s};
     border-radius: 4px;
-    border-radius: 100px;
     height: 40px;
     padding: 0px ${space.ml};
     border: 1px solid ${color.medium.fontGrey};

@@ -56,6 +56,10 @@ const api = async ({
             const data = await response.json();
             throw new Error(data.message || "Erreur inconnue");
         }
+
+        if (parseInt(response.headers.get('Content-Length') || '0') === 0) {
+            return null;
+        }
     return await response.json();
   } catch (error: any) {
     console.error('API error:', error);
@@ -144,6 +148,13 @@ export function postUser(data: UserFormData) {
 
 export function postCourse(data: CourseData) {
   return api({ method: 'POST', url: `chapter`, data });
+}
+
+export function putGroupeInCompany(idChapter: string, groupName: string) {
+  return api({ method: 'PUT', url: `company/group/${idChapter}`, data:{
+    user: [],
+    groupName,
+  } });
 }
 
 export function refreshToken(refreshToken: string) {
