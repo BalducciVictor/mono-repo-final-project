@@ -9,6 +9,7 @@ import {
   getChaptersByUser,
   getAllCompany,
   getChapterByCompany,
+  deleteChapterById,
 } from '../../../services/api';
 import { fontSize, color, space } from '../../../styles/const';
 import { Link } from 'react-router-dom';
@@ -18,7 +19,7 @@ interface Chapters {
   chapterName: string;
   category: string;
   description: string;
-  timeRead: string;
+  timeToRead: string;
 }
 
 interface Company {
@@ -42,43 +43,68 @@ export const Chapter = () => {
           const allCompany = await getAllCompany();
           const result = await getChapters();
           setAllCompany(allCompany);
+          setChapters(result);
           setAllChapters(result);
-          if (!selectedCompany) {
-            setChapters(result);
-          } else {
-            const chapterResult = await getChapterByCompany(selectedCompany);
-            setChapters(chapterResult);
-          }
         } else {
           if (user.id) {
             const result = await getChaptersByUser(user.id);
             setChapters(result);
           }
         }
-
-        if (Search === '') {
-          setFilteredChapters([]);
-        } else {
-          const filtered = allChapters.filter(chapter =>
-            chapter.chapterName.toLowerCase().includes(Search.toLowerCase()),
-          );
-          setFilteredChapters(filtered);
-        }
       } catch (e) {
         console.log(e);
       }
     })();
-  }, [user, selectedCompany, Search, allChapters]);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedCompany) setChapters(allChapters);
+    else {
+      (async () => {
+        try {
+          const result = await getChapterByCompany(selectedCompany);
+          setChapters(result);
+        } catch (e) {
+          console.log(e);
+        }
+      })();
+    }
+  }, [selectedCompany]);
+
+  useEffect(() => {
+    if (Search === '') {
+      setFilteredChapters([]);
+    } else {
+      const filtered = Chapters.filter(chapter =>
+        chapter.chapterName.toLowerCase().includes(Search.toLowerCase()),
+      );
+      setFilteredChapters(filtered);
+    }
+  }, [Search]);
+
+  const handleDeleteChapter = async (id: string) => {
+    try {
+      await deleteChapterById(id);
+      setChapters(prevChapters =>
+        prevChapters.filter(chapter => chapter._id !== id),
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <ChapterWrapper>
       <Header>
-        <Title>Mes Chapitres</Title>
-        <SearchBar onChange={setSearch} />
+        <Title>Mes cours</Title>
+        <SearchBarAndFilter>
+          <SearchBar onChange={setSearch} />
+          {user.role === 'ADMIN' && (
+            <FilterRole onChange={setSelectedCompany} categories={allCompany} />
+          )}
+        </SearchBarAndFilter>
       </Header>
-      {user.role === 'ADMIN' && (
-        <FilterRole onChange={setSelectedCompany} categories={allCompany} />
-      )}
+
       {Chapters.length ? (
         <ListeOfChapter>
           {(filteredChapters.length > 0 || Search.length > 0
@@ -87,18 +113,16 @@ export const Chapter = () => {
           ).map((value: Chapters) => {
             return (
               <>
-                {console.log('test', value)}
-                <Link to={`/dashboard/chapter/${value._id}`}>
-                  <ChapterCard
-                    key={value._id}
-                    id={value._id}
-                    chapterName={value.chapterName}
-                    category={value.category}
-                    description={value.description}
-                    timeRead={value.timeRead}
-                    role={user.role || ''}
-                  />
-                </Link>
+                <ChapterCard
+                  key={value._id}
+                  id={value._id}
+                  chapterName={value.chapterName}
+                  category={value.category}
+                  description={value.description}
+                  timeToRead={value.timeToRead}
+                  role={user.role || ''}
+                  handleDeleteChapter={handleDeleteChapter}
+                />
               </>
             );
           })}
@@ -113,7 +137,7 @@ export const Chapter = () => {
 const ChapterWrapper = styled.article`
   display: flex;
   flex-direction: column;
-  gap: ${space.ml};
+  gap: ${space.m};
 `;
 
 const Title = styled.h1`
@@ -131,5 +155,11 @@ const Header = styled.div`
 const ListeOfChapter = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  gap: ${space.s};
+`;
+
+const SearchBarAndFilter = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
   gap: ${space.ml};
 `;

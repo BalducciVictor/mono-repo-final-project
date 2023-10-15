@@ -10,6 +10,8 @@ interface FirstStepProps {
   updateChapterName: (value: string) => void;
   updateDescription: (value: string) => void;
   updateHasQuiz: (value: boolean) => void;
+  updateCategory: (value: string) => void;
+  updateTimeToRead: (value: string) => void;
 }
 
 export const FirstStep: React.FC<FirstStepProps> = ({
@@ -17,9 +19,13 @@ export const FirstStep: React.FC<FirstStepProps> = ({
   updateChapterName,
   updateDescription,
   updateHasQuiz,
+  updateCategory,
+  updateTimeToRead,
 }) => {
   const [chapterName, setChapterName] = useState('');
   const [description, setDescription] = useState('');
+  const [timeToRead, setTimeToRead] = useState('');
+  const [category, setCategory] = useState('');
   const [hasQuiz, setHasQuiz] = useState(true);
   const [nameError, setNameError] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
@@ -50,24 +56,26 @@ export const FirstStep: React.FC<FirstStepProps> = ({
       updateDescription(description);
       updateHasQuiz(hasQuiz);
       setIsCourseCreation(false);
+      updateCategory(category);
+      updateTimeToRead(timeToRead);
     }
   };
 
   return (
     <CreateChapterFirstStep>
       <WrapperBackground>
-        <TitleH1>Créer un nouveau cours</TitleH1>
+        <TitleH1 style={{ marginBottom: space.m }}>
+          Créer un nouveau cours
+        </TitleH1>
         <Form>
-          <Wrapper>
-            <FormularInput
-              type="text"
-              label="Nom"
-              placeholder="Débutez avec Gatsby"
-              value={chapterName}
-              onChange={setChapterName}
-            />
-            <ErrorMessage>{nameError}</ErrorMessage>
-          </Wrapper>
+          <FormularInput
+            type="text"
+            label="Nom"
+            placeholder="Débutez avec Gatsby"
+            value={chapterName}
+            onChange={setChapterName}
+          />
+          <ErrorMessage>{nameError}</ErrorMessage>
           <Wrapper>
             <FormularInput
               type="textarea"
@@ -79,13 +87,20 @@ export const FirstStep: React.FC<FirstStepProps> = ({
             />
             <ErrorMessage>{descriptionError}</ErrorMessage>
           </Wrapper>
+          <FormularInput
+            type="text"
+            label="Catégorie"
+            placeholder="Téchnique"
+            value={category}
+            onChange={setCategory}
+          />
           <Wrapper>
             <FormularInput
-              type="radio"
-              label="Questionnaire de validation"
-              options={['Oui', 'Non']}
-              selectedOption={hasQuiz ? 'Oui' : 'Non'}
-              onChange={option => setHasQuiz(option === 'Oui')}
+              type="text"
+              label="Temps de lécture en minutes"
+              placeholder="30"
+              value={timeToRead}
+              onChange={setTimeToRead}
             />
           </Wrapper>
           <Button onClick={handleNextStep} buttonStyle={{ width: '100%' }}>

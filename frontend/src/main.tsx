@@ -30,7 +30,7 @@ export const App = () => {
           <Route
             path="dashboard/*"
             element={
-              <ProtectedRoute redirectPath={'/'}>
+              <ProtectedRoute redirectPath={'/home'}>
                 <Dashboard />
               </ProtectedRoute>
             }

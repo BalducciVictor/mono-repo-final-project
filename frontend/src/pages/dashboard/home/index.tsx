@@ -11,13 +11,16 @@ import { CreateUserForm } from './components/formCreateUser';
 import { CreateCompanyForm } from './components/organismes/formCreateCompany';
 import { ModifierCompanyForm } from './components/organismes/formModifierCompany';
 import { getAllCompany, postNewCompany, deleteCompany, putCompany } from '../../../services/api';
-import { ActionButton } from './components/action';
+// import { ActionButton } from './components/action';
 
 import AddUserIllustration from '../../../assets/addUserIllu.svg';
 import NewLeconIllustration from '../../../assets/newChapterIllu.svg';
 import NewTeamIllusttration from '../../../assets/addUserIllu.svg';
 import { Button } from '../../../components/atoms/button';
 import { Link } from 'react-router-dom';
+import { space } from '../../../styles/const';
+import { ActionButton } from './components/action';
+import { HeadSection } from './components/headerSection';
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +30,6 @@ export const Home = () => {
   const [isModalOpenCompanyModifier, setIsModalOpenCompanyModifier] = useState(false);
   const [companyToModify, setCompanyToModify] = useState<Company>();
   const [isModalCreateUserOpen, setIsModalCreateUserOpen] = useState(false);
-  const [isModalNewTeamOpen, setIsModalNewTeamOpen] = useState(false);
   const [isModalNewCourseOpen, setIsModalNewCourseOpen] = useState(false);
   const [userAdded, setUserAdded] = useState(false);
   const {user} = useUser();
@@ -75,7 +77,10 @@ export const Home = () => {
   const HandleModifer = async (data: any) => {
     try {
       setIsModalOpenCompanyModifier(false);
-      putCompany(data._id, data)
+      const newObjects = allCompany.map((obj:any) =>
+        obj._id === data._id ? data : obj
+      );
+      setAllCompany(newObjects);
     } catch(e: any) {
       console.log(e)
     }
@@ -94,76 +99,76 @@ export const Home = () => {
 
   return (
     <HomeContainer>
-      <TitleH1>Dashboard</TitleH1>
-      {
-        user.role == UserRole.Admin ?
+      <TitleH1>Accueil</TitleH1>
+      <IntroBlock/> 
+      <HeadSection title='Vos actions'/>
+      <ActionButtonsWrapper>
         <div>
-          <IntroBlock/>
-          <WrapperUser>
-            <TitleH2>Actions</TitleH2>
-            <WrapperActions>
-              <ActionButton text="Creer un nouveau utilisateur" imageSrc={AddUserIllustration} onClick={() => setIsModalCreateUserOpen(true)}/>
-              <PopUp isOpen={isModalCreateUserOpen} onClose={() => {setIsModalCreateUserOpen(false)}}>
-                <CreateUserForm onSubmit={handleSubmitForm}/>
-              </PopUp>
-              <ActionButton text="Creer un nouveau groupe d'utilisateurs" imageSrc={NewTeamIllusttration} onClick={() => setIsModalNewTeamOpen(true)}/>
-              <PopUp isOpen={isModalNewTeamOpen} onClose={() => {setIsModalNewTeamOpen(false)}}>
-                <p>Ici form new team</p>
-              </PopUp>
-              <Link to='/dashboard/create-chapter'>
-              <ActionButton text="Creer un nouveau cours" imageSrc={NewLeconIllustration} />
-              </Link>
-              <PopUp isOpen={isModalNewCourseOpen} onClose={() => {setIsModalNewCourseOpen(false)}}>
-                <p>Ici form new chapter</p>
-              </PopUp>
-            </WrapperActions>
-            <TitleH2>Listes Utilisateurs</TitleH2>
+          <ActionButton imageSrc={AddUserIllustration} text="Créer un nouvel utilisateur" onClick={() => setIsModalCreateUserOpen(true)}/>
+          <PopUp isOpen={isModalCreateUserOpen} onClose={() => {setIsModalCreateUserOpen(false)}}>
+            <CreateUserForm onSubmit={handleSubmitForm}/>
+          </PopUp>
+        </div>
+        <div>
+        <Link style={{color: "black"}} to='/dashboard/create-chapter'>
+          <ActionButton imageSrc={NewLeconIllustration} text="Créer un nouveau cours" onClick={() => setIsModalNewCourseOpen(true)}/>
+        </Link>
+        </div>
+        {user.role === "SUPERADMIN" && 
+        <div>
+          <ActionButton imageSrc={NewLeconIllustration} text="Créer une entreprise" onClick={() => setIsModalOpenCompany(true)}/>
+          <PopUp isOpen={isModalOpenCompany} onClose={() => {setIsModalOpenCompany(false)}}>
+            <CreateCompanyForm companyName={newCompany} setCompanyName={setNewCompnay} handleSubmit={handleSubmitNewCompany}/>
+          </PopUp>
+        </div>
+        }
+        </ActionButtonsWrapper>
+        <UsersAndComapniesWrapper>
+        {(user.role === "SUPERADMIN" || user.role === 'ADMIN') && 
+          <div>
+            <HeadSection title='Liste des utilisateurs' buttonTitle='+' onClick={() => setIsModalCreateUserOpen(true)}/>
             <UserList companyId={`${user.companyId}`} userAdded={userAdded} />
-          </WrapperUser>
-          <WrapperCompany>
-            <h1>Mes Company</h1>
-            <Button onClick={() => setIsModalOpenCompany(true)}>Creer une nouvelle company +</Button>
-            <PopUp isOpen={isModalOpenCompany} onClose={() => {setIsModalOpenCompany(false)}}>
-              <CreateCompanyForm companyName={newCompany} setCompanyName={setNewCompnay} handleSubmit={handleSubmitNewCompany}/>
-            </PopUp>
+          </div>}
+          {user.role === "SUPERADMIN" &&
+          <div>
+            <HeadSection title='Liste des entreprises' buttonTitle='+' onClick={() => setIsModalOpenCompany(true)} />
             <ListCompany>
               {
-                allCompany.map((value: any) => {
-                  return (
+              allCompany.map((value: any) => {
+                return (
                     <CompanyCard key={value._id} HandleDelete={HandleDeleteCompany} HandleModifier={HandleModiferCompany} CompanyName={value.name} CompanyId={value._id} companyData={value}/>
                   );
                 })
               }
+              <PopUp isOpen={isModalOpenCompanyModifier} onClose={() => {setIsModalOpenCompanyModifier(false)}}>
+                <ModifierCompanyForm updatedCompany={HandleModifer} companyGroupe={companyToModify} />
+              </PopUp>
             </ListCompany>
-            <PopUp isOpen={isModalOpenCompanyModifier} onClose={() => {setIsModalOpenCompanyModifier(false)}}>
-              <ModifierCompanyForm companyGroupe={companyToModify} />
-            </PopUp> 
-          </WrapperCompany>
-        </div>
-        : ''
-      }
+          </div>
+          }
+        </UsersAndComapniesWrapper>
     </HomeContainer>
   );
 };
 
-const HomeContainer = styled.div``;
 
-const WrapperUser = styled.div`
-  margin: 20px 0px;
-`;
-
-const WrapperCompany = styled.div`
-
+const UsersAndComapniesWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  gap: ${space.m};
 `
 
-const ListCompany = styled.ul`
-  margin-top: 10px;
+const ActionButtonsWrapper = styled.div`
   display: flex;
+  gap: ${space.s};
+`
+
+const HomeContainer = styled.div``;
+
+
+const ListCompany = styled.ul`
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   flex-wrap: wrap;
 `;
-const WrapperActions= styled.div`
-  margin: 20px 0px;
-  display: flex;
-  flex-direction: row;
-`
