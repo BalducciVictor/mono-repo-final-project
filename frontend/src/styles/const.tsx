@@ -1,4 +1,7 @@
 export const color = {
+  error: {
+    lightError: '#f44336',
+  },
   light: {
     PureWhite: '#ffffff',
     WhiteSmoke: '#F7F9F9',
