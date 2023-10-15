@@ -9,10 +9,10 @@ export const CreateChapter: React.FC = () => {
   const [chapterData, setChapterData] = useState<CourseData>({
     chapterName: '',
     hasQuiz: false,
-    category: 'Technique',
+    category: '',
     description: '',
-    timeToRead: 120,
-    companyId: '650075b6a81c4941918dec26',
+    timeToRead: 0,
+    companyId: '',
     documentation: [],
   });
   const [apiMessage, setApiMessage] = useState<string | null>(null);
@@ -45,6 +45,21 @@ export const CreateChapter: React.FC = () => {
     }));
   };
 
+  const updateCategory = (newCategory: string) => {
+    setChapterData(prevData => ({
+      ...prevData,
+      category: newCategory,
+    }));
+  };
+
+  const updateTimeToRead = (newTimeToRead: string) => {
+    const timeToReadNumber = parseInt(newTimeToRead);
+    setChapterData(prevData => ({
+      ...prevData,
+      timeToRead: timeToReadNumber,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -73,6 +88,8 @@ export const CreateChapter: React.FC = () => {
       updateChapterName={updateChapterName}
       updateDescription={updateDescription}
       updateHasQuiz={updateHasQuiz}
+      updateCategory={updateCategory}
+      updateTimeToRead={updateTimeToRead}
     />
   );
 };
