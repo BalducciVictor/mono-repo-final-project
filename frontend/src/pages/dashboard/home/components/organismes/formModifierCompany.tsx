@@ -23,7 +23,7 @@ export const ModifierCompanyForm = ({companyGroupe, updatedCompany}: ModifierCom
 
     return (
         <WrapperForm>
-            <h1>Modifier une company</h1>
+            <h1>Ajouter un group a l'entreprise</h1>
             <FormularInput
                 label={"Nom de L'entreprise"}
                 placeholder={"Designer"}
