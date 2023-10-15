@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link, redirect, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { StudentCapIcon } from './icons/studentCapIcon';
 import { color, iconSize, space } from '../styles/const';
 import { HomeIcon } from './icons/homeIcon';
@@ -11,7 +11,7 @@ import { useUser } from '../userContext';
 import sessionAPI from '../services/sessionStorageAPI';
 
 export const SignOut = () => {
-  const {user, setUser} = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -24,12 +24,10 @@ export const SignOut = () => {
   return (
     <SignOutContainer onClick={handleClick}>
       <ExitIcon size={iconSize.m} color={color.light.PureWhite} />
-      <Text>
-        Sign out
-      </Text>
+      <Text>Sign out</Text>
     </SignOutContainer>
-  )
-}
+  );
+};
 
 export const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -45,7 +43,7 @@ export const Sidebar: React.FC = () => {
       </TopSideBar>
       <MiddleSideBar>
         <SidebarItem>
-          <SidebarLink to="">
+          <SidebarLink to="home">
             <HomeIcon size={iconSize.m} color={color.light.PureWhite} />
             <Text className={isHovered ? 'show-text' : 'hide-text'}>Home</Text>
           </SidebarLink>
@@ -67,7 +65,7 @@ export const Sidebar: React.FC = () => {
           </SidebarLink>
         </SidebarItem>
         <SidebarItem>
-          <SignOut/>
+          <SignOut />
         </SidebarItem>
       </MiddleSideBar>
     </SidebarContainer>

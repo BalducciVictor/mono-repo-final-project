@@ -3,13 +3,12 @@ import { useState } from 'react';
 import { MainLogo } from "../../components/icons/mainLogo";
 import { FormularInput } from "./components/molecules/FormularInput";
 import { useMutation } from 'react-query';
-import AuthImage from "../../assets/auth.png";
-import { useNavigate } from "react-router-dom";
+import AuthImage from '../../assets/auth.png';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../userContext';
 import { fontSize } from '../../styles/const';
 import sessionAPI from '../../services/sessionStorageAPI';
 import { signIn } from '../../services/api';
-
 
 export const Auth = () => {
   const [adminAuth, setAdminAuth] = useState(true);
@@ -47,11 +46,12 @@ export const Auth = () => {
             <LeftChoice
               onClick={() => changeAuth(false)}
               adminAuth={!adminAuth}
-            >Collaborateur</LeftChoice>
-            <LeftChoice
-              onClick={() => changeAuth(true)}
-              adminAuth={adminAuth}
-            >Admin</LeftChoice>
+            >
+              Collaborateur
+            </LeftChoice>
+            <LeftChoice onClick={() => changeAuth(true)} adminAuth={adminAuth}>
+              Admin
+            </LeftChoice>
           </LeftChoiceAuth>
             {
               adminAuth ? 

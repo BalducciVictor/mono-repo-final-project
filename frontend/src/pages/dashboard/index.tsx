@@ -5,6 +5,8 @@ import { Sidebar } from '../../components/sidebar';
 import { Home } from './home';
 import { Chapter } from './chapter';
 import { Profile } from './profile';
+import { CreateChapter } from './createChapter';
+import { ReadChapter } from './readChapter';
 
 export const Dashboard = () => {
   return (
@@ -12,9 +14,11 @@ export const Dashboard = () => {
       <Sidebar />
       <Content>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="chapters" element={<Chapter />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/chapters" element={<Chapter />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/create-chapter" element={<CreateChapter />} />
+          <Route path="/chapter/:uuid" element={<ReadChapter />} />
         </Routes>
       </Content>
     </DashboardContainer>
