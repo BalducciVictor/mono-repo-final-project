@@ -10,7 +10,7 @@ type ChapterCardProps = {
   chapterName?: string;
   category?: string;
   description?: any;
-  timeRead?: string;
+  timeToRead?: string;
   role?: string;
 };
 
@@ -20,7 +20,7 @@ export const ChapterCard = ({
   chapterName,
   category,
   description,
-  timeRead,
+  timeToRead,
   role,
 }: ChapterCardProps) => {
   const goChapter = async (id: string) => {
@@ -41,7 +41,7 @@ export const ChapterCard = ({
         <Category>{category}</Category>
         <Description>{description}</Description>
         <BottomOfCard>
-          <TimeToRead>Temps de lecture -{timeRead}min</TimeToRead>
+          <TimeToRead>Temps de lecture -{timeToRead}min</TimeToRead>
           <Button
             onClick={() => {
               goChapter(id);
@@ -68,7 +68,7 @@ const MainWrapper = styled.li`
 `;
 
 const ImageChapter = styled.img`
-  width: 100%;
+  height: 100%;
 `;
 
 const RightSection = styled.section`
@@ -80,6 +80,10 @@ const Title = styled.h1`
   color: ${color.darker.fontDark};
   font-size: ${fontSize.m};
   font-style: normal;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const Category = styled.h2`

@@ -18,7 +18,7 @@ interface Chapters {
   chapterName: string;
   category: string;
   description: string;
-  timeRead: string;
+  timeToRead: string;
 }
 
 interface Company {
@@ -38,37 +38,49 @@ export const Chapter = () => {
   useEffect(() => {
     (async () => {
       try {
-        if (user.role === 'ADMIN') {
+        if (user.role === "ADMIN") {
           const allCompany = await getAllCompany();
           const result = await getChapters();
           setAllCompany(allCompany);
+          setChapters(result);
           setAllChapters(result);
-          if (!selectedCompany) {
-            setChapters(result);
-          } else {
-            const chapterResult = await getChapterByCompany(selectedCompany);
-            setChapters(chapterResult);
-          }
         } else {
           if (user.id) {
             const result = await getChaptersByUser(user.id);
             setChapters(result);
-          }
+          } 
         }
-
-        if (Search === '') {
-          setFilteredChapters([]);
-        } else {
-          const filtered = allChapters.filter(chapter =>
-            chapter.chapterName.toLowerCase().includes(Search.toLowerCase()),
-          );
-          setFilteredChapters(filtered);
-        }
-      } catch (e) {
+      } catch (e: any) {
         console.log(e);
       }
     })();
-  }, [user, selectedCompany, Search, allChapters]);
+  }, []);
+
+  useEffect(() => {
+      if (!selectedCompany) setChapters(allChapters);
+      else {
+        (async () => {
+            try {
+                const result = await getChapterByCompany(selectedCompany);
+                setChapters(result);
+            } catch (e: any) {
+                console.log(e);
+            }
+        })();
+      }
+  }, [selectedCompany]);
+
+
+  useEffect(() => {
+    if(Search === "") {
+      setFilteredChapters([]);
+    } else {
+      const filtered = Chapters.filter(chapter => 
+        chapter.chapterName.toLowerCase().includes(Search.toLowerCase())
+      );
+      setFilteredChapters(filtered);
+    }
+  }, [Search]);
 
   return (
     <ChapterWrapper>
@@ -95,7 +107,7 @@ export const Chapter = () => {
                     chapterName={value.chapterName}
                     category={value.category}
                     description={value.description}
-                    timeRead={value.timeRead}
+                    timeToRead={value.timeToRead}
                     role={user.role || ''}
                   />
                 </Link>

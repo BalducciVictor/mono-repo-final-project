@@ -99,6 +99,25 @@ export const Home = () => {
         user.role == UserRole.Admin ?
         <div>
           <IntroBlock/>
+          <WrapperCompany>
+          <TitleH2>Les Company</TitleH2>
+            <ActionButton text="Creer une nouvelle company" imageSrc={AddUserIllustration} onClick={() => setIsModalOpenCompany(true)}/>
+            <PopUp isOpen={isModalOpenCompany} onClose={() => {setIsModalOpenCompany(false)}}>
+              <CreateCompanyForm companyName={newCompany} setCompanyName={setNewCompnay} handleSubmit={handleSubmitNewCompany}/>
+            </PopUp>
+            <ListCompany>
+              {
+                allCompany.map((value: any) => {
+                  return (
+                    <CompanyCard key={value._id} HandleDelete={HandleDeleteCompany} HandleModifier={HandleModiferCompany} CompanyName={value.name} CompanyId={value._id} companyData={value}/>
+                  );
+                })
+              }
+            </ListCompany>
+            <PopUp isOpen={isModalOpenCompanyModifier} onClose={() => {setIsModalOpenCompanyModifier(false)}}>
+              <ModifierCompanyForm companyGroupe={companyToModify} />
+            </PopUp> 
+          </WrapperCompany>
           <WrapperUser>
             <TitleH2>Actions</TitleH2>
             <WrapperActions>
@@ -120,25 +139,6 @@ export const Home = () => {
             <TitleH2>Listes Utilisateurs</TitleH2>
             <UserList companyId={`${user.companyId}`} userAdded={userAdded} />
           </WrapperUser>
-          <WrapperCompany>
-            <h1>Mes Company</h1>
-            <Button onClick={() => setIsModalOpenCompany(true)}>Creer une nouvelle company +</Button>
-            <PopUp isOpen={isModalOpenCompany} onClose={() => {setIsModalOpenCompany(false)}}>
-              <CreateCompanyForm companyName={newCompany} setCompanyName={setNewCompnay} handleSubmit={handleSubmitNewCompany}/>
-            </PopUp>
-            <ListCompany>
-              {
-                allCompany.map((value: any) => {
-                  return (
-                    <CompanyCard key={value._id} HandleDelete={HandleDeleteCompany} HandleModifier={HandleModiferCompany} CompanyName={value.name} CompanyId={value._id} companyData={value}/>
-                  );
-                })
-              }
-            </ListCompany>
-            <PopUp isOpen={isModalOpenCompanyModifier} onClose={() => {setIsModalOpenCompanyModifier(false)}}>
-              <ModifierCompanyForm companyGroupe={companyToModify} />
-            </PopUp> 
-          </WrapperCompany>
         </div>
         : ''
       }
