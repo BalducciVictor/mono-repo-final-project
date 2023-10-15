@@ -114,7 +114,8 @@ const SidebarContainer = styled.div`
 
 const SidebarItem = styled(Link)`
   border-radius: 10px;
-  padding: ${space.m} ${space.s};
+  padding: ${space.xs};
+  margin: ${space.xs} 0%;
   cursor: pointer;
   &:hover {
     background-color: #273445;
