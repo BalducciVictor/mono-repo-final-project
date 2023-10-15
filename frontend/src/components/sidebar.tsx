@@ -15,23 +15,34 @@ export const SignOut = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    setUser({role: null, id: null, companyId: null, currentChapterId: null, currentChapterStepId: null, email:null, firstName: null, lastName: null, validatedChapterId: null, refreshToken: null});
-    sessionAPI.removeToken()
-    sessionAPI.removeUser()
-    navigate('/')
-  }
+    setUser({
+      role: null,
+      id: null,
+      companyId: null,
+      currentChapterId: null,
+      currentChapterStepId: null,
+      email: null,
+      firstName: null,
+      lastName: null,
+      validatedChapterId: null,
+      refreshToken: null,
+    });
+    sessionAPI.removeToken();
+    sessionAPI.removeUser();
+    navigate('/');
+  };
 
   return (
     <SignOutContainer onClick={handleClick}>
       <ExitIcon size={iconSize.m} color={color.light.PureWhite} />
-      <Text>Sign out</Text>
+      <Text style={{ color: 'white' }}>Déconnexion</Text>
     </SignOutContainer>
   );
 };
 
 export const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const {user, setUser} = useUser();
+  const { user, setUser } = useUser();
 
   return (
     <SidebarContainer
@@ -42,29 +53,27 @@ export const Sidebar: React.FC = () => {
         <BrandIcon size={iconSize.xl} color={color.light.brandGreen} />
       </TopSideBar>
       <MiddleSideBar>
-        <SidebarItem>
-          <SidebarLink to="home">
+        <SidebarItem to="home">
+          <SidebarLink>
             <HomeIcon size={iconSize.m} color={color.light.PureWhite} />
             <Text className={isHovered ? 'show-text' : 'hide-text'}>Home</Text>
           </SidebarLink>
         </SidebarItem>
-        <SidebarItem>
-          <SidebarLink to="chapters">
+        <SidebarItem to="chapters">
+          <SidebarLink>
             <StudentCapIcon size={iconSize.m} color={color.light.PureWhite} />
-            <Text className={isHovered ? 'show-text' : 'hide-text'}>
-              Chapters
-            </Text>
+            <Text className={isHovered ? 'show-text' : 'hide-text'}>Cours</Text>
           </SidebarLink>
         </SidebarItem>
-        <SidebarItem>
-          <SidebarLink to="profile">
+        <SidebarItem to="profile">
+          <SidebarLink>
             <ProfileIcon size={iconSize.m} color={color.light.PureWhite} />
             <Text className={isHovered ? 'show-text' : 'hide-text'}>
               {user.firstName}
             </Text>
           </SidebarLink>
         </SidebarItem>
-        <SidebarItem>
+        <SidebarItem to="">
           <SignOut />
         </SidebarItem>
       </MiddleSideBar>
@@ -103,16 +112,16 @@ const SidebarContainer = styled.div`
   transition: width 0.3s ease;
 `;
 
-const SidebarItem = styled.div`
+const SidebarItem = styled(Link)`
   border-radius: 10px;
   padding: ${space.m} ${space.s};
   cursor: pointer;
-  &:hover{
-    background-color: #273445;;
+  &:hover {
+    background-color: #273445;
   }
 `;
 
-const SidebarLink = styled(Link)`
+const SidebarLink = styled.div`
   display: flex;
   align-items: center;
   color: #fff;

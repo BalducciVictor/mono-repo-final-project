@@ -11,51 +11,53 @@ interface ApiOptions {
 }
 
 const api = async ({
-    method,
-    url,
-    data,
-    searchParams
-}: ApiOptions): Promise<any> => {;
-    const apiUrl = `${process.env.REACT_APP_API_URL}${url}`;
+  method,
+  url,
+  data,
+  searchParams,
+}: ApiOptions): Promise<any> => {
+  const apiUrl = `${process.env.REACT_APP_API_URL}${url}`;
 
-    const headers: HeadersInit = {
-        "X-CSRFToken": `Bearer ${sessionAPI.getToken() as string}`,
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionAPI.getToken() as string}`,
-    };
+  const headers: HeadersInit = {
+    'X-CSRFToken': `Bearer ${sessionAPI.getToken() as string}`,
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${sessionAPI.getToken() as string}`,
+  };
 
-    let queryParams = "";
+  let queryParams = '';
 
-    if (searchParams) {
-        for (const [key, value] of Object.entries(searchParams)) {
-            queryParams += `&${key}=${value}`;
-        }
+  if (searchParams) {
+    for (const [key, value] of Object.entries(searchParams)) {
+      queryParams += `&${key}=${value}`;
     }
+  }
 
-    const requestOptions: RequestInit = {
-        method,
-        headers,
-        body: data ? JSON.stringify(data) : undefined,
-    };
+  const requestOptions: RequestInit = {
+    method,
+    headers,
+    body: data ? JSON.stringify(data) : undefined,
+  };
 
-    const requestUrl = new URL(`${apiUrl}${queryParams}`);
-    
+  const requestUrl = new URL(`${apiUrl}${queryParams}`);
 
-    try {
-        const response = await fetch(requestUrl, requestOptions);
-        if (response.status === 401) {
-            const userInformation = sessionAPI.getUser();
-            if (userInformation && userInformation.refreshToken) {
-                console.log(userInformation);
-                const newToken = await refreshToken(userInformation.refreshToken);
-                sessionAPI.setToken(newToken.tokenRefreshed);
-                window.location.reload(); //refresh to reload data
-            }
-        }
-        if (!response.ok) {
-            const data = await response.json();
-            throw new Error(data.message || "Erreur inconnue");
-        }
+  try {
+    const response = await fetch(requestUrl, requestOptions);
+    if (response.status === 401) {
+      const userInformation = sessionAPI.getUser();
+      if (userInformation && userInformation.refreshToken) {
+        console.log(userInformation);
+        const newToken = await refreshToken(userInformation.refreshToken);
+        sessionAPI.setToken(newToken.tokenRefreshed);
+        window.location.reload(); //refresh to reload data
+      }
+    }
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || 'Erreur inconnue');
+    }
+    if (parseInt(response.headers.get('Content-Length') || '0') === 0) {
+      return null;
+    }
     return await response.json();
   } catch (error: any) {
     console.error('API error:', error);
@@ -147,11 +149,15 @@ export function postCourse(data: CourseData) {
 }
 
 export function refreshToken(refreshToken: string) {
-    return api({method: "POST", url: `auth/refresh/${refreshToken}`})
+  return api({ method: 'POST', url: `auth/refresh/${refreshToken}` });
 }
 
 export function getChapterById(id: string) {
   return api({ method: 'GET', url: `chapter/${id}` });
+}
+
+export function deleteChapterById(id: string) {
+  return api({ method: 'DELETE', url: `chapter/${id}` });
 }
 
 export function getUserByCompagnyId(companyId: string) {
