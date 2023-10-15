@@ -148,6 +148,13 @@ export function postCourse(data: CourseData) {
   return api({ method: 'POST', url: `chapter`, data });
 }
 
+export function putGroupeInCompany(idChapter: string, groupName: string) {
+  return api({ method: 'PUT', url: `company/group/${idChapter}`, data:{
+    user: [],
+    groupName,
+  } });
+}
+
 export function refreshToken(refreshToken: string) {
   return api({ method: 'POST', url: `auth/refresh/${refreshToken}` });
 }

@@ -27,7 +27,6 @@ export const Home = () => {
   const [isModalOpenCompanyModifier, setIsModalOpenCompanyModifier] = useState(false);
   const [companyToModify, setCompanyToModify] = useState<Company>();
   const [isModalCreateUserOpen, setIsModalCreateUserOpen] = useState(false);
-  const [isModalNewTeamOpen, setIsModalNewTeamOpen] = useState(false);
   const [isModalNewCourseOpen, setIsModalNewCourseOpen] = useState(false);
   const [userAdded, setUserAdded] = useState(false);
   const {user} = useUser();
@@ -75,7 +74,10 @@ export const Home = () => {
   const HandleModifer = async (data: any) => {
     try {
       setIsModalOpenCompanyModifier(false);
-      putCompany(data._id, data)
+      const newObjects = allCompany.map((obj:any) =>
+        obj._id === data._id ? data : obj
+      );
+      setAllCompany(newObjects);
     } catch(e: any) {
       console.log(e)
     }
@@ -115,7 +117,7 @@ export const Home = () => {
               }
             </ListCompany>
             <PopUp isOpen={isModalOpenCompanyModifier} onClose={() => {setIsModalOpenCompanyModifier(false)}}>
-              <ModifierCompanyForm companyGroupe={companyToModify} />
+              <ModifierCompanyForm updatedCompany={HandleModifer} companyGroupe={companyToModify} />
             </PopUp> 
           </WrapperCompany>
           <WrapperUser>
@@ -124,10 +126,6 @@ export const Home = () => {
               <ActionButton text="Creer un nouveau utilisateur" imageSrc={AddUserIllustration} onClick={() => setIsModalCreateUserOpen(true)}/>
               <PopUp isOpen={isModalCreateUserOpen} onClose={() => {setIsModalCreateUserOpen(false)}}>
                 <CreateUserForm onSubmit={handleSubmitForm}/>
-              </PopUp>
-              <ActionButton text="Creer un nouveau groupe d'utilisateurs" imageSrc={NewTeamIllusttration} onClick={() => setIsModalNewTeamOpen(true)}/>
-              <PopUp isOpen={isModalNewTeamOpen} onClose={() => {setIsModalNewTeamOpen(false)}}>
-                <p>Ici form new team</p>
               </PopUp>
               <Link to='/dashboard/create-chapter'>
               <ActionButton text="Creer un nouveau cours" imageSrc={NewLeconIllustration} />
