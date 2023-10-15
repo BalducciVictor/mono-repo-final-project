@@ -93,6 +93,8 @@ const MiddleSideBar = styled.div`
   display: flex;
   margin-left: 5px;
   flex-direction: column;
+  gap: 10px;
+  margin-top: 50px;
 `;
 
 const Text = styled.p`
