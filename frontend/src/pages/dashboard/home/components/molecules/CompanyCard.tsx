@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import IllustrationCompany from '../../../../../assets/company.png';
-import { color } from '../../../../../styles/const';
+import { color, space } from '../../../../../styles/const';
 
 type CompanyCardProps = {
   CompanyName: string;
@@ -22,12 +22,12 @@ export const CompanyCard = ({
       <img src={IllustrationCompany} alt="" />
       <div>
         <p>{CompanyName}</p>
-        <DeleteButton onClick={() => HandleDelete(CompanyId)}>
-          Supprimer
-        </DeleteButton>
         <ModifierButton onClick={() => HandleModifier(companyData)}>
           Modifier
         </ModifierButton>
+        <DeleteButton onClick={() => HandleDelete(CompanyId)}>
+          Supprimer
+        </DeleteButton>
       </div>
     </Company>
   );
@@ -36,7 +36,7 @@ export const CompanyCard = ({
 const Company = styled.li`
   border-radius: 10px;
   background: #fff;
-  box-shadow: 2px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 20px;
   width: 300px;
   display: flex;
@@ -68,7 +68,6 @@ const DeleteButton = styled.button`
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s;
-  margin-right: 10px;
 
   &:hover {
     background-color: ${color.error.lightError};
@@ -80,6 +79,7 @@ const ModifierButton = styled.button`
   color: white;
   border: none;
   padding: 5px 10px;
+  margin-right: ${space.xs};
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s;

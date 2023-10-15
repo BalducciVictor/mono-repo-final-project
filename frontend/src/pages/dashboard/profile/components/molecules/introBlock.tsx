@@ -6,13 +6,14 @@ interface IntroBlockProps {
   firstName: string | null;
 }
 
-export const IntroBlock = ({firstName}: IntroBlockProps) => {
+export const IntroBlock = ({ firstName }: IntroBlockProps) => {
   return (
     <IntroBlockStyled>
       <div>
         <IntroBlockTitle>Hello, {firstName} !</IntroBlockTitle>
         <IntroBlockText>
-          Ici vous pouvez retrouver et modifier vos infos personnelles tel que le mail et le mot de passe.
+          Ici vous pouvez retrouver et modifier vos infos personnelles tel que
+          le mail et le mot de passe.
         </IntroBlockText>
       </div>
       <IdeogramStyle src={IdeogramImage} alt="ideogram icon" />

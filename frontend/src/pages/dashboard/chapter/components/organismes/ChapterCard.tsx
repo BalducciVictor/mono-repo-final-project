@@ -49,20 +49,6 @@ export const ChapterCard = ({
         </RightSection>
         <BottomOfCard>
           <TimeToRead>Temps de lecture -{timeToRead}min</TimeToRead>
-          {role === 'ADMIN' && (
-            <Button
-              style={{
-                background: color.error.lightError,
-                padding: space.xs,
-                borderRadius: '4px',
-              }}
-              onClick={() => {
-                handleDeleteChapter(id);
-              }}
-            >
-              Suprimmer
-            </Button>
-          )}
           <Link to={`/dashboard/chapter/${id}`}>
             <Button
               style={{ padding: space.xs, borderRadius: '4px' }}
@@ -73,6 +59,21 @@ export const ChapterCard = ({
               {role === 'ADMIN' ? 'Accéder' : 'Accéder'}
             </Button>
           </Link>
+          {role === 'ADMIN' ||
+            ('SUPERADMIN' && (
+              <Button
+                style={{
+                  background: color.error.lightError,
+                  padding: space.xs,
+                  borderRadius: '4px',
+                }}
+                onClick={() => {
+                  handleDeleteChapter(id);
+                }}
+              >
+                Suprimer
+              </Button>
+            ))}
         </BottomOfCard>
       </div>
     </MainWrapper>
