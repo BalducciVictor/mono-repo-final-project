@@ -9,8 +9,8 @@ describe('HomePage Tests', () => {
         browser.url('http://onby-front.ghgmbbhubqhfbnc2.francecentral.azurecontainer.io');
     
         AllureReporter.addStep('Navigated to login page');
-        const emailInput = $('#mail');
-        const passwordInput = $('#password'); 
+        const emailInput = $('input[type="mail"]');
+        const passwordInput = $('input[type="password"]');
         const loginButton = $('button=Sign in');  
     
         emailInput.setValue('test.doe@test.com');
@@ -20,6 +20,7 @@ describe('HomePage Tests', () => {
         browser.pause(2000); 
     
         const currentUrl = browser.getUrl();
+        console.log(currentUrl)
         expect(currentUrl).toEqual('http://onby-front.ghgmbbhubqhfbnc2.francecentral.azurecontainer.io/dashboard/home');
     
         AllureReporter.addStep('Logged in successfully');
