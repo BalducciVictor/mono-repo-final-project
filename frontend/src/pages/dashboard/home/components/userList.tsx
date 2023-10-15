@@ -109,7 +109,7 @@ const StyledTable = styled.table`
     }
 
     button {
-        background-color: #f44336;
+        background-color: #2685bd;
         color: white;
         border: none;
         padding: 5px 10px;
@@ -118,7 +118,7 @@ const StyledTable = styled.table`
         transition: background-color 0.3s;
 
         &:hover {
-            background-color: #e53935;
+            background-color: #1b6995;
         }
     }
 `;

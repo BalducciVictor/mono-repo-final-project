@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { MainLogo } from '../../components/icons/mainLogo';
-import { FormularInput } from './components/molecules/FormularInput';
+import { MainLogo } from "../../components/icons/mainLogo";
+import { FormularInput } from "./components/molecules/FormularInput";
 import { useMutation } from 'react-query';
 import AuthImage from '../../assets/auth.png';
 import { useNavigate } from 'react-router-dom';
@@ -27,19 +27,9 @@ export const Auth = () => {
   };
 
   if (mutation.isSuccess) {
-    setUser({
-      role: `${mutation.data.user.role}`,
-      id: mutation.data.user._id,
-      companyId: mutation.data.user.companyId,
-      currentChapterId: mutation.data.user.currentChapterId,
-      currentChapterStepId: mutation.data.user.currentChapterStepId,
-      email: `${mutation.data.user.email}`,
-      firstName: `${mutation.data.user.firstName}`,
-      lastName: `${mutation.data.user.lastName}`,
-      validatedChapterId: mutation.data.user.lastName,
-    });
+    setUser({role: `${mutation.data.user.role}`, id: mutation.data.user._id, companyId: mutation.data.user.companyId, currentChapterId: mutation.data.user.currentChapterId, currentChapterStepId: mutation.data.user.currentChapterStepId, email: `${mutation.data.user.email}`, firstName: `${mutation.data.user.firstName}`, lastName: `${mutation.data.user.lastName}`, validatedChapterId: mutation.data.user.lastName, refreshToken: mutation.data.user.refreshToken });
     sessionAPI.setToken(`${mutation.data.accessToken}`);
-    sessionAPI.setUser({role: `${mutation.data.user.role}`, id: mutation.data.user._id, companyId: mutation.data.user.companyId, currentChapterId: mutation.data.user.currentChapterId, currentChapterStepId: mutation.data.user.currentChapterStepId, email: `${mutation.data.user.email}`, firstName: `${mutation.data.user.firstName}`, lastName: `${mutation.data.user.lastName}`, validatedChapterId: mutation.data.user.lastName });
+    sessionAPI.setUser({role: `${mutation.data.user.role}`, id: mutation.data.user._id, companyId: mutation.data.user.companyId, currentChapterId: mutation.data.user.currentChapterId, currentChapterStepId: mutation.data.user.currentChapterStepId, email: `${mutation.data.user.email}`, firstName: `${mutation.data.user.firstName}`, lastName: `${mutation.data.user.lastName}`, validatedChapterId: mutation.data.user.lastName, refreshToken: mutation.data.user.refreshToken });
     navigate('/dashboard');
   }
 
@@ -63,42 +53,43 @@ export const Auth = () => {
               Admin
             </LeftChoice>
           </LeftChoiceAuth>
-          {adminAuth ? (
-            <LeftFrom>
-              <FormularInput
-                label={'Email'}
-                placeholder={'mail@exemple.com'}
-                type={'mail'}
-                value={email}
-                onChange={setEmail}
-              />
-              <FormularInput
-                label={'Mot de passe'}
-                placeholder={'Min. 8 characters'}
-                type={'password'}
-                value={password}
-                onChange={setPassword}
-              />
-            </LeftFrom>
-          ) : (
-            <LeftFrom>
-              <FormularInput
-                label={'Email'}
-                placeholder={'mail@exemple.com'}
-                type={'mail'}
-                value={email}
-                onChange={setEmail}
-              />
-              <FormularInput
-                label={'Mot de passe'}
-                placeholder={'Min. 8 characters'}
-                type={'password'}
-                value={password}
-                onChange={setPassword}
-              />
-            </LeftFrom>
-          )}
-          <LeftButton onClick={handleLogin}>Sing in</LeftButton>
+            {
+              adminAuth ? 
+                <LeftFrom>
+                    <FormularInput
+                      label={"Email"}
+                      placeholder={"mail@exemple.com"}
+                      type={"mail"}
+                      value={email}
+                      onChange={setEmail}
+                    />
+                    <FormularInput
+                      label={"Mot de passe"}
+                      placeholder={"Min. 8 characters"}
+                      type={"password"}
+                      value={password}
+                      onChange={setPassword}
+                    />
+                </LeftFrom>
+                : 
+                <LeftFrom>
+                    <FormularInput
+                      label={"Email"}
+                      placeholder={"mail@exemple.com"}
+                      type={"mail"}
+                      value={email}
+                      onChange={setEmail}
+                    />
+                    <FormularInput
+                      label={"Mot de passe"}
+                      placeholder={"Min. 8 characters"}
+                      type={"password"}
+                      value={password}
+                      onChange={setPassword}
+                    />
+                </LeftFrom>
+            }
+          <LeftButton onClick={handleLogin}>Sign in</LeftButton>
         </LeftContent>
       </LeftSection>
       <RightSection>

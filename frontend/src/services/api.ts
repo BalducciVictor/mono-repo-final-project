@@ -11,46 +11,51 @@ interface ApiOptions {
 }
 
 const api = async ({
-  method,
-  url,
-  data,
-  searchParams,
-}: ApiOptions): Promise<any> => {
-  const apiUrl = `${process.env.REACT_APP_API_URL}${url}`;
-
-  const headers: HeadersInit = {
-    'X-CSRFToken': `Bearer ${sessionAPI.getToken() as string}`,
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${sessionAPI.getToken() as string}`,
-  };
-
-  let queryParams = '';
-
-  if (searchParams) {
-    for (const [key, value] of Object.entries(searchParams)) {
-      queryParams += `&${key}=${value}`;
-    }
-  }
-
-  const requestOptions: RequestInit = {
     method,
-    headers,
-    body: data ? JSON.stringify(data) : undefined,
-  };
+    url,
+    data,
+    searchParams
+}: ApiOptions): Promise<any> => {;
+    const apiUrl = `${process.env.REACT_APP_API_URL}${url}`;
 
-  const requestUrl = new URL(`${apiUrl}${queryParams}`);
+    const headers: HeadersInit = {
+        "X-CSRFToken": `Bearer ${sessionAPI.getToken() as string}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionAPI.getToken() as string}`,
+    };
 
-  try {
-    const response = await fetch(requestUrl, requestOptions);
+    let queryParams = "";
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok' + response.statusText);
+    if (searchParams) {
+        for (const [key, value] of Object.entries(searchParams)) {
+            queryParams += `&${key}=${value}`;
+        }
     }
 
-    if (parseInt(response.headers.get('Content-Length') || '0') === 0) {
-      return null;
-    }
+    const requestOptions: RequestInit = {
+        method,
+        headers,
+        body: data ? JSON.stringify(data) : undefined,
+    };
 
+    const requestUrl = new URL(`${apiUrl}${queryParams}`);
+    
+
+    try {
+        const response = await fetch(requestUrl, requestOptions);
+        if (response.status === 401) {
+            const userInformation = sessionAPI.getUser();
+            if (userInformation && userInformation.refreshToken) {
+                console.log(userInformation);
+                const newToken = await refreshToken(userInformation.refreshToken);
+                sessionAPI.setToken(newToken.tokenRefreshed);
+                window.location.reload(); //refresh to reload data
+            }
+        }
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.message || "Erreur inconnue");
+        }
     return await response.json();
   } catch (error: any) {
     console.error('API error:', error);
@@ -139,6 +144,10 @@ export function postUser(data: UserFormData) {
 
 export function postCourse(data: CourseData) {
   return api({ method: 'POST', url: `chapter`, data });
+}
+
+export function refreshToken(refreshToken: string) {
+    return api({method: "POST", url: `auth/refresh/${refreshToken}`})
 }
 
 export function getChapterById(id: string) {
