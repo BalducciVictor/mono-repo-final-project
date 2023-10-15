@@ -24,7 +24,7 @@ export const ProfileCadre = ({id, companyName, email, firstName, lastName, setEm
                 <ProfileDescription>
                     <ProfileName>{firstName} {lastName}</ProfileName>
                     <p><ProfilLabel>Indentification:</ProfilLabel> {id}</p>
-                    <p><ProfilLabel>Poste:</ProfilLabel> {companyName}</p>
+                    <p><ProfilLabel>Entreprise:</ProfilLabel> {companyName}</p>
                 </ProfileDescription>
             </HeaderProfile>
             <FormularInput

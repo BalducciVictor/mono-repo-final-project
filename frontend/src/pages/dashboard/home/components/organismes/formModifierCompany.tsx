@@ -76,8 +76,8 @@ const ModifButton = styled.button`
 `;
 
 const GroupeItem = styled.li`
-    background-color: #1C2632;
-    color: white;
+    margin-top: 5px;
+    border: 1px solid #31b898;
     padding: 10px;
     border-radius: 4px;
 `;
