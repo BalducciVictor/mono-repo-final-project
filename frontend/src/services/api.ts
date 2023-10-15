@@ -1,7 +1,7 @@
 import sessionAPI from './sessionStorageAPI';
 import type { Chapter } from '../types/requestTypes';
 import { UserFormData } from '../types/usertypes';
-import { CourseData } from '../types/coursesTypes';
+import { CourseData, FileData } from '../types/coursesTypes';
 
 interface ApiOptions {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -151,4 +151,12 @@ export function getUserByCompagnyId(companyId: string) {
 
 export function DeleteUserById(userId: string) {
   return api({ method: 'DELETE', url: `users/${userId}` });
+}
+
+export function PostFile(contentType: string, data: any) {
+  return api({
+    method: 'POST',
+    url: `upload?contentType=${contentType}`,
+    data,
+  });
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FormularInput } from '../../auth/components/molecules/FormularInput';
 import ReactMarkdown from 'react-markdown';
@@ -9,6 +9,7 @@ import { Button } from '../../../components/atoms/button';
 import { Documentations } from '../../../types/coursesTypes';
 import { ChapterRectangles } from '../chapter/components/organismes/ChapterRectangles';
 import ChapterPreview from '../chapter/components/organismes/ChapterPreview';
+import { PostFile } from '../../../services/api';
 
 interface ChapterCreationProps {
   documentations: Documentations[];
@@ -25,6 +26,8 @@ export const ChapterCreation = ({
 }: ChapterCreationProps) => {
   const [inputText, setInputText] = useState('');
   const [chapterTitle, setChapterTitle] = useState('');
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const handleAddChapter = () => {
     if (chapterTitle.trim() !== '' && inputText.trim() !== '') {
@@ -45,9 +48,33 @@ export const ChapterCreation = ({
     }
   };
 
+  const handleImageSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files && e.target.files[0];
+    if (selectedFile) {
+      setSelectedImage(selectedFile);
+    }
+  };
+
+  const inputFileRef = useRef<HTMLInputElement>(null);
+
+  const handlePostFile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (selectedImage) {
+        const formData = new FormData();
+        formData.append('file', selectedImage);
+
+        const response = await PostFile(selectedImage.type, formData);
+      }
+    } catch (err) {
+      return;
+    }
+  };
+
   return (
     <>
       <TitleH1 style={{ marginBottom: space.xs }}>Création du cours</TitleH1>
+      {console.log('selectedImage', selectedImage)}
       <CourseTitleStyled>{courseTitle}</CourseTitleStyled>
       <StepsCreationWrapper>
         <ChapterRectangles
@@ -78,6 +105,17 @@ export const ChapterCreation = ({
               inputStyle={{ resize: 'none', height: '500px' }}
             />
           </Wrapper>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageSelection}
+            style={{ display: 'none' }}
+            ref={inputFileRef}
+          />
+          {/* <Button onClick={() => inputFileRef.current?.click()}>
+            Sélectionner une image
+          </Button>
+          <Button onClick={handlePostFile}>Validate</Button> */}
           <Button style={{ width: '100%' }} onClick={handleAddChapter}>
             Valider le chapitre
           </Button>

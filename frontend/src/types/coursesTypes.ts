@@ -16,3 +16,7 @@ export interface CourseData {
   companyId: string;
   documentation: Documentations[];
 }
+
+export interface FileData {
+  file: any;
+}
