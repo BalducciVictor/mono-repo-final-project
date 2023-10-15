@@ -4,14 +4,13 @@ import EXPECTED_HREF from '../../fixtures/testCaseHref.fixture';
 
 describe('HomePage Tests', () => {
 
-    // Cette fonction s'exécutera avant chaque test pour s'assurer que vous êtes connecté
     beforeEach(() => {
         browser.url('http://onby-front.ghgmbbhubqhfbnc2.francecentral.azurecontainer.io');
     
         AllureReporter.addStep('Navigated to login page');
-        const emailInput = $('input[type="mail"]');
-        const passwordInput = $('input[type="password"]');
-        const loginButton = $('button=Sign in');  
+        const emailInput = $('[data-testid="email-input-test"]');
+        const passwordInput = $('[data-testid="password-input-test"]');
+        const loginButton = $('[data-testid="login-button"]');  
     
         emailInput.setValue('test.doe@test.com');
         passwordInput.setValue('string'); 
@@ -28,7 +27,6 @@ describe('HomePage Tests', () => {
     
 
     it('should navigate to the correct URL when clicking "Créer un nouveau cours"', async () => {
-        // Utiliser l'attribut data-testid pour sélectionner l'élément
         const linkElement = await $('[data-testid="createCourse"]'); 
         console.log(linkElement)
     
@@ -51,7 +49,6 @@ describe('HomePage Tests', () => {
         const homeHref = await homeLink.getAttribute('href');
         console.log(homeHref)
 
-        // Ajout des détails au rapport Allure
         AllureReporter.addAttachment("Actual href for Home", homeHref, 'text/plain');
         AllureReporter.addAttachment("Expected href for Home", EXPECTED_HREF.home, 'text/plain');
 
